@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Resumo de Plantão</title>
+<meta name="theme-color" content="#1d4ed8">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Plantão">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+:root{--bg:#f4f5f7;--card:#fff;--tx:#14181f;--mut:#5d6675;--bd:#d5d9e0;--ac:#1d4ed8;--acx:#fff;--ok:#15803d;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1218;--card:#1a1f29;--tx:#eceff4;--mut:#9aa4b5;--bd:#333b4a;--ac:#6b9bff;--acx:#0b1220;--ok:#4ade80}}
+:root[data-theme="dark"]{--bg:#0f1218;--card:#1a1f29;--tx:#eceff4;--mut:#9aa4b5;--bd:#333b4a;--ac:#6b9bff;--acx:#0b1220;--ok:#4ade80}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{padding:18px 16px 6px;max-width:640px;margin:0 auto}
+h1{font-size:22px;margin:0 0 4px}
+header p{margin:0;color:var(--mut);font-size:14px}
+main{max-width:640px;margin:0 auto;padding:8px 12px 120px}
+section{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px;margin:12px 0}
+h2{font-size:15px;margin:0 0 10px;letter-spacing:.03em;text-transform:uppercase}
+label{display:block;font-size:13px;color:var(--mut);margin:10px 0 4px}
+input[type=text],input[type=date],input[type=time],input[type=number],select,textarea{width:100%;font:inherit;color:var(--tx);background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:12px;min-height:48px}
+textarea{min-height:90px;resize:vertical}
+input:focus,textarea:focus{outline:2px solid var(--ac);border-color:transparent}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.opt{display:flex;gap:10px}
+.opt label{flex:1;margin:0;color:var(--tx);font-size:16px;border:1px solid var(--bd);border-radius:10px;padding:13px;display:flex;align-items:center;gap:8px;background:var(--bg)}
+.opt input{width:20px;height:20px;accent-color:var(--ac)}
+.chk{display:flex;align-items:center;gap:10px;color:var(--tx);font-size:16px;margin:0 0 4px}
+.chk input{width:22px;height:22px;accent-color:var(--ac)}
+.hide{display:none}
+#ocs{counter-reset:oc}#ovs{counter-reset:ov}#trs{counter-reset:tr}#rbs{counter-reset:rb}.rb>.tt{font-weight:600;margin-top:6px}.rb>.tt::before{counter-increment:rb;content:"Repasse " counter(rb)}
+.opt label:has(input:checked){border-color:var(--ok);background:color-mix(in srgb,var(--ok) 16%,var(--bg));font-weight:600}.tr>.tt{font-weight:600;margin-top:6px}.tr>.tt::before{counter-increment:tr;content:"Envolvido " counter(tr)}.ov>.tt{font-weight:600;margin-top:6px}.ov>.tt::before{counter-increment:ov;content:"Envolvido " counter(ov)}.oc>.tt{font-weight:600;margin-top:6px}.oc>.tt::before{counter-increment:oc;content:"Envolvido " counter(oc)}
+.tt2{font-weight:600;font-size:14px;color:var(--mut);margin:16px 0 0}
+.hr{margin-left:auto;font-variant-numeric:tabular-nums;color:var(--ok);font-size:15px}
+.ubs,.esc,.crc{display:flex;align-items:center;gap:12px;margin:0 0 8px;padding:13px;border:1px solid var(--bd);border-radius:10px;background:var(--bg);color:var(--tx);font-size:16px}
+.ubs input,.esc input,.crc input{width:22px;height:22px;accent-color:var(--ok)}
+.ubs:has(input:checked),.esc:has(input:checked),.crc:has(input:checked){border-color:var(--ok);background:color-mix(in srgb,var(--ok) 16%,var(--bg));font-weight:600}
+.bo{border-top:1px dashed var(--bd);margin-top:10px;padding-top:2px}
+button{font:inherit;border:1px solid var(--bd);background:var(--bg);color:var(--tx);border-radius:10px;padding:12px 14px;min-height:46px}
+button.p{background:var(--ac);color:var(--acx);border-color:var(--ac);font-weight:600}
+.sm{margin-top:10px}
+canvas{width:100%;height:150px;background:var(--bg);border:1px solid var(--bd);border-radius:10px;touch-action:none;display:block}
+.bar{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--bd);padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));display:flex;gap:8px;justify-content:center}
+.bar button{flex:1;max-width:200px;padding:12px 6px;font-size:15px}
+#msg{text-align:center;color:var(--ok);font-size:14px;min-height:20px}
+#out{display:none;width:100%;min-height:200px;margin-top:8px}
+</style>
+</head>
+<body>
+<header>
+<h1>Resumo de Plantão</h1>
+<p>Preencha o plantão e gere um PDF para conferir e encaminhar. O preenchimento fica neste navegador e não é enviado a um servidor.</p><p role="alert" style="margin-top:10px;padding:10px;border:1px solid #b45309;border-radius:10px;background:#fffbeb;color:#78350f;font-weight:600">DEMONSTRAÇÃO PÚBLICA — não use dados reais, CPF, RG ou informações de ocorrências. Este site não tem login nem armazenamento institucional.</p><details style="margin-top:10px;color:var(--mut);font-size:14px"><summary style="cursor:pointer;color:var(--ac)">Exemplo rápido de preenchimento</summary><p>Ex.: marque “Novidades” na ronda e descreva o ocorrido; adicione uma autuação com número AIT, código e artigo; selecione as unidades visitadas. Ao final, informe o responsável, assine e toque em “Enviar PDF”. O app monta o resumo e baixa o PDF para você compartilhar.</p></details>
+</header>
+<main>
+<section>
+<label for="data" style="margin-top:0">Data</label>
+<input type="date" id="data" data-k="data">
+</section>
+
+<section>
+<h2>1. Ronda aos postos</h2>
+<div class="opt">
+<label><input type="radio" name="ronda" value="Sem novidades" data-k="ronda"> Sem novidades</label>
+<label><input type="radio" name="ronda" value="Novidades" data-k="ronda"> Novidades</label>
+</div>
+<div id="rondaBox" class="hide">
+<label for="rondaDesc">Descreva as novidades</label>
+<textarea id="rondaDesc" data-k="rondaDesc"></textarea>
+</div>
+</section>
+
+<section>
+<h2>2. Viatura e abastecimento</h2>
+<label class="chk"><input type="checkbox" id="viatura" data-k="viatura"> Viatura em operação</label>
+<label for="prefixo">Prefixo da VTR</label>
+<input type="text" id="prefixo" data-k="prefixo" autocapitalize="characters" style="margin-bottom:4px">
+<div class="row">
+<div><label for="talaoAb">Nº do talão</label><input type="text" id="talaoAb" data-k="talaoAb" inputmode="numeric"></div>
+<div><label for="horaAb">Horário</label><input type="time" id="horaAb" data-k="horaAb"></div>
+<div><label for="vale">Nº do vale</label><input type="text" id="vale" data-k="vale" inputmode="numeric"></div>
+<div><label for="litros">Litros</label><input type="text" id="litros" data-k="litros" inputmode="decimal"></div>
+</div>
+<div id="abs"></div>
+<button type="button" class="sm" id="addAb">+ Adicionar abastecimento</button>
+</section>
+
+<section>
+<h2>3. Ausência no plantão</h2>
+<label for="ausencia" style="margin-top:0">Quem faltou e motivo</label>
+<textarea id="ausencia" data-k="ausencia"></textarea>
+</section>
+
+<section>
+<h2>4. Remanejamento de servidor</h2>
+<label for="remanej" style="margin-top:0">Quem foi remanejado, de onde e para onde</label>
+<textarea id="remanej" data-k="remanej"></textarea>
+</section>
+
+<section>
+<h2>5. Perturbação do sossego</h2>
+<div id="pss"></div>
+<button type="button" class="sm" id="addPs">+ Adicionar atendimento</button>
+</section>
+
+<section>
+<h2>6. B.O. GCM</h2>
+<div id="bos"></div>
+<button type="button" class="sm" id="addBo">+ Adicionar B.O.</button>
+</section>
+
+<section>
+<h2>7. Autuação de trânsito</h2>
+<div id="ats"></div>
+<button type="button" class="sm" id="addAt">+ Adicionar autuação</button>
+<div style="margin-top:14px;padding:12px;border:1px solid var(--bd);border-radius:10px;background:var(--bg);display:flex;justify-content:space-between;align-items:center"><span>Total de autuações</span><strong id="totAt" style="font-size:22px">0</strong></div>
+</section>
+
+<section>
+<h2>8. Solicitação Ministério Público</h2>
+<div id="mps"></div>
+<button type="button" class="sm" id="addMp">+ Adicionar solicitação</button>
+</section>
+
+<section>
+<h2>9. Ronda Unidade Básica Saúde</h2>
+<p style="margin:0 0 10px;color:var(--mut);font-size:13px">Toque para destacar as unidades onde a ronda foi realizada.</p>
+<label class="ubs"><input type="checkbox" data-k="ubs0"> UBS Florida Mirim</label>
+<label class="ubs"><input type="checkbox" data-k="ubs1"> UBS Itaguaí</label>
+<label class="ubs"><input type="checkbox" data-k="ubs2"> UBS Agenor Campos</label>
+<label class="ubs"><input type="checkbox" data-k="ubs3"> UBS Primavera</label>
+<label class="ubs"><input type="checkbox" data-k="ubs4"> UBS JD Praia Grande</label>
+<label class="ubs"><input type="checkbox" data-k="ubs5"> UBS Jussara</label>
+<label class="ubs"><input type="checkbox" data-k="ubs6"> UBS Pedreira</label>
+<label class="ubs"><input type="checkbox" data-k="ubs10"> UBS Vila Atlântica</label>
+<label class="ubs"><input type="checkbox" data-k="ubs7"> Centro de Especialidades</label>
+<label class="ubs"><input type="checkbox" data-k="ubs8"> UPA</label>
+<label class="ubs"><input type="checkbox" data-k="ubs9"> PS Central</label>
+</section>
+
+<section>
+<h2>10. Ronda EMEF e EMEIEF</h2>
+<p style="margin:0 0 10px;color:var(--mut);font-size:13px">Toque para destacar as escolas onde a ronda foi realizada.</p>
+<label class="esc"><input type="checkbox" data-k="esc0"> EMEF Sirana</label>
+<label class="esc"><input type="checkbox" data-k="esc1"> EMEF Gilvado</label>
+<label class="esc"><input type="checkbox" data-k="esc2"> EMEF Regina Maria</label>
+<label class="esc"><input type="checkbox" data-k="esc3"> EMEF Claudia Andrella</label>
+<label class="esc"><input type="checkbox" data-k="esc4"> EMEF José Carlos Freitas</label>
+<label class="esc"><input type="checkbox" data-k="esc5"> EMEF Jacyra</label>
+<label class="esc"><input type="checkbox" data-k="esc6"> EMEF Pequeno Príncipe</label>
+<label class="esc"><input type="checkbox" data-k="esc7"> EMEF Ivone Monteiro</label>
+<label class="esc"><input type="checkbox" data-k="esc8"> EMEF Hortência</label>
+<label class="esc"><input type="checkbox" data-k="esc9"> EMEF José Cesário</label>
+<label class="esc"><input type="checkbox" data-k="esc10"> EMEF Pedro Fernandes</label>
+<label class="esc"><input type="checkbox" data-k="esc11"> EMEF Cassimiro</label>
+<label class="esc"><input type="checkbox" data-k="esc12"> EMEF Barigui</label>
+<label class="esc"><input type="checkbox" data-k="esc13"> EMEF Joaquim Monteiro</label>
+<label class="esc"><input type="checkbox" data-k="esc14"> EMEF Dona Naia</label>
+<label class="esc"><input type="checkbox" data-k="esc15"> EMEF Tonico Silva</label>
+<label class="esc"><input type="checkbox" data-k="esc16"> EMEIEF Célia Pupo</label>
+<label class="esc"><input type="checkbox" data-k="esc17"> EMEIEF Sitio do Pica Pau Amarelo</label>
+<label class="esc"><input type="checkbox" data-k="esc18"> EMEIEF Vila Atlântica</label>
+<label class="esc"><input type="checkbox" data-k="esc19"> EMEI Catatau</label>
+<label class="esc"><input type="checkbox" data-k="esc20"> EMEI Branca de Neve</label>
+<label class="esc"><input type="checkbox" data-k="esc21"> EMEI Pingo de Gente</label>
+<label class="esc"><input type="checkbox" data-k="esc22"> EMEI Tio Patinhas</label>
+</section>
+
+<section>
+<h2>11. Ronda Creches</h2>
+<p style="margin:0 0 10px;color:var(--mut);font-size:13px">Toque para destacar as creches onde a ronda foi realizada.</p>
+<label class="crc"><input type="checkbox" data-k="crc0"> Creche Vera Lúcia</label>
+<label class="crc"><input type="checkbox" data-k="crc1"> Creche Tia Dita</label>
+<label class="crc"><input type="checkbox" data-k="crc2"> Creche Suely Silva</label>
+<label class="crc"><input type="checkbox" data-k="crc3"> Creche Elio Gonçalves</label>
+<label class="crc"><input type="checkbox" data-k="crc4"> Creche Manoel José</label>
+<label class="crc"><input type="checkbox" data-k="crc5"> Creche Nilton de Oliveira</label>
+<label class="crc"><input type="checkbox" data-k="crc6"> Creche Vila Atlântica</label>
+<label class="crc"><input type="checkbox" data-k="crc7"> Creche Barigui</label>
+<label class="crc"><input type="checkbox" data-k="crc8"> Creche Zico Bucanas</label>
+<label class="crc"><input type="checkbox" data-k="crc9"> Creche Nossa Senhora Aparecida</label>
+<label class="crc"><input type="checkbox" data-k="crc10"> Creche Raudna Maria</label>
+<label class="crc"><input type="checkbox" data-k="crc11"> Creche Oceanopolis</label>
+<label class="crc"><input type="checkbox" data-k="crc12"> Creche Walter Gomes</label>
+</section>
+
+<section>
+<h2>12. Ocorrência de trânsito sem vítima</h2>
+<div id="ocs"></div>
+<button type="button" class="sm" id="addOc">+ Adicionar envolvido</button>
+</section>
+
+<section>
+<h2>13. Ocorrência de trânsito com vítima</h2>
+<div id="ovs"></div>
+<button type="button" class="sm" id="addOv">+ Adicionar envolvido</button>
+</section>
+
+<section>
+<h2>14. Ocorrência com Transeunte</h2>
+<div id="trs"></div>
+<button type="button" class="sm" id="addTr">+ Adicionar envolvido</button>
+</section>
+
+<section>
+<h2>15. Repasse Boletim de Ocorrência</h2>
+<div id="rbs"></div>
+<button type="button" class="sm" id="addRb">+ Adicionar repasse</button>
+</section>
+
+<section>
+<h2>Responsável</h2>
+<label for="resp" style="margin-top:0">Responsável pelo plantão</label>
+<input type="text" id="resp" data-k="resp" autocomplete="name">
+<label>Assinatura (desenhe com o dedo)</label>
+<canvas id="sig"></canvas>
+<button type="button" class="sm" id="clrSig">Limpar assinatura</button>
+</section>
+
+<div id="msg"></div>
+<textarea id="out" readonly></textarea>
+</main>
+
+<div class="bar">
+<button type="button" id="clear">Limpar</button>
+<button type="button" id="copy">Copiar texto</button>
+<button type="button" class="p" id="share">Enviar PDF</button>
+</div>
+
+<script>
+(function(){
+var KEY="resumo-plantao-v1", $=function(s){return document.querySelector(s)}, $$=function(s){return Array.prototype.slice.call(document.querySelectorAll(s))};
+var bosEl=$("#bos"), sig=$("#sig"), ctx, drawn=false;
+
+function hoje(){var d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function fmtData(v){if(!v)return"";var p=v.split("-");return p[2]+"/"+p[1]+"/"+p[0]}
+
+function addBo(n,t){
+var d=document.createElement("div");d.className="bo";
+d.innerHTML='<div class="row"><div><label>Natureza</label><input type="text" class="bn"></div><div><label>Talão nº</label><input type="text" class="bt"></div></div>';
+d.querySelector(".bn").value=n||"";d.querySelector(".bt").value=t||"";
+if(bosEl.children.length){var r=document.createElement("button");r.type="button";r.className="sm";r.textContent="Remover";r.onclick=function(){d.remove();save()};d.appendChild(r)}
+bosEl.appendChild(d);
+}
+function addAb(t,h,v,l){
+var d=document.createElement("div");d.className="ab";d.style.cssText="border-top:1px dashed var(--bd);margin-top:10px;padding-top:2px";
+d.innerHTML='<div class="row"><div><label>Nº do talão</label><input type="text" class="at" inputmode="numeric"></div><div><label>Horário</label><input type="time" class="ah"></div><div><label>Nº do vale</label><input type="text" class="av" inputmode="numeric"></div><div><label>Litros</label><input type="text" class="al" inputmode="decimal"></div></div>';
+d.querySelector(".at").value=t||"";d.querySelector(".ah").value=h||"";d.querySelector(".av").value=v||"";d.querySelector(".al").value=l||"";
+var r=document.createElement("button");r.type="button";r.className="sm";r.textContent="Remover";r.onclick=function(){d.remove();save()};d.appendChild(r);
+$("#abs").appendChild(d);
+}
+function addOc(v){
+v=v||[];var d=document.createElement("div");d.className="oc";
+if($("#ocs").children.length)d.style.cssText="border-top:1px dashed var(--bd);margin-top:14px;padding-top:6px";
+function f(i,l,t,m){return '<div><label>'+l+'</label><input type="'+(t||"text")+'" class="f'+i+'"'+(m?' inputmode="'+m+'"':'')+'></div>'}
+d.innerHTML='<div class="tt"></div>'+f(0,"Nome do envolvido")+'<div class="row">'+f(1,"CPF","text","numeric")+f(2,"RG")+f(3,"CNH","text","numeric")+f(6,"Data de nascimento","date")+'</div>'+f(4,"Nome do pai")+f(5,"Nome da mãe")+'<div><label>Gênero</label><select class="f7"><option value=""></option><option>Masculino</option><option>Feminino</option><option>Outro</option></select></div><div class="tt2">Veículo</div><div class="row">'+f(8,"Placa")+f(9,"Modelo")+f(10,"Marca")+f(11,"Categoria")+f(12,"Renavam","text","numeric")+f(13,"Chassi")+'</div>'+f(14,"Local dos fatos")+'<div><label>Observação</label><textarea class="f15"></textarea></div>';
+d.querySelector(".tt").insertAdjacentHTML("afterend",f(16,"Talão nº","text","numeric")+'<div class="row">'+f(17,"Horário inicial","time")+f(18,"Horário final","time")+'</div>');
+d.querySelector(".f0").parentNode.insertAdjacentHTML("afterend",f(19,"Endereço residencial"));
+for(var i=0;i<20;i++)d.querySelector(".f"+i).value=v[i]||"";
+if($("#ocs").children.length){var r=document.createElement("button");r.type="button";r.className="sm";r.textContent="Remover envolvido";r.onclick=function(){d.remove();save()};d.appendChild(r)}
+$("#ocs").appendChild(d);
+}
+function addOv(v){
+v=v||[];var d=document.createElement("div");d.className="ov";
+if($("#ovs").children.length)d.style.cssText="border-top:1px dashed var(--bd);margin-top:14px;padding-top:6px";
+function f(i,l,t,m){return '<div><label>'+l+'</label><input type="'+(t||"text")+'" class="f'+i+'"'+(m?' inputmode="'+m+'"':'')+'></div>'}
+d.innerHTML='<div class="tt"></div>'+f(0,"Nome do envolvido")+'<div class="row">'+f(1,"CPF","text","numeric")+f(2,"RG")+f(3,"CNH","text","numeric")+f(6,"Data de nascimento","date")+'</div>'+f(4,"Nome do pai")+f(5,"Nome da mãe")+'<div><label>Gênero</label><select class="f7"><option value=""></option><option>Masculino</option><option>Feminino</option><option>Outro</option></select></div><div class="tt2">Veículo</div><div class="row">'+f(8,"Placa")+f(9,"Modelo")+f(10,"Marca")+f(11,"Categoria")+f(12,"Renavam","text","numeric")+f(13,"Chassi")+'</div>'+f(20,"Local dos fatos")+'<div class="tt2">Atendimento</div><div><label>Observação</label><textarea class="f14"></textarea></div><div class="row">'+f(15,"Prefixo da ambulância")+f(16,"Nome do socorrista")+f(17,"Horário de chegada","time")+f(18,"Horário de saída","time")+'</div>'+f(19,"Destino da vítima");
+d.querySelector(".tt").insertAdjacentHTML("afterend",f(21,"Talão nº","text","numeric")+'<div class="row">'+f(22,"Horário inicial","time")+f(23,"Horário final","time")+'</div>');
+d.querySelector(".f0").parentNode.insertAdjacentHTML("afterend",f(24,"Endereço residencial"));
+for(var i=0;i<25;i++)d.querySelector(".f"+i).value=v[i]||"";
+if($("#ovs").children.length){var r=document.createElement("button");r.type="button";r.className="sm";r.textContent="Remover envolvido";r.onclick=function(){d.remove();save()};d.appendChild(r)}
+$("#ovs").appendChild(d);
+}
+function addTr(v){
+v=v||[];var d=document.createElement("div");d.className="tr";
+if($("#trs").children.length)d.style.cssText="border-top:1px dashed var(--bd);margin-top:14px;padding-top:6px";
+function f(i,l,t,m){return '<div><label>'+l+'</label><input type="'+(t||"text")+'" class="f'+i+'"'+(m?' inputmode="'+m+'"':'')+'></div>'}
+d.innerHTML='<div class="tt"></div>'+f(0,"Talão nº","text","numeric")+'<div class="row">'+f(1,"Horário inicial","time")+f(2,"Horário final","time")+'</div>'+f(3,"Nome do envolvido")+f(4,"Endereço residencial")+'<div class="row">'+f(5,"CPF","text","numeric")+f(6,"RG")+f(7,"CNH","text","numeric")+f(10,"Data de nascimento","date")+'</div>'+f(8,"Nome do pai")+f(9,"Nome da mãe")+'<div><label>Gênero</label><select class="f11"><option value=""></option><option>Masculino</option><option>Feminino</option><option>Outro</option></select></div>'+f(12,"Local dos fatos")+'<div class="tt2">Atendimento</div><div class="row">'+f(13,"Prefixo da ambulância")+f(14,"Nome do socorrista")+f(15,"Horário de chegada","time")+f(16,"Horário de saída","time")+'</div>'+f(17,"Destino da vítima")+'<div><label>Observação</label><textarea class="f18"></textarea></div>';
+for(var i=0;i<19;i++)d.querySelector(".f"+i).value=v[i]||"";
+if($("#trs").children.length){var r=document.createElement("button");r.type="button";r.className="sm";r.textContent="Remover envolvido";r.onclick=function(){d.remove();save()};d.appendChild(r)}
+$("#trs").appendChild(d);
+}
+var MODELO=["Informo que esta equipe (Viatura [Prefixo], composta pelos policiais [Nome/RE]) assumiu a apresentação da presente ocorrência de trânsito em virtude de [justificativa: ex: término do turno de serviço / necessidade de permanência no local]. O atendimento inicial no local dos fatos foi realizado pela equipe da Viatura [Prefixo], composta pelos policiais [Nome/RE do policial do primeiro atendimento], que efetuou o isolamento da área e o acionamento dos órgãos de socorro. No momento do repasse, a primeira equipe transmitiu a este apresentante os seguintes dados e providências já adotadas:",
+"- [Se houver óbito]: O óbito da vítima [Nome da Vítima] foi constatado no local pelo médico do SAMU, Dr. [Nome], CRM [Número], às [Horário]. A equipe inicial permaneceu preservando o local do acidente aguardando a chegada da Perícia Técnico-Científica (Viatura [Prefixo]), motivo pelo qual a condução das demais partes e testemunhas a esta Delegacia foi repassada para esta equipe apresentante.",
+"- [Se houver recusa de bafômetro]: Foi ofertado o teste do etilômetro ao condutor [Nome do Condutor] pela primeira equipe policial às [Horário], tendo este recusado formalmente a realização do exame. Diante da recusa e da ausência/presença de sinais notórios de embriaguez, foi lavrado o respectivo Auto de Infração de Trânsito (AIT) no [Número] com fulcro no Art. 165-A do CTB.",
+"Diante do exposto, esta equipe assumiu a custódia e conduziu o condutor [Nome], a testemunha [Nome] e os pertences arrecadados, apresentando-os à Autoridade Policial para as providências de Polícia Judiciária."].join("\n\n");
+function addRb(v){
+v=v||[];var d=document.createElement("div");d.className="rb";
+addRb.n=(addRb.n||0)+1;var n=addRb.n;
+if($("#rbs").children.length)d.style.cssText="border-top:1px dashed var(--bd);margin-top:14px;padding-top:6px";
+function f(i,l,t,m){return '<div><label>'+l+'</label><input type="'+(t||"text")+'" class="f'+i+'"'+(m?' inputmode="'+m+'"':'')+'></div>'}
+function o(c,nm,val){return '<label><input type="radio" class="'+c+'" name="'+nm+'" value="'+val+'"> '+val+'</label>'}
+d.innerHTML='<div class="tt"></div>'+f(0,"Talão nº","text","numeric")+'<div class="row">'+f(1,"Horário inicial","time")+f(2,"Horário final","time")+'</div>'+f(3,"Nome")+f(4,"Endereço residencial")+'<div class="row">'+f(5,"RG")+f(6,"CPF","text","numeric")+f(7,"CNH","text","numeric")+f(10,"Data de nascimento","date")+'</div>'+f(8,"Nome do pai")+f(9,"Nome da mãe")+'<div><label>Gênero</label><select class="f11"><option value=""></option><option>Masculino</option><option>Feminino</option><option>Outro</option></select></div><div class="tt2">Veículo</div><div class="row">'+f(12,"Placa")+f(13,"Modelo")+f(14,"Marca")+f(15,"Categoria")+f(16,"Renavam","text","numeric")+f(17,"Chassi")+'</div>'+f(18,"Local dos fatos")+'<div class="tt2">Guarnição</div>'+f(19,"Viatura inicial")+'<div class="row">'+f(20,"Motorista")+f(21,"Encarregado")+'</div><div class="tt2">Atendimento</div><div class="row">'+f(22,"Prefixo da ambulância")+f(23,"Nome do socorrista")+f(24,"Horário de chegada","time")+f(25,"Horário de saída","time")+'</div>'+f(26,"Destino")+'<div class="tt2">Local e perícia</div><div class="opt" style="margin-bottom:8px">'+o("f27","lp"+n,"Local preservado")+o("f27","lp"+n,"Não preservado")+'</div><div class="opt">'+o("f28","pe"+n,"Sem perícia")+o("f28","pe"+n,"Com perícia")+'</div><div><label>Histórico</label><textarea class="f29" style="min-height:260px"></textarea><button type="button" class="sm modelo">Inserir modelo de histórico</button></div>';
+for(var i=0;i<27;i++)d.querySelector(".f"+i).value=v[i]||"";
+[27,28].forEach(function(k){Array.prototype.forEach.call(d.querySelectorAll(".f"+k),function(r){r.checked=(r.value===v[k])})});
+d.querySelector(".f29").value=v.length?(v[29]||""):MODELO;
+d.querySelector(".modelo").onclick=function(){var t=d.querySelector(".f29");if(!t.value.trim()||confirm("Substituir o texto atual pelo modelo?")){t.value=MODELO;save()}};
+if($("#rbs").children.length){var r=document.createElement("button");r.type="button";r.className="sm";r.textContent="Remover repasse";r.onclick=function(){d.remove();save()};d.appendChild(r)}
+$("#rbs").appendChild(d);
+}
+function addAt(a,c,r){
+var d=document.createElement("div");d.className="au";
+if($("#ats").children.length)d.style.cssText="border-top:1px dashed var(--bd);margin-top:10px;padding-top:2px";
+d.innerHTML='<label>Número AIT</label><input type="text" class="ua" inputmode="text"><div class="row"><div><label>Código</label><input type="text" class="uc" inputmode="numeric"></div><div><label>Artigo</label><input type="text" class="ur"></div></div>';
+d.querySelector(".ua").value=a||"";d.querySelector(".uc").value=c||"";d.querySelector(".ur").value=r||"";
+if($("#ats").children.length){var b=document.createElement("button");b.type="button";b.className="sm";b.textContent="Remover";b.onclick=function(){d.remove();save()};d.appendChild(b)}
+$("#ats").appendChild(d);
+}
+function addPs(t,e,i,f,au,or){
+var d=document.createElement("div");d.className="ps";
+if($("#pss").children.length)d.style.cssText="border-top:1px dashed var(--bd);margin-top:10px;padding-top:2px";
+d.innerHTML='<div class="row"><div><label>Talão nº</label><input type="text" class="pt" inputmode="numeric"></div><div><label>Endereço</label><input type="text" class="pe"></div><div><label>Horário inicial</label><input type="time" class="pi"></div><div><label>Horário final</label><input type="time" class="pf"></div></div><div class="row" style="margin-top:12px"><label class="chk"><input type="checkbox" class="pa"> Autuado</label><label class="chk"><input type="checkbox" class="po"> Orientado</label></div>';
+d.querySelector(".pt").value=t||"";d.querySelector(".pe").value=e||"";d.querySelector(".pi").value=i||"";d.querySelector(".pf").value=f||"";d.querySelector(".pa").checked=!!au;d.querySelector(".po").checked=!!or;
+if($("#pss").children.length){var r=document.createElement("button");r.type="button";r.className="sm";r.textContent="Remover";r.onclick=function(){d.remove();save()};d.appendChild(r)}
+$("#pss").appendChild(d);
+}
+function addMp(t,l,i,f){
+var d=document.createElement("div");d.className="mp";
+if($("#mps").children.length)d.style.cssText="border-top:1px dashed var(--bd);margin-top:10px;padding-top:2px";
+d.innerHTML='<div class="row"><div><label>Talão nº</label><input type="text" class="mt" inputmode="numeric"></div><div><label>Local</label><input type="text" class="ml"></div><div><label>Horário inicial</label><input type="time" class="mi"></div><div><label>Horário final</label><input type="time" class="mf"></div></div>';
+d.querySelector(".mt").value=t||"";d.querySelector(".ml").value=l||"";d.querySelector(".mi").value=i||"";d.querySelector(".mf").value=f||"";
+if($("#mps").children.length){var r=document.createElement("button");r.type="button";r.className="sm";r.textContent="Remover";r.onclick=function(){d.remove();save()};d.appendChild(r)}
+$("#mps").appendChild(d);
+}
+function bos(){return $$(".bo").map(function(d){return{n:d.querySelector(".bn").value.trim(),t:d.querySelector(".bt").value.trim()}}).filter(function(b){return b.n||b.t})}
+
+function state(){
+var s={};
+$$("[data-k]").forEach(function(e){
+var k=e.dataset.k;
+if(e.type==="radio"){if(e.checked)s[k]=e.value}
+else if(e.type==="checkbox")s[k]=e.checked;
+else s[k]=e.value;
+});
+s.bos=$$(".bo").map(function(d){return[d.querySelector(".bn").value,d.querySelector(".bt").value]});
+s.hr={};$$(".hr").forEach(function(sp){var i=sp.parentNode.querySelector("input");if(i.checked&&sp.textContent)s.hr[i.dataset.k]=sp.textContent});
+s.rbs=$$(".rb").map(function(d){var a=[];for(var i=0;i<27;i++)a.push(d.querySelector(".f"+i).value);var p=d.querySelector(".f27:checked"),q=d.querySelector(".f28:checked");a.push(p?p.value:"");a.push(q?q.value:"");a.push(d.querySelector(".f29").value);return a});
+s.trs=$$(".tr").map(function(d){var a=[];for(var i=0;i<19;i++)a.push(d.querySelector(".f"+i).value);return a});
+s.ovs=$$(".ov").map(function(d){var a=[];for(var i=0;i<25;i++)a.push(d.querySelector(".f"+i).value);return a});
+s.ocs=$$(".oc").map(function(d){var a=[];for(var i=0;i<20;i++)a.push(d.querySelector(".f"+i).value);return a});
+s.ats=$$(".au").map(function(d){return[d.querySelector(".ua").value,d.querySelector(".uc").value,d.querySelector(".ur").value]});
+s.pss=$$(".ps").map(function(d){return[d.querySelector(".pt").value,d.querySelector(".pe").value,d.querySelector(".pi").value,d.querySelector(".pf").value,d.querySelector(".pa").checked,d.querySelector(".po").checked]});
+s.mps=$$(".mp").map(function(d){return[d.querySelector(".mt").value,d.querySelector(".ml").value,d.querySelector(".mi").value,d.querySelector(".mf").value]});
+s.abs=$$(".ab").map(function(d){return[d.querySelector(".at").value,d.querySelector(".ah").value,d.querySelector(".av").value,d.querySelector(".al").value]});
+s.sig=drawn?sig.toDataURL():"";
+return s;
+}
+function updAt(){var n=$$(".au").filter(function(d){return d.querySelector(".ua").value.trim()||d.querySelector(".uc").value.trim()||d.querySelector(".ur").value.trim()}).length;$("#totAt").textContent=n}
+function save(){updAt();try{localStorage.setItem(KEY,JSON.stringify(state()))}catch(e){}}
+function load(){
+var s=null;try{s=JSON.parse(localStorage.getItem(KEY)||"null")}catch(e){}
+if(!s){addBo();addMp();addPs();addAt();addOc();addOv();addTr();addRb();$("#data").value=hoje();toggleRonda();return}
+$$("[data-k]").forEach(function(e){
+var k=e.dataset.k;
+if(e.type==="radio")e.checked=(s[k]===e.value);
+else if(e.type==="checkbox")e.checked=!!s[k];
+else if(s[k]!=null)e.value=s[k];
+});
+if(!$("#data").value)$("#data").value=hoje();
+$$(".hr").forEach(function(sp){var i=sp.parentNode.querySelector("input");sp.textContent=(s.hr&&s.hr[i.dataset.k]&&i.checked)?s.hr[i.dataset.k]:""});
+(s.bos&&s.bos.length?s.bos:[["",""]]).forEach(function(b){addBo(b[0],b[1])});
+(s.abs||[]).forEach(function(a){addAb(a[0],a[1],a[2],a[3])});
+(s.mps&&s.mps.length?s.mps:[["","","",""]]).forEach(function(m){addMp(m[0],m[1],m[2],m[3])});
+(s.pss&&s.pss.length?s.pss:[["","","","",false,false]]).forEach(function(p){addPs(p[0],p[1],p[2],p[3],p[4],p[5])});
+(s.ats&&s.ats.length?s.ats:[["","",""]]).forEach(function(u){addAt(u[0],u[1],u[2])});
+(s.ocs&&s.ocs.length?s.ocs:[[]]).forEach(function(o){addOc(o)});
+(s.ovs&&s.ovs.length?s.ovs:[[]]).forEach(function(o){addOv(o)});
+(s.trs&&s.trs.length?s.trs:[[]]).forEach(function(o){addTr(o)});
+(s.rbs&&s.rbs.length?s.rbs:[[]]).forEach(function(o){addRb(o)});
+if(s.sig){var im=new Image();im.onload=function(){ctx.drawImage(im,0,0,sig.clientWidth,sig.clientHeight);drawn=true};im.src=s.sig}
+toggleRonda();updAt();
+}
+function toggleRonda(){var v=($$('input[name=ronda]:checked')[0]||{}).value;$("#rondaBox").classList.toggle("hide",v!=="Novidades")}
+
+function nh(e){var l=e.parentNode,h=l.querySelector(".hr").textContent;return l.textContent.replace(h,"").trim()+(h?" ("+h+")":"")}
+function texto(){
+var s=state(),L=[],v=function(x){return(x||"").toString().trim()};
+L.push("RESUMO DE PLANTÃO");
+L.push("Data: "+fmtData(s.data));
+L.push("");
+L.push("1. RONDA AOS POSTOS");
+L.push(v(s.ronda)||"—");
+if(s.ronda==="Novidades"&&v(s.rondaDesc))L.push(v(s.rondaDesc));
+L.push("");
+L.push("2. VIATURA E ABASTECIMENTO");
+L.push("Viatura em operação: "+(s.viatura?"Sim":"Não"));
+L.push("Prefixo da VTR: "+(v(s.prefixo)||"—"));
+L.push("Talão nº: "+(v(s.talaoAb)||"—")+" | Horário: "+(v(s.horaAb)||"—")+" | Vale nº: "+(v(s.vale)||"—")+" | Litros: "+(v(s.litros)||"—"));
+(s.abs||[]).forEach(function(a){if(a[0]||a[1]||a[2]||a[3])L.push("Talão nº: "+(a[0]||"—")+" | Horário: "+(a[1]||"—")+" | Vale nº: "+(a[2]||"—")+" | Litros: "+(a[3]||"—"))});
+L.push("");
+L.push("3. AUSÊNCIA NO PLANTÃO");L.push(v(s.ausencia)||"—");L.push("");
+L.push("4. REMANEJAMENTO DE SERVIDOR");L.push(v(s.remanej)||"—");L.push("");
+L.push("5. PERTURBAÇÃO DO SOSSEGO");
+var ps=s.pss.filter(function(p){return p[0]||p[1]||p[2]||p[3]||p[4]||p[5]});
+if(!ps.length)L.push("—");ps.forEach(function(p){L.push("Talão nº: "+(p[0]||"—")+" | Endereço: "+(p[1]||"—")+" | Início: "+(p[2]||"—")+" | Fim: "+(p[3]||"—")+" | Autuado: "+(p[4]?"Sim":"Não")+" | Orientado: "+(p[5]?"Sim":"Não"))});
+L.push("Total: "+ps.length+" atendimento(s) | "+ps.filter(function(p){return p[4]}).length+" autuado(s) | "+ps.filter(function(p){return p[5]}).length+" orientado(s)");L.push("");
+L.push("6. B.O. GCM");
+var b=bos();if(!b.length)L.push("—");b.forEach(function(x){L.push("Natureza: "+(x.n||"—")+" | Talão nº: "+(x.t||"—"))});L.push("");
+L.push("7. AUTUAÇÃO DE TRÂNSITO");
+var us=s.ats.filter(function(u){return u[0]||u[1]||u[2]});
+if(!us.length)L.push("—");us.forEach(function(u){L.push("AIT nº: "+(u[0]||"—")+" | Código: "+(u[1]||"—")+" | Artigo: "+(u[2]||"—"))});
+L.push("Total: "+us.length+" autuação(ões)");L.push("");
+L.push("8. SOLICITAÇÃO MINISTÉRIO PÚBLICO");
+var ms=s.mps.filter(function(m){return m[0]||m[1]||m[2]||m[3]});
+if(!ms.length)L.push("—");ms.forEach(function(m){L.push("Talão nº: "+(m[0]||"—")+" | Local: "+(m[1]||"—")+" | Início: "+(m[2]||"—")+" | Fim: "+(m[3]||"—"))});L.push("");
+L.push("9. RONDA UNIDADE BÁSICA SAÚDE");
+var ub=$$(".ubs input:checked").map(nh);
+L.push(ub.length?"Ronda realizada em: "+ub.join(", "):"—");L.push("");
+L.push("10. RONDA EMEF E EMEIEF");
+var ec=$$(".esc input:checked").map(nh);
+L.push(ec.length?"Ronda realizada em: "+ec.join(", "):"—");L.push("");
+L.push("11. RONDA CRECHES");
+var cr=$$(".crc input:checked").map(nh);
+L.push(cr.length?"Ronda realizada em: "+cr.join(", "):"—");L.push("");
+L.push("12. OCORRÊNCIA DE TRÂNSITO SEM VÍTIMA");
+var oc=s.ocs.filter(function(o){return o.some(function(x){return x&&x.trim()})});
+if(!oc.length)L.push("—");
+oc.forEach(function(o,i){var g=function(k){return(o[k]&&o[k].trim())||"—"};
+L.push("Talão nº: "+g(16)+" | Início: "+g(17)+" | Fim: "+g(18));
+L.push("Envolvido "+(i+1)+": "+g(0));
+L.push("Endereço residencial: "+g(19));
+L.push("CPF: "+g(1)+" | RG: "+g(2)+" | CNH: "+g(3));
+L.push("Pai: "+g(4)+" | Mãe: "+g(5));
+L.push("Nascimento: "+(o[6]?fmtData(o[6]):"—")+" | Gênero: "+g(7));
+L.push("Veículo - Placa: "+g(8)+" | Modelo: "+g(9)+" | Marca: "+g(10)+" | Categoria: "+g(11));
+L.push("Renavam: "+g(12)+" | Chassi: "+g(13));
+L.push("Local dos fatos: "+g(14));
+L.push("Observação: "+g(15))});
+L.push("");
+L.push("13. OCORRÊNCIA DE TRÂNSITO COM VÍTIMA");
+var ov=s.ovs.filter(function(o){return o.some(function(x){return x&&x.trim()})});
+if(!ov.length)L.push("—");
+ov.forEach(function(o,i){var g=function(k){return(o[k]&&o[k].trim())||"—"};
+L.push("Talão nº: "+g(21)+" | Início: "+g(22)+" | Fim: "+g(23));
+L.push("Envolvido "+(i+1)+": "+g(0));
+L.push("Endereço residencial: "+g(24));
+L.push("CPF: "+g(1)+" | RG: "+g(2)+" | CNH: "+g(3));
+L.push("Pai: "+g(4)+" | Mãe: "+g(5));
+L.push("Nascimento: "+(o[6]?fmtData(o[6]):"—")+" | Gênero: "+g(7));
+L.push("Veículo - Placa: "+g(8)+" | Modelo: "+g(9)+" | Marca: "+g(10)+" | Categoria: "+g(11));
+L.push("Renavam: "+g(12)+" | Chassi: "+g(13));
+L.push("Local dos fatos: "+g(20));
+L.push("Observação: "+g(14));
+L.push("Ambulância: "+g(15)+" | Socorrista: "+g(16));
+L.push("Chegada: "+g(17)+" | Saída: "+g(18));
+L.push("Destino da vítima: "+g(19))});
+L.push("");
+L.push("14. OCORRÊNCIA COM TRANSEUNTE");
+var tq=s.trs.filter(function(o){return o.some(function(x){return x&&x.trim()})});
+if(!tq.length)L.push("—");
+tq.forEach(function(o,i){var g=function(k){return(o[k]&&o[k].trim())||"—"};
+L.push("Talão nº: "+g(0)+" | Início: "+g(1)+" | Fim: "+g(2));
+L.push("Envolvido "+(i+1)+": "+g(3));
+L.push("Endereço residencial: "+g(4));
+L.push("CPF: "+g(5)+" | RG: "+g(6)+" | CNH: "+g(7));
+L.push("Pai: "+g(8)+" | Mãe: "+g(9));
+L.push("Nascimento: "+(o[10]?fmtData(o[10]):"—")+" | Gênero: "+g(11));
+L.push("Local dos fatos: "+g(12));
+L.push("Ambulância: "+g(13)+" | Socorrista: "+g(14));
+L.push("Chegada: "+g(15)+" | Saída: "+g(16));
+L.push("Destino da vítima: "+g(17));
+L.push("Observação: "+g(18))});
+L.push("");
+L.push("15. REPASSE BOLETIM DE OCORRÊNCIA");
+var rq=s.rbs.map(function(o){o=o.slice();if(o[29]===MODELO)o[29]="";return o}).filter(function(o){return o.some(function(x){return x&&x.trim()})});
+if(!rq.length)L.push("—");
+rq.forEach(function(o,i){var g=function(k){return(o[k]&&o[k].trim())||"—"};
+L.push("Repasse "+(i+1)+" - Talão nº: "+g(0)+" | Início: "+g(1)+" | Fim: "+g(2));
+L.push("Nome: "+g(3));
+L.push("Endereço residencial: "+g(4));
+L.push("RG: "+g(5)+" | CPF: "+g(6)+" | CNH: "+g(7));
+L.push("Pai: "+g(8)+" | Mãe: "+g(9));
+L.push("Nascimento: "+(o[10]?fmtData(o[10]):"—")+" | Gênero: "+g(11));
+L.push("Veículo - Placa: "+g(12)+" | Modelo: "+g(13)+" | Marca: "+g(14)+" | Categoria: "+g(15));
+L.push("Renavam: "+g(16)+" | Chassi: "+g(17));
+L.push("Local dos fatos: "+g(18));
+L.push("Viatura inicial: "+g(19)+" | Motorista: "+g(20)+" | Encarregado: "+g(21));
+L.push("Ambulância: "+g(22)+" | Socorrista: "+g(23));
+L.push("Chegada: "+g(24)+" | Saída: "+g(25)+" | Destino: "+g(26));
+L.push("Local: "+g(27)+" | Perícia: "+g(28));
+L.push("Histórico: "+g(29))});
+L.push("");
+L.push("Responsável pelo plantão: "+(v(s.resp)||"—"));
+return L.join("\n");
+}
+
+function msg(t){var m=$("#msg");m.textContent=t;setTimeout(function(){m.textContent=""},3000)}
+function mostrar(t){var o=$("#out");o.style.display="block";o.value=t;o.focus();o.select()}
+
+// assinatura
+function initSig(){
+var r=window.devicePixelRatio||1;
+sig.width=sig.clientWidth*r;sig.height=sig.clientHeight*r;
+ctx=sig.getContext("2d");ctx.scale(r,r);ctx.lineWidth=2.2;ctx.lineCap="round";ctx.lineJoin="round";
+ctx.strokeStyle=getComputedStyle(document.body).color;
+var down=false;
+function pos(e){var b=sig.getBoundingClientRect();return[e.clientX-b.left,e.clientY-b.top]}
+sig.addEventListener("pointerdown",function(e){down=true;sig.setPointerCapture(e.pointerId);var p=pos(e);ctx.beginPath();ctx.moveTo(p[0],p[1]);ctx.lineTo(p[0]+.1,p[1]+.1);ctx.stroke();drawn=true;e.preventDefault()});
+sig.addEventListener("pointermove",function(e){if(!down)return;var p=pos(e);ctx.lineTo(p[0],p[1]);ctx.stroke();ctx.beginPath();ctx.moveTo(p[0],p[1])});
+function up(){if(down){down=false;save()}}
+sig.addEventListener("pointerup",up);sig.addEventListener("pointercancel",up);
+}
+
+$$(".ubs,.esc,.crc").forEach(function(l){var sp=document.createElement("span");sp.className="hr";l.appendChild(sp)});
+initSig();load();
+try{var ic=document.createElement("canvas");ic.width=ic.height=180;var x=ic.getContext("2d");x.fillStyle="#1d4ed8";x.fillRect(0,0,180,180);x.font="96px sans-serif";x.textAlign="center";x.textBaseline="middle";x.fillText("📋",90,95);var lk=document.createElement("link");lk.rel="apple-touch-icon";lk.href=ic.toDataURL("image/png");document.head.appendChild(lk)}catch(e){}
+document.addEventListener("input",save);
+document.addEventListener("change",function(e){if(e.target.name==="ronda")toggleRonda();var l=e.target.parentNode,sp=(l&&l.classList&&(l.classList.contains("ubs")||l.classList.contains("esc")||l.classList.contains("crc")))?l.querySelector(".hr"):null;if(sp){if(e.target.checked){var n=new Date();sp.textContent=("0"+n.getHours()).slice(-2)+":"+("0"+n.getMinutes()).slice(-2)}else sp.textContent=""}save()});
+$("#addBo").onclick=function(){addBo();save()};
+$("#addAb").onclick=function(){addAb();save()};
+$("#addMp").onclick=function(){addMp();save()};
+$("#addPs").onclick=function(){addPs();save()};
+$("#addAt").onclick=function(){addAt();save()};
+$("#addOc").onclick=function(){addOc();save()};
+$("#addOv").onclick=function(){addOv();save()};
+$("#addTr").onclick=function(){addTr();save()};
+$("#addRb").onclick=function(){addRb();save()};
+$("#clrSig").onclick=function(){ctx.clearRect(0,0,sig.clientWidth,sig.clientHeight);drawn=false;save()};
+$("#clear").onclick=function(){
+if(!confirm("Limpar todos os campos?"))return;
+try{localStorage.removeItem(KEY)}catch(e){}
+$$("[data-k]").forEach(function(e){if(e.type==="radio"||e.type==="checkbox")e.checked=false;else e.value=""});$$(".hr").forEach(function(sp){sp.textContent=""});
+bosEl.innerHTML="";addBo();$("#abs").innerHTML="";$("#mps").innerHTML="";addMp();$("#pss").innerHTML="";addPs();$("#ats").innerHTML="";addAt();updAt();$("#ocs").innerHTML="";addOc();$("#ovs").innerHTML="";addOv();$("#trs").innerHTML="";addTr();$("#rbs").innerHTML="";addRb();ctx.clearRect(0,0,sig.clientWidth,sig.clientHeight);drawn=false;
+$("#data").value=hoje();$("#out").style.display="none";toggleRonda();
+};
+$("#copy").onclick=function(){
+var t=texto();
+if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){msg("Resumo copiado!")},function(){mostrar(t);msg("Selecione e copie o texto abaixo")})}
+else{mostrar(t);msg("Selecione e copie o texto abaixo")}
+};
+function pdfBlob(){
+var J=window.jspdf&&window.jspdf.jsPDF;if(!J)return null;
+var doc=new J({unit:"mm",format:"a4"}),M=15,mw=180,y=M;
+function need(h){if(y+h>285){doc.addPage();y=M}}
+doc.setTextColor(20);
+texto().replace(/\u2014/g,"-").split("\n").forEach(function(l,i){
+if(i===0){doc.setFont("helvetica","bold");doc.setFontSize(16);doc.text(l,M,y+4);y+=11;return}
+if(!l.trim()){y+=1.5;return}
+if(/^\d+\. /.test(l)&&l===l.toUpperCase()){need(14);y+=3;doc.setFillColor(228,232,240);doc.rect(M,y-4.5,mw,7,"F");doc.setFont("helvetica","bold");doc.setFontSize(11);doc.text(l,M+2,y);y+=7;return}
+doc.setFont("helvetica","normal");doc.setFontSize(10.5);
+doc.splitTextToSize(l,mw-4).forEach(function(x){need(5.5);doc.text(x,M+2,y);y+=5.5});
+});
+if(drawn){
+var t=document.createElement("canvas");t.width=sig.width;t.height=sig.height;var c=t.getContext("2d");c.drawImage(sig,0,0);c.globalCompositeOperation="source-in";c.fillStyle="#000";c.fillRect(0,0,t.width,t.height);
+need(48);y+=4;doc.setFont("helvetica","bold");doc.setFontSize(10);doc.text("Assinatura:",M+2,y);y+=2;
+var w=70,h=w*t.height/t.width;doc.addImage(t.toDataURL("image/png"),"PNG",M+2,y,w,h);y+=h+1;doc.line(M+2,y,M+2+w,y);
+}
+var np=doc.getNumberOfPages();
+for(var p=1;p<=np;p++){doc.setPage(p);doc.setFont("helvetica","normal");doc.setFontSize(8);doc.setTextColor(110);doc.text("Gerado em "+new Date().toLocaleString("pt-BR")+" - pág. "+p+"/"+np,M,292)}
+return doc.output("blob");
+}
+$("#share").onclick=function(){
+var b=pdfBlob();
+if(!b){msg("Não foi possível gerar o PDF. Use Copiar texto.");return}
+var nome="Resumo-de-Plantao-"+($("#data").value||hoje()).split("-").reverse().join("-")+".pdf";
+function salvar(){
+var url=URL.createObjectURL(b), a=document.createElement("a");
+a.href=url;a.download=nome;document.body.appendChild(a);a.click();a.remove();
+setTimeout(function(){URL.revokeObjectURL(url)},1500);msg("PDF baixado. Abra o arquivo para conferir e enviar.");
+}
+try{
+var f=new File([b],nome,{type:"application/pdf"});
+if(navigator.canShare&&navigator.canShare({files:[f]})){navigator.share({files:[f],title:"Resumo de Plantão"}).catch(function(e){if(!e||e.name!=="AbortError")salvar()});return}
+}catch(e){}
+salvar();
+};
+})();
+</script>
+</body>
+</html>
+
+
+
