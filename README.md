@@ -1,12 +1,12 @@
 # Resumo de Plantão — demonstração
 
-Protótipo estático para preencher um resumo de plantão e gerar um PDF no navegador.
+Protótipo estático de formulário para registrar atividades de plantão e gerar um PDF no navegador. A versão visual usa um ícone de prancheta em `favicon.svg`.
 
-## Publicação
+## Publicação no GitHub Pages
 
-O GitHub Pages serve o `index.html` como site público. Acesse **Settings → Pages**, escolha a branch `main` e a pasta `/ (root)` para habilitar o endereço do site.
+No repositório, abra **Settings → Pages** e selecione `main` e `/(root)` em **Deploy from a branch**.
 
 ## Privacidade e uso
 
-Esta demonstração não possui login nem backend. O preenchimento é guardado apenas no `localStorage` do navegador e o PDF é gerado no aparelho. O código HTML/JavaScript é público. Não inserir dados reais de cidadãos, documentos ou ocorrências. Para uso oficial, solicitar aprovação da Prefeitura e da TI, com autenticação, permissões, retenção e hospedagem adequadas.
+Esta demonstração é pública e não possui login nem backend. Os dados ficam apenas no armazenamento local do navegador, e o PDF é gerado no aparelho. Não inserir dados reais de cidadãos, documentos ou ocorrências. Para uso oficial, solicitar aprovação da Prefeitura e da TI, com autenticação, permissões, retenção e hospedagem adequadas.
 
