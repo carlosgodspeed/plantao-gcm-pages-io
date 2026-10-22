@@ -90,19 +90,33 @@ main>section input:focus,main>section select:focus,main>section textarea:focus{b
 @media(min-width:900px){main>section{grid-column:1/-1!important}}
 @media print{body{background:#fff;color:#111}.status-wrap{display:none}header,main{max-width:none;padding:10px}section{box-shadow:none;break-inside:avoid}.bar{display:none}}
 
-.brand-head{display:flex;align-items:center;gap:18px}.gcm-logo{display:block;width:104px;height:104px;object-fit:contain;flex:0 0 auto;background:#fff;border:1px solid var(--bd);border-radius:12px;padding:4px}.brand-copy{min-width:0}.brand-kicker{display:block;color:var(--ac);font-size:11px;letter-spacing:.14em;font-weight:800;margin:0 0 7px}header:before{display:none}.storage-note{display:flex;align-items:flex-start;gap:10px;margin:0 0 14px;padding:12px 14px;border:1px solid var(--bd);border-left:4px solid var(--ac);border-radius:11px;background:var(--card);color:var(--mut);font-size:13px}.storage-note strong{flex:0 0 auto;color:var(--ac)}.row>*,.row3>*{min-width:0}input,select,textarea{min-width:0;max-width:100%}@media(max-width:640px){header{padding:18px 12px 14px}.brand-head{align-items:flex-start;gap:12px}.gcm-logo{width:74px;height:74px;border-radius:10px;padding:3px}.brand-kicker{font-size:9px;letter-spacing:.09em;margin-bottom:5px}h1{font-size:clamp(22px,6vw,29px)}header p{font-size:13px}.status-wrap{margin-left:10px;margin-right:10px}.storage-note{display:block;padding:11px 12px;font-size:12px}.storage-note strong{display:block;margin:0 0 3px}main{padding-left:10px;padding-right:10px}section{padding:15px 12px}.row,.row3{gap:8px}.bar{gap:5px;padding-left:7px;padding-right:7px}.bar button{min-width:0;white-space:normal;overflow-wrap:anywhere;line-height:1.2;padding:8px 3px;font-size:11px}}
-@media(max-width:380px){.row,.row3{grid-template-columns:minmax(0,1fr)}.brand-head{gap:9px}.gcm-logo{width:62px;height:62px}.brand-kicker{font-size:8px;letter-spacing:.07em}.status-count{width:100%;margin-left:17px}.bar button{font-size:10px}}</style>
+
+main>section>h2[data-tg]{cursor:pointer;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent}
+main>section>h2 .tgb{order:1;flex:0 0 auto;min-height:32px;padding:4px 12px;font-size:12px;font-weight:700;letter-spacing:0;text-transform:none;border-radius:99px;border:1px solid var(--bd);background:var(--bg);color:var(--tx);cursor:pointer}
+main>section.closed>h2{margin-bottom:0}
+main>section.closed>*:not(h2){display:none!important}
+.brand-head{display:flex;align-items:center;gap:18px}
+.gcm-logo{display:block;width:104px;height:104px;object-fit:contain;flex:0 0 auto;background:#fff;border:1px solid var(--bd);border-radius:12px;padding:4px}
+.brand-copy{min-width:0}
+.brand-kicker{display:block;color:var(--ac);font-size:11px;letter-spacing:.14em;font-weight:800;margin:0 0 7px}
+header:before{display:none}
+.storage-note{display:flex;align-items:flex-start;gap:10px;margin:0 0 14px;padding:12px 14px;border:1px solid var(--bd);border-left:4px solid var(--ac);border-radius:11px;background:var(--card);color:var(--mut);font-size:13px}
+.storage-note strong{flex:0 0 auto;color:var(--ac)}
+.row>*,.row3>*{min-width:0}
+input,select,textarea{min-width:0;max-width:100%}
+@media(max-width:640px){header{padding:18px 12px 14px}.brand-head{align-items:flex-start;gap:12px}.gcm-logo{width:74px;height:74px;border-radius:10px;padding:3px}.brand-kicker{font-size:9px;letter-spacing:.09em;margin-bottom:5px}h1{font-size:clamp(22px,6vw,29px)}header p{font-size:13px}.status-wrap{margin-left:10px;margin-right:10px}.storage-note{display:block;padding:11px 12px;font-size:12px}.storage-note strong{display:block;margin:0 0 3px}main{padding-left:10px;padding-right:10px}section{padding:15px 12px}.row,.row3{gap:8px}.bar{gap:5px;padding-left:7px;padding-right:7px}.bar button{min-width:0;white-space:normal;overflow-wrap:anywhere;line-height:1.2;padding:8px 3px;font-size:11px}}
+@media(max-width:380px){.row,.row3{grid-template-columns:minmax(0,1fr)}.brand-head{gap:9px}.gcm-logo{width:62px;height:62px}.brand-kicker{font-size:8px;letter-spacing:.07em}.status-count{width:100%;margin-left:17px}.bar button{font-size:10px}}
+</style>
 </head>
 <body>
 <header>
-<div class="brand-head"><img class="gcm-logo" src="logo.svg" alt="Brasão da Guarda Civil Municipal de Mongaguá"><div class="brand-copy"><span class="brand-kicker">GUARDA CIVIL MUNICIPAL • MONGAGUÁ</span><h1>Relatório de Plantão</h1><p>Registre as atividades do plantão de forma clara, objetiva e padronizada. Preencha os campos aplicáveis e confira as informações antes de gerar o relatório. Os dados são salvos automaticamente neste dispositivo.</p></div></div>
+<div class="brand-head"><img class="gcm-logo" src="logo.svg" alt="Brasão da Guarda Civil Municipal"><div class="brand-copy"><span class="brand-kicker">Guarda Civil Municipal</span><h1>Relatório de Plantão</h1><p>Registre as atividades do plantão de forma clara, objetiva e padronizada. Preencha os campos aplicáveis e confira as informações antes de gerar o relatório. Os dados são salvos automaticamente neste dispositivo.</p></div></div>
 </header>
 <div class="status-wrap" aria-live="polite">
   <div class="status-line"><span class="status-dot" aria-hidden="true"></span><span id="saveStatus">Salvamento automático ativado</span><span class="status-count" id="completionCount">0 campos preenchidos</span></div>
   <div class="progress-track" role="progressbar" aria-label="Preenchimento do formulário" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressTrack"><span id="progressFill"></span></div>
 </div>
-<main>
-<div class="storage-note" role="note"><strong>Salvamento local</strong><span>Os dados ficam salvos somente neste navegador e não são sincronizados. Baixe o PDF ao concluir para guardar uma cópia. Se limpar os dados do navegador ou trocar de aparelho, o preenchimento pode ser perdido.</span></div>
+<div class="storage-note" role="note"><strong>Salvamento local</strong><span>Os dados ficam salvos somente neste navegador e não são sincronizados. Baixe o PDF ao concluir para guardar uma cópia. Se limpar os dados do navegador ou trocar de aparelho, o preenchimento pode ser perdido.</span></div><main>
 <section>
 <label for="data" style="margin-top:0">Data</label>
 <input type="date" id="data" data-k="data">
@@ -117,6 +131,9 @@ main>section input:focus,main>section select:focus,main>section textarea:focus{b
 <div id="rondaBox" class="hide">
 <label for="rondaDesc">Descreva as alterações, irregularidades ou ocorrências identificadas</label>
 <textarea id="rondaDesc" data-k="rondaDesc"></textarea>
+<div id="rondaRegs"></div>
+<button type="button" class="sm" id="addRondaReg">+ Adicionar novo registro</button>
+<div id="rondaFotos" aria-label="Fotos da ronda nos postos"></div>
 </div>
 </section>
 
@@ -215,6 +232,7 @@ main>section input:focus,main>section select:focus,main>section textarea:focus{b
 <label class="esc"><input type="checkbox" data-k="esc20"> EMEI Branca de Neve</label>
 <label class="esc"><input type="checkbox" data-k="esc21"> EMEI Pingo de Gente</label>
 <label class="esc"><input type="checkbox" data-k="esc22"> EMEI Tio Patinhas</label>
+<label class="esc"><input type="checkbox" data-k="esc23"> EMEI Sininho</label>
 </section>
 
 <section>
@@ -394,6 +412,8 @@ fin.onchange=function(){Array.prototype.forEach.call(fin.files,function(file){va
 if($("#ars").children.length){var r=document.createElement("button");r.type="button";r.className="sm";r.textContent="Remover abordagem";r.onclick=function(){d.remove();save()};d.appendChild(r)}
 $("#ars").appendChild(d);
 }
+function renumRR(){$$(".rr").forEach(function(d,i){d.querySelector("label").textContent="Registro "+(i+2)})}
+function addRondaReg(val){var d=document.createElement("div");d.className="rr";d.innerHTML='<label>Registro</label><textarea></textarea>';d.querySelector("textarea").value=val||"";var r=document.createElement("button");r.type="button";r.className="sm";r.textContent="Remover registro";r.onclick=function(){d.remove();renumRR();save()};d.appendChild(r);$("#rondaRegs").appendChild(d);renumRR()}
 function fotosDe(d){var p=[];d.querySelectorAll(".fotos img").forEach(function(i){p.push(i.src)});return p}
 function nv(x){return typeof x==="string"?x.trim():(x&&x.length)}
 function initFotos(d,imgs){
@@ -452,13 +472,13 @@ d.querySelector(".ua").value=a||"";d.querySelector(".uc").value=c||"";d.querySel
 if($("#ats").children.length){var b=document.createElement("button");b.type="button";b.className="sm";b.textContent="Remover";b.onclick=function(){d.remove();save()};d.appendChild(b)}
 $("#ats").appendChild(d);
 }
-function addPs(t,e,i,f,au,or,nu){
+function addPs(t,e,i,f,au,or,nu,db){
 var d=document.createElement("div");d.className="ps";
 if($("#pss").children.length)d.style.cssText="border-top:1px dashed var(--bd);margin-top:10px;padding-top:2px";
-d.innerHTML='<div class="row"><div><label>Talão nº</label><input type="text" class="pt" inputmode="numeric"></div><div><label>Endereço</label><input type="text" class="pe"></div><div><label>Horário inicial</label><input type="time" class="pi"></div><div><label>Horário final</label><input type="time" class="pf"></div></div><div class="row" style="margin-top:12px"><label class="chk"><input type="checkbox" class="pa"> Autuado</label><label class="chk"><input type="checkbox" class="po"> Orientado</label></div><div class="pnum hide"><label>Nº da autuação</label><input type="text" class="pn" inputmode="numeric"></div>';
-d.querySelector(".pt").value=t||"";d.querySelector(".pe").value=e||"";d.querySelector(".pi").value=i||"";d.querySelector(".pf").value=f||"";d.querySelector(".pa").checked=!!au;d.querySelector(".po").checked=!!or;d.querySelector(".pn").value=nu||"";
+d.innerHTML='<div class="row"><div><label>Talão nº</label><input type="text" class="pt" inputmode="numeric"></div><div><label>Endereço</label><input type="text" class="pe"></div><div><label>Horário inicial</label><input type="time" class="pi"></div><div><label>Horário final</label><input type="time" class="pf"></div></div><div class="row" style="margin-top:12px"><label class="chk"><input type="checkbox" class="pa"> Autuado</label><label class="chk"><input type="checkbox" class="po"> Orientado</label></div><div class="pnum hide"><div class="row"><div><label>Nº da autuação</label><input type="text" class="pn" inputmode="numeric"></div><div><label>Decibéis (dB)</label><input type="text" class="pdb" inputmode="decimal"></div></div></div>';
+d.querySelector(".pt").value=t||"";d.querySelector(".pe").value=e||"";d.querySelector(".pi").value=i||"";d.querySelector(".pf").value=f||"";d.querySelector(".pa").checked=!!au;d.querySelector(".po").checked=!!or;d.querySelector(".pn").value=nu||"";d.querySelector(".pdb").value=db||"";
 d.querySelector(".pnum").classList.toggle("hide",!au);
-d.querySelector(".pa").addEventListener("change",function(){var on=d.querySelector(".pa").checked;d.querySelector(".pnum").classList.toggle("hide",!on);if(!on)d.querySelector(".pn").value=""});
+d.querySelector(".pa").addEventListener("change",function(){var on=d.querySelector(".pa").checked;d.querySelector(".pnum").classList.toggle("hide",!on);if(!on){d.querySelector(".pn").value="";d.querySelector(".pdb").value=""}});
 if($("#pss").children.length){var r=document.createElement("button");r.type="button";r.className="sm";r.textContent="Remover";r.onclick=function(){d.remove();save()};d.appendChild(r)}
 $("#pss").appendChild(d);
 }
@@ -474,14 +494,14 @@ $("#mps").appendChild(d);
 }
 function addMaria(v){
  v=v||[];if(Array.isArray(v[9])){v[19]=v[9];for(var mi=9;mi<=18;mi++)v[mi]="";}var d=document.createElement("div");d.className="maria";
- d.innerHTML='<div class="tt">Ocorrência</div><div class="row"><div><label>Data</label><input class="md" type="date"></div><input class="mh" type="hidden" value=""></div><div class="row"><div><label>Talão</label><input class="mtalao" type="text"></div><div><label>Horário inicial</label><input class="mhini" type="time"></div><div><label>Horário final</label><input class="mhfim" type="time"></div></div><div class="tt2">Identificação</div><label>Nome</label><input class="mnome" type="text" autocomplete="name"><div class="row"><div><label>RG</label><input class="mrg" type="text"></div><div><label>CPF</label><input class="mcpf" type="text" inputmode="numeric"></div><div><label>CNH</label><input class="mcnh" type="text"></div><div><label>Data de nascimento</label><input class="mnasc" type="date"></div></div><label>Endereço residencial</label><input class="mend" type="text" autocomplete="street-address"><label>Telefone</label><input class="mtel" type="tel" autocomplete="tel"><div class="tt2">Dados da ocorrência</div><label>Local da ocorrência</label><input class="mloc" type="text" placeholder="Endereço ou referência necessária"><label>Tipo de atendimento</label><select class="mtipo"><option value="">Selecione</option><option>Atendimento de ocorrência</option><option>Averiguação</option><option>Acompanhamento de vítima</option><option>Apoio a outro órgão</option><option>Encaminhamento</option><option>Outro</option></select><label>Relato objetivo dos fatos</label><textarea class="mrel" placeholder="Descreva os fatos de forma clara e cronológica, distinguindo informações relatadas de fatos constatados."></textarea><label>Providências adotadas</label><textarea class="mprov" placeholder="Registre acionamentos, orientações, encaminhamentos e demais providências efetivamente realizadas."></textarea><div class="row"><div><label>Situação do atendimento</label><select class="msit"><option>Em andamento</option><option>Concluído</option><option>Encaminhado</option><option>Pendente de providências</option></select></div><div><label>Nº do boletim/protocolo (se houver)</label><input class="mprot" type="text"></div></div><label>Pendências e observações</label><textarea class="mpend" placeholder="Providências pendentes ou observações necessárias."></textarea>';
+ d.innerHTML='<div class="tt">Ocorrência</div><div class="row"><div><label>Data</label><input class="md" type="date"></div><input class="mh" type="hidden" value=""></div><div class="row"><div><label>Talão</label><input class="mtalao" type="text"></div><div><label>Horário inicial</label><input class="mhini" type="time"></div><div><label>Horário final</label><input class="mhfim" type="time"></div></div><div class="tt2">Identificação</div><select class="mqual"><option value="">Selecione: Vítima, Autor, Suspeito ou Averiguado</option><option>Vítima</option><option>Autor</option><option>Suspeito</option><option>Averiguado</option></select><label>Nome</label><input class="mnome" type="text" autocomplete="name"><div class="row"><div><label>RG</label><input class="mrg" type="text"></div><div><label>CPF</label><input class="mcpf" type="text" inputmode="numeric"></div><div><label>CNH</label><input class="mcnh" type="text"></div><div><label>Data de nascimento</label><input class="mnasc" type="date"></div></div><label>Endereço residencial</label><input class="mend" type="text" autocomplete="street-address"><label>Telefone</label><input class="mtel" type="tel" autocomplete="tel"><div class="tt2">Dados da ocorrência</div><label>Local da ocorrência</label><input class="mloc" type="text" placeholder="Endereço ou referência necessária"><label>Tipo de atendimento</label><select class="mtipo"><option value="">Selecione</option><option>Atendimento de ocorrência</option><option>Averiguação</option><option>Acompanhamento de vítima</option><option>Apoio a outro órgão</option><option>Encaminhamento</option><option>Outro</option></select><label>Relato objetivo dos fatos</label><textarea class="mrel" placeholder="Descreva os fatos de forma clara e cronológica, distinguindo informações relatadas de fatos constatados."></textarea><label>Providências adotadas</label><textarea class="mprov" placeholder="Registre acionamentos, orientações, encaminhamentos e demais providências efetivamente realizadas."></textarea><div class="row"><div><label>Situação do atendimento</label><select class="msit"><option>Em andamento</option><option>Concluído</option><option>Encaminhado</option><option>Pendente de providências</option></select></div><div><label>Nº do boletim/protocolo (se houver)</label><input class="mprot" type="text"></div></div><label>Pendências e observações</label><textarea class="mpend" placeholder="Providências pendentes ou observações necessárias."></textarea>';
  var keys=["md","mh","mloc","mtipo","mrel","mprov","msit","mprot","mpend","mtalao","mhini","mhfim","mnome","mrg","mcpf","mcnh","mnasc","mend","mtel"];
  keys.forEach(function(k,i){var e=d.querySelector("."+k);if(e)e.value=v[i]|| (k==="msit"?"Em andamento":"")});
- initFotos(d,v[19]||[]);
+ initFotos(d,v[19]||[]);d.querySelector(".mqual").value=v[20]||"";
  var rem=document.createElement("button");rem.type="button";rem.className="sm mrem";rem.textContent="Remover ocorrência";rem.onclick=function(){d.remove();save()};d.appendChild(rem);
  $("#marias").appendChild(d);
 }
-function mariaState(){return $$(".maria").map(function(d){var a=["md","mh","mloc","mtipo","mrel","mprov","msit","mprot","mpend","mtalao","mhini","mhfim","mnome","mrg","mcpf","mcnh","mnasc","mend","mtel"].map(function(k){return d.querySelector("."+k).value});a.push(fotosDe(d));return a})}
+function mariaState(){return $$(".maria").map(function(d){var a=["md","mh","mloc","mtipo","mrel","mprov","msit","mprot","mpend","mtalao","mhini","mhfim","mnome","mrg","mcpf","mcnh","mnasc","mend","mtel"].map(function(k){return d.querySelector("."+k).value});a.push(fotosDe(d));a.push(d.querySelector(".mqual").value);return a})}
 function bos(){return $$(".bo").map(function(d){return{n:d.querySelector(".bn").value.trim(),t:d.querySelector(".bt").value.trim()}}).filter(function(b){return b.n||b.t})}
 
 function state(){
@@ -494,7 +514,7 @@ else s[k]=e.value;
 });
 s.bos=$$(".bo").map(function(d){return[d.querySelector(".bn").value,d.querySelector(".bt").value]});
 s.marias=mariaState();
-s.viaturaFotos=fotosDe($("#viaturaFotos"));
+s.viaturaFotos=fotosDe($("#viaturaFotos"));s.rondaFotos=fotosDe($("#rondaFotos"));s.rondaRegs=$$(".rr textarea").map(function(t){return t.value});
 s.hr={};$$(".hr").forEach(function(sp){var i=sp.parentNode.querySelector("input");if(i.checked&&sp.textContent)s.hr[i.dataset.k]=sp.textContent});
 s.bks=$$(".bk").map(function(d){var a=[];for(var i=0;i<15;i++)a.push(d.querySelector(".f"+i).value);return a});
 s.ars=$$(".ar").map(function(d){var a=[];for(var i=0;i<8;i++)a.push(d.querySelector(".f"+i).value);var p=d.querySelector(".f8:checked");a.push(p?p.value:"");var ph=[];d.querySelectorAll(".fotos img").forEach(function(i){ph.push(i.src)});a.push(ph);return a});
@@ -503,7 +523,7 @@ s.trs=$$(".tr").map(function(d){var a=[];for(var i=0;i<19;i++)a.push(d.querySele
 s.ovs=$$(".ov").map(function(d){var a=[];for(var i=0;i<25;i++)a.push(d.querySelector(".f"+i).value);a.push(fotosDe(d));recDe(d,a);lpDe(d,a);return a});
 s.ocs=$$(".oc").map(function(d){var a=[];for(var i=0;i<20;i++)a.push(d.querySelector(".f"+i).value);a.push(fotosDe(d));recDe(d,a);return a});
 s.ats=$$(".au").map(function(d){return[d.querySelector(".ua").value,d.querySelector(".uc").value,d.querySelector(".ur").value]});
-s.pss=$$(".ps").map(function(d){return[d.querySelector(".pt").value,d.querySelector(".pe").value,d.querySelector(".pi").value,d.querySelector(".pf").value,d.querySelector(".pa").checked,d.querySelector(".po").checked,d.querySelector(".pn").value]});
+s.pss=$$(".ps").map(function(d){return[d.querySelector(".pt").value,d.querySelector(".pe").value,d.querySelector(".pi").value,d.querySelector(".pf").value,d.querySelector(".pa").checked,d.querySelector(".po").checked,d.querySelector(".pn").value,d.querySelector(".pdb").value]});
 s.mps=$$(".mp").map(function(d){return[d.querySelector(".mt").value,d.querySelector(".ml").value,d.querySelector(".mi").value,d.querySelector(".mf").value,(d.querySelector(".mr:checked")||{value:""}).value,d.querySelector(".mn").value]});
 s.abs=$$(".ab").map(function(d){return[d.querySelector(".at").value,d.querySelector(".ah").value,d.querySelector(".av").value,d.querySelector(".al").value]});
 s.sig=drawn?sig.toDataURL():"";
@@ -522,6 +542,7 @@ function save(){updAt();updateProgress();try{localStorage.setItem(KEY,JSON.strin
 function load(){
 var s=null;try{s=JSON.parse(localStorage.getItem(KEY)||"null")}catch(e){}
 $("#viaturaFotos").innerHTML="";initFotos($("#viaturaFotos"),s&&s.viaturaFotos||[]);
+$("#rondaFotos").innerHTML="";initFotos($("#rondaFotos"),s&&s.rondaFotos||[]);$("#rondaRegs").innerHTML="";(s&&s.rondaRegs||[]).forEach(addRondaReg);
 if(!s){addBo();addMp();addPs();addAt();addMaria();addOc();addOv();addTr();addRb();addAr();addBk();$("#data").value=hoje();toggleRonda();return}
 $$("[data-k]").forEach(function(e){
 var k=e.dataset.k;
@@ -535,7 +556,7 @@ $$(".hr").forEach(function(sp){var i=sp.parentNode.querySelector("input");sp.tex
 (s.marias&&s.marias.length?s.marias:[[]]).forEach(function(m){addMaria(m)});
 (s.abs||[]).forEach(function(a){addAb(a[0],a[1],a[2],a[3])});
 (s.mps&&s.mps.length?s.mps:[["","","",""]]).forEach(function(m){addMp(m[0],m[1],m[2],m[3],m[4],m[5])});
-(s.pss&&s.pss.length?s.pss:[["","","","",false,false]]).forEach(function(p){addPs(p[0],p[1],p[2],p[3],p[4],p[5],p[6])});
+(s.pss&&s.pss.length?s.pss:[["","","","",false,false]]).forEach(function(p){addPs(p[0],p[1],p[2],p[3],p[4],p[5],p[6],p[7])});
 (s.ats&&s.ats.length?s.ats:[["","",""]]).forEach(function(u){addAt(u[0],u[1],u[2])});
 (s.ocs&&s.ocs.length?s.ocs:[[]]).forEach(function(o){addOc(o)});
 (s.ovs&&s.ovs.length?s.ovs:[[]]).forEach(function(o){addOv(o)});
@@ -557,6 +578,7 @@ L.push("");
 L.push("1. RONDA AOS POSTOS");
 L.push(v(s.ronda)||"—");
 if(s.ronda==="Novidades"&&v(s.rondaDesc))L.push(v(s.rondaDesc));
+if(s.ronda==="Novidades"){(s.rondaRegs||[]).forEach(function(t,i){if(v(t))L.push("Registro "+(i+2)+": "+v(t))});if(s.rondaFotos&&s.rondaFotos.length)L.push("Fotos anexadas: "+s.rondaFotos.length)}
 L.push("");
 L.push("2. VIATURA E ABASTECIMENTO");
 L.push("Viatura disponível para operação: "+(s.viatura?"Sim":"Não informado / indisponível"));
@@ -569,7 +591,7 @@ L.push("3. AUSÊNCIAS NO PLANTÃO");L.push(v(s.ausencia)||"—");L.push("");
 L.push("4. REMANEJAMENTO DE SERVIDORES");L.push(v(s.remanej)||"—");L.push("");
 L.push("5. ATENDIMENTOS DE PERTURBAÇÃO DO SOSSEGO");
 var ps=s.pss.filter(function(p){return p[0]||p[1]||p[2]||p[3]||p[4]||p[5]});
-if(!ps.length)L.push("—");ps.forEach(function(p){L.push("Talão nº: "+(p[0]||"—")+" | Endereço: "+(p[1]||"—")+" | Início: "+(p[2]||"—")+" | Fim: "+(p[3]||"—")+" | Autuação realizada: "+(p[4]?("Sim"+(p[6]?" (nº "+p[6]+")":"")):"Não")+" | Orientação realizada: "+(p[5]?"Sim":"Não"))});
+if(!ps.length)L.push("—");ps.forEach(function(p){L.push("Talão nº: "+(p[0]||"—")+" | Endereço: "+(p[1]||"—")+" | Início: "+(p[2]||"—")+" | Fim: "+(p[3]||"—")+" | Autuação realizada: "+(p[4]?("Sim"+(p[6]?" (nº "+p[6]+")":"")+(p[7]?" | Decibéis: "+p[7]+" dB":"")):"Não")+" | Orientação realizada: "+(p[5]?"Sim":"Não"))});
 L.push("Total: "+ps.length+" atendimento(s) | "+ps.filter(function(p){return p[4]}).length+" autuado(s) | "+ps.filter(function(p){return p[5]}).length+" orientado(s)");L.push("");
 L.push("6. BOLETINS DE OCORRÊNCIA — GCM");
 var b=bos();if(!b.length)L.push("—");b.forEach(function(x){L.push("Natureza: "+(x.n||"—")+" | Talão nº: "+(x.t||"—"))});L.push("");
@@ -592,7 +614,7 @@ L.push(cr.length?"Unidades visitadas: "+cr.join(", "):"—");L.push("");
 L.push("12. OCORRÊNCIAS DE VIOLÊNCIA DOMÉSTICA E FAMILIAR CONTRA A MULHER — LEI MARIA DA PENHA");
 var vm=mariaState().filter(function(m){return m.some(function(x){return String(x||"").trim()})});
 if(!vm.length)L.push("—");
-vm.forEach(function(m,i){L.push("Ocorrência "+(i+1));L.push("Data: "+(m[0]?fmtData(m[0]):"—"));L.push("Talão: "+(m[9]||"—")+" | Horário inicial: "+(m[10]||"—")+" | Horário final: "+(m[11]||"—"));L.push("Nome: "+(m[12]||"—")+" | RG: "+(m[13]||"—")+" | CPF: "+(m[14]||"—")+" | CNH: "+(m[15]||"—"));L.push("Data de nascimento: "+(m[16]?fmtData(m[16]):"—")+" | Endereço residencial: "+(m[17]||"—")+" | Telefone: "+(m[18]||"—"));L.push("Local: "+(m[2]||"—"));L.push("Tipo de atendimento: "+(m[3]||"—"));L.push("Relato objetivo: "+(m[4]||"—"));L.push("Providências adotadas: "+(m[5]||"—"));L.push("Situação: "+(m[6]||"—")+" | Boletim/protocolo: "+(m[7]||"—"));L.push("Pendências e observações: "+(m[8]||"—"));if(m[19]&&m[19].length)L.push("Fotos anexadas: "+m[19].length);});L.push("");
+vm.forEach(function(m,i){L.push("Ocorrência "+(i+1));L.push("Data: "+(m[0]?fmtData(m[0]):"—"));L.push("Talão: "+(m[9]||"—")+" | Horário inicial: "+(m[10]||"—")+" | Horário final: "+(m[11]||"—"));L.push("Identificação: "+(m[20]||"—"));L.push("Nome: "+(m[12]||"—")+" | RG: "+(m[13]||"—")+" | CPF: "+(m[14]||"—")+" | CNH: "+(m[15]||"—"));L.push("Data de nascimento: "+(m[16]?fmtData(m[16]):"—")+" | Endereço residencial: "+(m[17]||"—")+" | Telefone: "+(m[18]||"—"));L.push("Local: "+(m[2]||"—"));L.push("Tipo de atendimento: "+(m[3]||"—"));L.push("Relato objetivo: "+(m[4]||"—"));L.push("Providências adotadas: "+(m[5]||"—"));L.push("Situação: "+(m[6]||"—")+" | Boletim/protocolo: "+(m[7]||"—"));L.push("Pendências e observações: "+(m[8]||"—"));if(m[19]&&m[19].length)L.push("Fotos anexadas: "+m[19].length);});L.push("");
 L.push("13. OCORRÊNCIA DE TRÂNSITO SEM VÍTIMA");
 var oc=s.ocs.filter(function(o){return o.some(nv)});
 if(!oc.length)L.push("—");
@@ -727,6 +749,7 @@ document.addEventListener("change",function(e){if(e.target.name==="ronda")toggle
 $("#addBo").onclick=function(){addBo();save()};
 $("#addMaria").onclick=function(){addMaria();save()};
 $("#addAb").onclick=function(){addAb();save()};
+$("#addRondaReg").onclick=function(){addRondaReg();save()};
 $("#addMp").onclick=function(){addMp();save()};
 $("#addPs").onclick=function(){addPs();save()};
 $("#addAt").onclick=function(){addAt();save()};
@@ -741,7 +764,7 @@ $("#clear").onclick=function(){
 if(!confirm("Limpar todos os campos?"))return;
 try{localStorage.removeItem(KEY)}catch(e){}
 $$("[data-k]").forEach(function(e){if(e.type==="radio"||e.type==="checkbox")e.checked=false;else e.value=""});$$(".hr").forEach(function(sp){sp.textContent=""});
-bosEl.innerHTML="";addBo();$("#abs").innerHTML="";$("#viaturaFotos").innerHTML="";initFotos($("#viaturaFotos"),[]);$("#mps").innerHTML="";addMp();$("#pss").innerHTML="";addPs();$("#ats").innerHTML="";addAt();updAt();$("#ocs").innerHTML="";addOc();$("#ovs").innerHTML="";addOv();$("#trs").innerHTML="";addTr();$("#rbs").innerHTML="";addRb();$("#ars").innerHTML="";addAr();$("#bks").innerHTML="";addBk();ctx.clearRect(0,0,sig.clientWidth,sig.clientHeight);drawn=false;
+bosEl.innerHTML="";addBo();$("#abs").innerHTML="";$("#viaturaFotos").innerHTML="";initFotos($("#viaturaFotos"),[]);$("#rondaFotos").innerHTML="";initFotos($("#rondaFotos"),[]);$("#rondaRegs").innerHTML="";$("#mps").innerHTML="";addMp();$("#pss").innerHTML="";addPs();$("#ats").innerHTML="";addAt();updAt();$("#ocs").innerHTML="";addOc();$("#ovs").innerHTML="";addOv();$("#trs").innerHTML="";addTr();$("#rbs").innerHTML="";addRb();$("#ars").innerHTML="";addAr();$("#bks").innerHTML="";addBk();ctx.clearRect(0,0,sig.clientWidth,sig.clientHeight);drawn=false;
 $("#data").value=hoje();$("#out").style.display="none";toggleRonda();updateProgress();msg("Formulário limpo.");
 };
 $("#copy").onclick=function(){
@@ -754,7 +777,7 @@ var J=window.jspdf&&window.jspdf.jsPDF;if(!J)return null;
 var doc=new J({unit:"mm",format:"a4"}),M=15,mw=180,y=M;
 function need(h){if(y+h>285){doc.addPage();y=M}}
 doc.setTextColor(20);
-var S=state(),A=[],pi=0;if(S.viaturaFotos&&S.viaturaFotos.length)A.push(S.viaturaFotos);(S.marias||[]).forEach(function(m){if(m[19]&&m[19].length)A.push(m[19])});[["ocs",20],["ovs",25],["trs",19],["rbs",30],["ars",9]].forEach(function(p){(S[p[0]]||[]).forEach(function(o){if(o[p[1]]&&o[p[1]].length)A.push(o[p[1]])})});
+var S=state(),A=[],pi=0;if(S.ronda==="Novidades"&&S.rondaFotos&&S.rondaFotos.length)A.push(S.rondaFotos);if(S.viaturaFotos&&S.viaturaFotos.length)A.push(S.viaturaFotos);(S.marias||[]).forEach(function(m){if(m[19]&&m[19].length)A.push(m[19])});[["ocs",20],["ovs",25],["trs",19],["rbs",30],["ars",9]].forEach(function(p){(S[p[0]]||[]).forEach(function(o){if(o[p[1]]&&o[p[1]].length)A.push(o[p[1]])})});
 texto().replace(/\u2014/g,"-").split("\n").forEach(function(l,i){
 if(i===0){doc.setFont("helvetica","bold");doc.setFontSize(16);doc.text(l,M,y+4);y+=11;return}
 if(!l.trim()){y+=1.5;return}
@@ -777,9 +800,8 @@ var b=pdfBlob();
 if(!b){msg("Não foi possível gerar o PDF. Use Copiar relatório.");return}
 var nome="Resumo-de-Plantao-"+($("#data").value||hoje()).split("-").reverse().join("-")+".pdf";
 function salvar(){
-var url=URL.createObjectURL(b), a=document.createElement("a");
-a.href=url;a.download=nome;document.body.appendChild(a);a.click();a.remove();
-setTimeout(function(){URL.revokeObjectURL(url)},1500);msg("PDF baixado. Confira e guarde uma cópia do arquivo.");
+try{var url=URL.createObjectURL(b),a=document.createElement("a");a.href=url;a.download=nome;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url)},1500);msg("PDF pronto para baixar!")}
+catch(e){msg("Não foi possível baixar o PDF. Use Copiar relatório.")}
 }
 try{
 var f=new File([b],nome,{type:"application/pdf"});
@@ -789,7 +811,19 @@ salvar();
 };
 })();
 </script>
+<script>
+(function(){
+var secs=Array.prototype.slice.call(document.querySelectorAll("main>section"));
+secs.forEach(function(sec){
+var h=sec.querySelector(":scope>h2");if(!h)return;
+h.setAttribute("data-tg","1");
+var b=document.createElement("button");b.type="button";b.className="tgb";h.appendChild(b);
+function set(open){sec.classList.toggle("closed",!open);b.textContent=open?"Fechar ▴":"Abrir ▾";b.setAttribute("aria-expanded",open?"true":"false")}
+h.addEventListener("click",function(){set(sec.classList.contains("closed"))});
+set(/^Respons/.test(h.firstChild?h.firstChild.textContent.trim():""));
+});
+})();
+</script>
 </body>
 </html>
-
 
