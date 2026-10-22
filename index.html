@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Relatório de Plantão | Registro Operacional</title>
 <meta name="theme-color" content="#1d4ed8">
-<link rel="icon" type="image/svg+xml" href="logo.svg?v=3">
+<link rel="icon" type="image/svg+xml" href="favicon.svg?v=4">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Plantão">
@@ -44,8 +44,9 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ac);box-
 .chk{display:flex;align-items:center;gap:10px;color:var(--tx);font-size:14px;margin:8px 0}
 .chk input{width:19px;height:19px;accent-color:var(--ac)}
 .hide{display:none}
-#ocs,#ovs,#trs,#rbs,#ars,#bks{counter-reset:oc}
-.bk>.tt,.ar>.tt,.rb>.tt,.tr>.tt,.ov>.tt,.oc>.tt{font-weight:800;color:var(--ac);font-size:14px;margin:14px 0 8px}
+#ocs,#ovs,#trs,#rbs,#ars,#bks,#gvs{counter-reset:oc}
+.gv>.tt,.bk>.tt,.ar>.tt,.rb>.tt,.tr>.tt,.ov>.tt,.oc>.tt{font-weight:800;color:var(--ac);font-size:14px;margin:14px 0 8px}
+.gv>.tt:before{counter-increment:oc;content:"Registro " counter(oc) " — "}
 .bk>.tt:before{counter-increment:oc;content:"Registro " counter(oc) " — "}
 .ar>.tt:before{counter-increment:oc;content:"Abordagem " counter(oc) " — "}
 .rb>.tt:before{counter-increment:oc;content:"Repasse " counter(oc) " — "}
@@ -95,33 +96,21 @@ main>section>h2[data-tg]{cursor:pointer;user-select:none;-webkit-user-select:non
 main>section>h2 .tgb{order:1;flex:0 0 auto;min-height:32px;padding:4px 12px;font-size:12px;font-weight:700;letter-spacing:0;text-transform:none;border-radius:99px;border:1px solid var(--bd);background:var(--bg);color:var(--tx);cursor:pointer}
 main>section.closed>h2{margin-bottom:0}
 main>section.closed>*:not(h2){display:none!important}
-.brand-head{display:flex;align-items:center;gap:18px}
-.gcm-logo{display:block;width:104px;height:104px;object-fit:contain;flex:0 0 auto;background:#fff;border:1px solid var(--bd);border-radius:12px;padding:4px}
-.brand-copy{min-width:0}
-.brand-kicker{display:block;color:var(--ac);font-size:11px;letter-spacing:.14em;font-weight:800;margin:0 0 7px}
-header:before{display:none}
-.storage-note{display:flex;align-items:flex-start;gap:10px;margin:0 0 14px;padding:12px 14px;border:1px solid var(--bd);border-left:4px solid var(--ac);border-radius:11px;background:var(--card);color:var(--mut);font-size:13px}
-.storage-note strong{flex:0 0 auto;color:var(--ac)}
-.row>*,.row3>*{min-width:0}
-input,select,textarea{min-width:0;max-width:100%}
-@media(max-width:640px){header{padding:18px 12px 14px}.brand-head{align-items:flex-start;gap:12px}.gcm-logo{width:74px;height:74px;border-radius:10px;padding:3px}.brand-kicker{font-size:9px;letter-spacing:.09em;margin-bottom:5px}h1{font-size:clamp(22px,6vw,29px)}header p{font-size:13px}.status-wrap{margin-left:10px;margin-right:10px}.storage-note{display:block;padding:11px 12px;font-size:12px}.storage-note strong{display:block;margin:0 0 3px}main{padding-left:10px;padding-right:10px}section{padding:15px 12px}.row,.row3{gap:8px}.bar{gap:5px;padding-left:7px;padding-right:7px}.bar button{min-width:0;white-space:normal;overflow-wrap:anywhere;line-height:1.2;padding:8px 3px;font-size:11px}}
-@media(max-width:380px){.row,.row3{grid-template-columns:minmax(0,1fr)}.brand-head{gap:9px}.gcm-logo{width:62px;height:62px}.brand-kicker{font-size:8px;letter-spacing:.07em}.status-count{width:100%;margin-left:17px}.bar button{font-size:10px}}
-/* Ajustes adicionais para celular: logo, grades de campos e barra de ações. */
-.gcm-logo{object-fit:contain;max-width:100%;height:auto;aspect-ratio:1}
-.brand-copy{flex:1;min-width:0}
-@media(max-width:640px){header{padding:16px 12px 14px}.brand-head{gap:12px;align-items:flex-start}.gcm-logo{width:72px;height:72px;flex-basis:72px}.brand-kicker{font-size:9px;letter-spacing:.07em;line-height:1.3}.brand-copy h1{font-size:clamp(21px,6vw,28px)}.row{grid-template-columns:repeat(2,minmax(0,1fr))}.row3{grid-template-columns:repeat(2,minmax(0,1fr))}.row>div,.row3>div{min-width:0}.opt label{min-width:0}input[type=text],input[type=date],input[type=time],input[type=number],input[type=tel],select,textarea{font-size:16px;padding-left:10px;padding-right:10px}.bar{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;padding:8px 8px calc(8px + env(safe-area-inset-bottom,0px))}.bar button{width:100%;min-width:0;max-width:none;padding:8px 4px;font-size:11px;line-height:1.2;overflow-wrap:anywhere}main{padding-bottom:100px}}
+.brand-head{display:flex;align-items:center;gap:18px}.gcm-logo{display:block;width:104px;height:104px;object-fit:contain;flex:0 0 auto;background:#fff;border:1px solid var(--bd);border-radius:12px;padding:4px}.brand-copy{flex:1;min-width:0}.brand-kicker{display:block;color:var(--ac);font-size:11px;letter-spacing:.14em;font-weight:800;margin:0 0 7px}header:before{display:none}.storage-note{display:flex;align-items:flex-start;gap:10px;margin:0 0 14px;padding:12px 14px;border:1px solid var(--bd);border-left:4px solid var(--ac);border-radius:11px;background:var(--card);color:var(--mut);font-size:13px}.storage-note strong{flex:0 0 auto;color:var(--ac)}.row>*,.row3>*{min-width:0}input,select,textarea{min-width:0;max-width:100%}
+@media(max-width:640px){header{padding:16px 12px 14px}.brand-head{gap:12px;align-items:flex-start}.gcm-logo{width:72px;height:72px;flex-basis:72px;padding:3px}.brand-kicker{font-size:9px;letter-spacing:.07em;line-height:1.3}.brand-copy h1{font-size:clamp(21px,6vw,28px)}.row{grid-template-columns:repeat(2,minmax(0,1fr))}.row3{grid-template-columns:repeat(2,minmax(0,1fr))}.row>div,.row3>div{min-width:0}.opt label{min-width:0}.storage-note{display:block;padding:11px 12px;font-size:12px}.storage-note strong{display:block;margin:0 0 3px}.status-wrap{margin-left:10px;margin-right:10px}input[type=text],input[type=date],input[type=time],input[type=number],input[type=tel],select,textarea{font-size:16px;padding-left:10px;padding-right:10px}.bar{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;padding:8px 8px calc(8px + env(safe-area-inset-bottom,0px))}.bar button{width:100%;min-width:0;max-width:none;padding:8px 4px;font-size:11px;line-height:1.2;overflow-wrap:anywhere}main{padding-left:10px;padding-right:10px;padding-bottom:100px}section{padding:15px 12px}}
 @media(max-width:390px){.brand-head{gap:9px}.gcm-logo{width:60px;height:60px;flex-basis:60px}.brand-kicker{font-size:8px;letter-spacing:.04em}.row,.row3{grid-template-columns:minmax(0,1fr)}.status-count{margin-left:0;width:100%}.bar button{font-size:10px;padding:7px 2px}}
 </style>
 </head>
 <body>
 <header>
-<div class="brand-head"><img class="gcm-logo" src="logo.svg?v=3" alt="Brasão da Guarda Civil Municipal" width="104" height="104" decoding="async"><div class="brand-copy"><span class="brand-kicker">Guarda Civil Municipal</span><h1>Relatório de Plantão</h1><p>Registre as atividades do plantão de forma clara, objetiva e padronizada. Preencha os campos aplicáveis e confira as informações antes de gerar o relatório. Os dados são salvos automaticamente neste dispositivo.</p></div></div>
+<div class="brand-head"><img class="gcm-logo" src="logo.svg?v=4" alt="Brasão da Guarda Civil Municipal" width="104" height="104" decoding="async"><div class="brand-copy"><span class="brand-kicker">Guarda Civil Municipal</span><h1>Relatório de Plantão</h1><p>Registre as atividades do plantão de forma clara, objetiva e padronizada. Preencha os campos aplicáveis e confira as informações antes de gerar o relatório. Os dados são salvos automaticamente neste dispositivo.</p></div></div>
 </header>
 <div class="status-wrap" aria-live="polite">
   <div class="status-line"><span class="status-dot" aria-hidden="true"></span><span id="saveStatus">Salvamento automático ativado</span><span class="status-count" id="completionCount">0 campos preenchidos</span></div>
   <div class="progress-track" role="progressbar" aria-label="Preenchimento do formulário" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressTrack"><span id="progressFill"></span></div>
 </div>
-<div class="storage-note" role="note"><strong>Salvamento local</strong><span>Os dados ficam salvos somente neste navegador e não são sincronizados. Baixe o PDF ao concluir para guardar uma cópia. Se limpar os dados do navegador ou trocar de aparelho, o preenchimento pode ser perdido.</span></div><main>
+<div class="storage-note" role="note"><strong>Salvamento local</strong><span>Os dados ficam salvos somente neste navegador e não são sincronizados. Baixe o PDF ao concluir para guardar uma cópia. Se limpar os dados do navegador ou trocar de aparelho, o preenchimento pode ser perdido.</span></div>
+<main>
 <section>
 <label for="data" style="margin-top:0">Data</label>
 <input type="date" id="data" data-k="data">
@@ -141,6 +130,8 @@ input,select,textarea{min-width:0;max-width:100%}
 <div id="rondaFotos" aria-label="Fotos da ronda nos postos"></div>
 </div>
 </section>
+
+
 
 <section>
 <h2>2. Viatura e abastecimento</h2>
@@ -302,6 +293,12 @@ input,select,textarea{min-width:0;max-width:100%}
 </section>
 
 <section>
+<h2>19. Escala Extraordinária GRASEV</h2>
+<div id="gvs"></div>
+<button type="button" class="sm" id="addGv">+ Adicionar novo registro</button>
+</section>
+
+<section>
 <h2>Responsável</h2>
 <label for="resp" style="margin-top:0">Nome do responsável pelo plantão</label>
 <input type="text" id="resp" data-k="resp" autocomplete="name">
@@ -460,14 +457,27 @@ Array.prototype.forEach.call(d.querySelectorAll(".pev"),function(r){r.checked=(r
 for(var i=0;i<5;i++)pf[i].value=vals[2+i]||"";
 box.classList.toggle("hide",vals[1]!=="Com perícia");
 }
+var MOT_BK=["Circular na contramão de direção","Circular em calçada","Circular em praça ou jardim","Circular em passeio ou via exclusiva de pedestres","Triciclo/quadriciclo/similar (acima de 3 aros) fora das ciclovias e áreas permitidas","Condutor com idade inferior a 14 anos","Outro motivo (descrever em observações)"];
 function addBk(v){
 v=v||[];var d=document.createElement("div");d.className="bk";
 if($("#bks").children.length)d.style.cssText="border-top:1px dashed var(--bd);margin-top:14px;padding-top:6px";
 function f(i,l,t,m){return '<div><label>'+l+'</label><input type="'+(t||"text")+'" class="f'+i+'"'+(m?' inputmode="'+m+'"':'')+'></div>'}
-d.innerHTML='<div class="tt"></div>'+f(0,"Talão nº","text","numeric")+'<div class="row">'+f(1,"Horário inicial","time")+f(2,"Horário final","time")+'</div>'+f(3,"Nome")+'<div class="row">'+f(4,"RG")+f(5,"CPF","text","numeric")+f(6,"CNH","text","numeric")+f(7,"Data de nascimento","date")+'</div>'+f(8,"Telefone","tel","tel")+f(9,"Nome do pai")+f(10,"Nome da mãe")+f(11,"Registro da bicicleta")+f(12,"Local dos fatos")+'<div><label>Motivo do recolhimento</label><textarea class="f13"></textarea></div>'+f(14,"Destino");
+d.innerHTML='<div class="tt"></div>'+f(0,"Talão nº","text","numeric")+'<div class="row">'+f(1,"Horário inicial","time")+f(2,"Horário final","time")+'</div>'+f(3,"Nome")+'<div class="row">'+f(4,"RG")+f(5,"CPF","text","numeric")+f(6,"CNH","text","numeric")+f(7,"Data de nascimento","date")+'</div>'+f(8,"Telefone","tel","tel")+f(9,"Nome do pai")+f(10,"Nome da mãe")+f(11,"Registro da bicicleta")+f(12,"Local dos fatos")+'<div><label>Motivo do recolhimento (Lei Amanda Boccuto – Mongaguá)</label>'+MOT_BK.map(function(m){return '<label class="chk"><input type="checkbox" class="mot" value="'+m+'"> '+m+'</label>'}).join("")+'</div><div><label>Observações do recolhimento</label><textarea class="f13"></textarea></div>'+f(14,"Destino");
 for(var i=0;i<15;i++)d.querySelector(".f"+i).value=v[i]||"";
+var mv=(v[15]||"").split("|");d.querySelectorAll(".mot").forEach(function(c){c.checked=mv.indexOf(c.value)>-1});
 if($("#bks").children.length){var r=document.createElement("button");r.type="button";r.className="sm";r.textContent="Remover apreensão";r.onclick=function(){d.remove();save()};d.appendChild(r)}
 $("#bks").appendChild(d);
+}
+var gvN=0;
+function addGv(v){
+v=v||[];gvN++;var nm="gvt"+gvN+"_"+Date.now();var d=document.createElement("div");d.className="gv";
+if($("#gvs").children.length)d.style.cssText="border-top:1px dashed var(--bd);margin-top:14px;padding-top:6px";
+function f(i,l,t){return '<div><label>'+l+'</label><input type="'+(t||"text")+'" class="g'+i+'"></div>'}
+d.innerHTML='<div class="tt"></div><div class="opt"><label><input type="radio" name="'+nm+'" value="GCM"> GCM</label><label><input type="radio" name="'+nm+'" value="VIGIA"> VIGIA</label></div>'+f(1,"Nome")+f(2,"Local")+'<div class="row">'+f(3,"Horário inicial","time")+f(4,"Horário final","time")+'</div>';
+for(var i=1;i<=4;i++)d.querySelector(".g"+i).value=v[i]||"";
+d.querySelectorAll("input[type=radio]").forEach(function(r){r.checked=(r.value===v[0])});
+if($("#gvs").children.length){var b=document.createElement("button");b.type="button";b.className="sm";b.textContent="Remover registro";b.onclick=function(){d.remove();save()};d.appendChild(b)}
+$("#gvs").appendChild(d);
 }
 function addAt(a,c,r){
 var d=document.createElement("div");d.className="au";
@@ -521,7 +531,8 @@ s.bos=$$(".bo").map(function(d){return[d.querySelector(".bn").value,d.querySelec
 s.marias=mariaState();
 s.viaturaFotos=fotosDe($("#viaturaFotos"));s.rondaFotos=fotosDe($("#rondaFotos"));s.rondaRegs=$$(".rr textarea").map(function(t){return t.value});
 s.hr={};$$(".hr").forEach(function(sp){var i=sp.parentNode.querySelector("input");if(i.checked&&sp.textContent)s.hr[i.dataset.k]=sp.textContent});
-s.bks=$$(".bk").map(function(d){var a=[];for(var i=0;i<15;i++)a.push(d.querySelector(".f"+i).value);return a});
+s.gvs=$$(".gv").map(function(d){var r=d.querySelector("input[type=radio]:checked");return[r?r.value:"",d.querySelector(".g1").value,d.querySelector(".g2").value,d.querySelector(".g3").value,d.querySelector(".g4").value]});
+s.bks=$$(".bk").map(function(d){var a=[];for(var i=0;i<15;i++)a.push(d.querySelector(".f"+i).value);a.push(Array.prototype.map.call(d.querySelectorAll(".mot:checked"),function(c){return c.value}).join("|"));return a});
 s.ars=$$(".ar").map(function(d){var a=[];for(var i=0;i<8;i++)a.push(d.querySelector(".f"+i).value);var p=d.querySelector(".f8:checked");a.push(p?p.value:"");var ph=[];d.querySelectorAll(".fotos img").forEach(function(i){ph.push(i.src)});a.push(ph);return a});
 s.rbs=$$(".rb").map(function(d){var a=[];for(var i=0;i<27;i++)a.push(d.querySelector(".f"+i).value);var p=d.querySelector(".f27:checked"),q=d.querySelector(".f28:checked");a.push(p?p.value:"");a.push(q?q.value:"");a.push(d.querySelector(".f29").value);a.push(fotosDe(d));perDe(d,a);return a});
 s.trs=$$(".tr").map(function(d){var a=[];for(var i=0;i<19;i++)a.push(d.querySelector(".f"+i).value);a.push(fotosDe(d));lpDe(d,a);return a});
@@ -548,7 +559,7 @@ function load(){
 var s=null;try{s=JSON.parse(localStorage.getItem(KEY)||"null")}catch(e){}
 $("#viaturaFotos").innerHTML="";initFotos($("#viaturaFotos"),s&&s.viaturaFotos||[]);
 $("#rondaFotos").innerHTML="";initFotos($("#rondaFotos"),s&&s.rondaFotos||[]);$("#rondaRegs").innerHTML="";(s&&s.rondaRegs||[]).forEach(addRondaReg);
-if(!s){addBo();addMp();addPs();addAt();addMaria();addOc();addOv();addTr();addRb();addAr();addBk();$("#data").value=hoje();toggleRonda();return}
+if(!s){addBo();addMp();addPs();addAt();addMaria();addOc();addOv();addTr();addRb();addAr();addBk();addGv();$("#data").value=hoje();toggleRonda();return}
 $$("[data-k]").forEach(function(e){
 var k=e.dataset.k;
 if(e.type==="radio")e.checked=(s[k]===e.value);
@@ -569,6 +580,7 @@ $$(".hr").forEach(function(sp){var i=sp.parentNode.querySelector("input");sp.tex
 (s.rbs&&s.rbs.length?s.rbs:[[]]).forEach(function(o){addRb(o)});
 (s.ars&&s.ars.length?s.ars:[[]]).forEach(function(o){addAr(o)});
 (s.bks&&s.bks.length?s.bks:[[]]).forEach(function(o){addBk(o)});
+(s.gvs&&s.gvs.length?s.gvs:[[]]).forEach(function(o){addGv(o)});
 if(s.sig){var im=new Image();im.onload=function(){ctx.drawImage(im,0,0,sig.clientWidth,sig.clientHeight);drawn=true};im.src=s.sig}
 toggleRonda();updAt();
 }
@@ -722,8 +734,15 @@ L.push("Nascimento: "+(o[7]?fmtData(o[7]):"—")+" | Telefone: "+g(8));
 L.push("Pai: "+g(9)+" | Mãe: "+g(10));
 L.push("Registro da bicicleta: "+g(11));
 L.push("Local dos fatos: "+g(12));
-L.push("Motivo do recolhimento: "+g(13));
+L.push("Motivo do recolhimento: "+(o[15]?o[15].split("|").join("; "):"—"));if(o[13]&&o[13].trim())L.push("Observações: "+o[13].trim());
 L.push("Destino: "+g(14))});
+L.push("");
+L.push("19. ESCALA EXTRAORDINÁRIA GRASEV");
+var gq=(s.gvs||[]).filter(function(o){return o.some(nv)});
+if(!gq.length)L.push("—");
+gq.forEach(function(o,i){var g=function(k){return(o[k]&&o[k].trim())||"—"};
+L.push("Registro "+(i+1)+" - "+g(0)+" | Nome: "+g(1));
+L.push("Local: "+g(2)+" | Início: "+g(3)+" | Fim: "+g(4))});
 L.push("");
 L.push("Responsável pelo plantão: "+(v(s.resp)||"—"));
 return L.join("\n");
@@ -764,12 +783,13 @@ $("#addTr").onclick=function(){addTr();save()};
 $("#addRb").onclick=function(){addRb();save()};
 $("#addAr").onclick=function(){addAr();save()};
 $("#addBk").onclick=function(){addBk();save()};
+$("#addGv").onclick=function(){addGv();save()};
 $("#clrSig").onclick=function(){ctx.clearRect(0,0,sig.clientWidth,sig.clientHeight);drawn=false;save()};
 $("#clear").onclick=function(){
 if(!confirm("Limpar todos os campos?"))return;
 try{localStorage.removeItem(KEY)}catch(e){}
 $$("[data-k]").forEach(function(e){if(e.type==="radio"||e.type==="checkbox")e.checked=false;else e.value=""});$$(".hr").forEach(function(sp){sp.textContent=""});
-bosEl.innerHTML="";addBo();$("#abs").innerHTML="";$("#viaturaFotos").innerHTML="";initFotos($("#viaturaFotos"),[]);$("#rondaFotos").innerHTML="";initFotos($("#rondaFotos"),[]);$("#rondaRegs").innerHTML="";$("#mps").innerHTML="";addMp();$("#pss").innerHTML="";addPs();$("#ats").innerHTML="";addAt();updAt();$("#ocs").innerHTML="";addOc();$("#ovs").innerHTML="";addOv();$("#trs").innerHTML="";addTr();$("#rbs").innerHTML="";addRb();$("#ars").innerHTML="";addAr();$("#bks").innerHTML="";addBk();ctx.clearRect(0,0,sig.clientWidth,sig.clientHeight);drawn=false;
+bosEl.innerHTML="";addBo();$("#abs").innerHTML="";$("#viaturaFotos").innerHTML="";initFotos($("#viaturaFotos"),[]);$("#rondaFotos").innerHTML="";initFotos($("#rondaFotos"),[]);$("#rondaRegs").innerHTML="";$("#mps").innerHTML="";addMp();$("#pss").innerHTML="";addPs();$("#ats").innerHTML="";addAt();updAt();$("#ocs").innerHTML="";addOc();$("#ovs").innerHTML="";addOv();$("#trs").innerHTML="";addTr();$("#rbs").innerHTML="";addRb();$("#ars").innerHTML="";addAr();$("#bks").innerHTML="";addBk();$("#gvs").innerHTML="";addGv();ctx.clearRect(0,0,sig.clientWidth,sig.clientHeight);drawn=false;
 $("#data").value=hoje();$("#out").style.display="none";toggleRonda();updateProgress();msg("Formulário limpo.");
 };
 $("#copy").onclick=function(){
