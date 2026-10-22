@@ -3,148 +3,159 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Resumo de Plantão | GCM</title>
-<meta name="theme-color" content="#102a43">
-<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<title>Relatório de Plantão | Registro Operacional</title>
+<meta name="theme-color" content="#1d4ed8">
+<link rel="icon" type="image/svg+xml" href="logo.svg">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Plantão">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
-:root {
-  --bg:#eef3f8; --card:#ffffff; --tx:#172b3a; --mut:#607386;
-  --bd:#d7e1eb; --ac:#145da0; --acx:#ffffff; --ok:#16794b;
-  --navy:#102a43; --soft:#e8f1fa;
-  box-sizing:border-box;
-  padding-top:env(safe-area-inset-top,0px);
-  padding-bottom:env(safe-area-inset-bottom,0px);
-}
-@media (prefers-color-scheme:dark) {
-  :root:not([data-theme="light"]) {
-    --bg:#0b1420; --card:#121f2e; --tx:#e8f0f7; --mut:#9cafc1;
-    --bd:#2a3c4e; --ac:#75b8f0; --acx:#071522; --ok:#54d69a;
-    --navy:#071522; --soft:#1b3044;
-  }
-}
-:root[data-theme="dark"] { --bg:#0b1420; --card:#121f2e; --tx:#e8f0f7; --mut:#9cafc1; --bd:#2a3c4e; --ac:#75b8f0; --acx:#071522; --ok:#54d69a; --navy:#071522; --soft:#1b3044; }
+
+:root{color-scheme:light;--bg:#f3f6fb;--card:#fff;--tx:#172235;--mut:#637086;--bd:#dbe3ef;--ac:#174ea6;--acx:#fff;--ok:#147d55;--soft:#eaf1fb;--shadow:0 8px 28px rgba(25,45,80,.06)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#101722;--card:#182231;--tx:#edf3fb;--mut:#a5b2c5;--bd:#344256;--ac:#8bb7ff;--acx:#101722;--ok:#58d6a2;--soft:#202f44;--shadow:0 8px 28px rgba(0,0,0,.18)}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#101722;--card:#182231;--tx:#edf3fb;--mut:#a5b2c5;--bd:#344256;--ac:#8bb7ff;--acx:#101722;--ok:#58d6a2;--soft:#202f44;--shadow:0 8px 28px rgba(0,0,0,.18)}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-header{padding:22px 16px 18px;max-width:760px;margin:0 auto}
-.brandline{display:flex;align-items:center;gap:9px;color:var(--mut);font-size:11px;font-weight:800;letter-spacing:.12em;margin-bottom:18px}
-.brandmark{display:grid;place-items:center;width:34px;height:34px;border-radius:10px;background:var(--ac);color:var(--acx);font-size:12px;letter-spacing:0}
-.status-pill{margin-left:auto;letter-spacing:0;font-size:11px;font-weight:650;padding:5px 9px;border:1px solid var(--bd);border-radius:99px;background:var(--card)}
-h1{font-size:clamp(26px,5vw,34px);line-height:1.15;letter-spacing:-.035em;margin:0 0 9px;color:var(--tx)}
-header p{margin:0;color:var(--mut);font-size:14px;max-width:600px}
-main{max-width:760px;margin:0 auto;padding:0 14px 120px}
-.notice{display:flex;gap:12px;align-items:flex-start;padding:13px 15px;border:1px solid var(--bd);border-left:4px solid var(--ac);border-radius:12px;background:var(--card);margin:0 0 16px;color:var(--mut);font-size:12px}
-.notice strong{color:var(--ac);white-space:nowrap}
-section{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:17px;margin:13px 0;box-shadow:0 4px 16px rgba(16,42,67,.035)}
-h2{font-size:13px;margin:0 0 13px;letter-spacing:.055em;text-transform:uppercase;color:var(--ac);display:flex;align-items:center;gap:8px}
-label{display:block;font-size:12px;font-weight:650;color:var(--mut);margin:12px 0 5px}
-input[type=text],input[type=date],input[type=time],input[type=number],input[type=tel],select,textarea{width:100%;font:inherit;color:var(--tx);background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:11px 12px;min-height:46px;transition:border-color .15s,box-shadow .15s}
-textarea{min-height:96px;resize:vertical}
-input:focus,textarea:focus,select:focus{outline:0;border-color:var(--ac);box-shadow:0 0 0 3px color-mix(in srgb,var(--ac) 18%,transparent)}
-.row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-.row3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
-.row>* ,.row3>*{min-width:0}
-input,select,textarea{min-width:0;max-width:100%}
-.opt{display:flex;flex-wrap:wrap;gap:9px}
-.opt label{flex:1 1 140px;min-width:0;margin:0;color:var(--tx);font-size:14px;border:1px solid var(--bd);border-radius:10px;padding:12px;display:flex;align-items:center;gap:8px;background:var(--bg)}
-.opt input{width:18px;height:18px;accent-color:var(--ac);flex-shrink:0}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{max-width:1120px;margin:0 auto;padding:32px 24px 18px;border-bottom:1px solid var(--bd)}
+header:before{content:"REGISTRO OPERACIONAL • PLANTÃO";display:inline-block;color:var(--ac);font-size:11px;letter-spacing:.14em;font-weight:800;margin-bottom:8px}
+h1{font-size:clamp(25px,3vw,34px);line-height:1.2;letter-spacing:-.035em;margin:0 0 8px;font-weight:800}
+header p{margin:0;color:var(--mut);font-size:14px;max-width:760px}
+.status-wrap{max-width:1072px;margin:14px auto 0;padding:12px 16px;background:var(--card);border:1px solid var(--bd);border-radius:12px}
+.status-line{display:flex;align-items:center;gap:9px;font-size:12px;color:var(--mut);font-weight:650}
+.status-dot{width:8px;height:8px;border-radius:50%;background:var(--ok);flex:0 0 auto}
+.status-count{margin-left:auto;font-variant-numeric:tabular-nums;color:var(--ac)}
+.progress-track{height:5px;background:var(--bd);border-radius:99px;overflow:hidden;margin-top:9px}
+#progressFill{display:block;height:100%;width:0;background:var(--ac);border-radius:99px;transition:width .2s ease}
+main{max-width:1120px;margin:0 auto;padding:18px 24px 120px}
+section{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:22px;margin:14px 0;box-shadow:var(--shadow)}
+h2{font-size:14px;margin:0 0 18px;letter-spacing:.055em;text-transform:uppercase;color:var(--ac);font-weight:800;display:flex;align-items:center;gap:10px}
+h2:after{content:"";height:1px;background:var(--bd);flex:1}
+label{display:block;font-size:12px;color:var(--mut);font-weight:650;margin:12px 0 5px}
+input[type=text],input[type=date],input[type=time],input[type=number],input[type=tel],select,textarea{width:100%;font:inherit;font-size:14px;color:var(--tx);background:var(--bg);border:1px solid var(--bd);border-radius:9px;padding:11px 12px;min-height:44px;transition:border-color .15s,box-shadow .15s}
+textarea{min-height:100px;resize:vertical}
+input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ac);box-shadow:0 0 0 3px color-mix(in srgb,var(--ac) 15%,transparent)}
+.row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.row3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.opt{display:flex;gap:10px;flex-wrap:wrap}
+.opt label{flex:1;min-width:140px;margin:0;color:var(--tx);font-size:14px;border:1px solid var(--bd);border-radius:10px;padding:12px;display:flex;align-items:center;gap:8px;background:var(--bg);cursor:pointer}
+.opt input{width:18px;height:18px;accent-color:var(--ac)}
+.opt label:has(input:checked){border-color:var(--ok);background:color-mix(in srgb,var(--ok) 10%,var(--card));font-weight:700}
 .chk{display:flex;align-items:center;gap:10px;color:var(--tx);font-size:14px;margin:8px 0}
-.chk input{width:20px;height:20px;accent-color:var(--ac)}
+.chk input{width:19px;height:19px;accent-color:var(--ac)}
 .hide{display:none}
-#ocs{counter-reset:oc}#ovs{counter-reset:ov}#trs{counter-reset:tr}#rbs{counter-reset:rb}#ars{counter-reset:ar}#bks{counter-reset:bk}
-.bk>.tt,.ar>.tt,.rb>.tt,.tr>.tt,.ov>.tt,.oc>.tt{font-weight:750;margin-top:10px;color:var(--ac);font-size:14px}
-.bk>.tt::before{counter-increment:bk;content:"Apreensão " counter(bk)}
-.ar>.tt::before{counter-increment:ar;content:"Abordagem " counter(ar)}
-.rb>.tt::before{counter-increment:rb;content:"Repasse " counter(rb)}
-.tr>.tt::before{counter-increment:tr;content:"Envolvido " counter(tr)}
-.ov>.tt::before{counter-increment:ov;content:"Envolvido " counter(ov)}
-.oc>.tt::before{counter-increment:oc;content:"Envolvido " counter(oc)}
-.tt2{font-weight:750;font-size:12px;color:var(--mut);margin:17px 0 2px;text-transform:uppercase;letter-spacing:.04em}
-.hr{margin-left:auto;font-variant-numeric:tabular-nums;color:var(--ok);font-size:13px;font-weight:750}
-.ubs,.esc,.crc{display:flex;align-items:center;gap:11px;margin:0 0 8px;padding:12px;border:1px solid var(--bd);border-radius:11px;background:var(--bg);color:var(--tx);font-size:14px}
-.ubs input,.esc input,.crc input{width:19px;height:19px;accent-color:var(--ok)}
-.ubs:has(input:checked),.esc:has(input:checked),.crc:has(input:checked){border-color:var(--ok);background:color-mix(in srgb,var(--ok) 10%,var(--bg));font-weight:650}
-.bo{border-top:1px dashed var(--bd);margin-top:13px;padding-top:3px}
-button{font:inherit;font-weight:650;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:10px;padding:11px 14px;min-height:44px;cursor:pointer;transition:transform .12s,background .12s}
-button:active{transform:scale(.98)}
-button:hover{border-color:var(--ac)}
-button.p{background:var(--ac);color:var(--acx);border-color:var(--ac)}
-.sm{margin-top:11px;font-size:13px}
+#ocs,#ovs,#trs,#rbs,#ars,#bks{counter-reset:oc}
+.bk>.tt,.ar>.tt,.rb>.tt,.tr>.tt,.ov>.tt,.oc>.tt{font-weight:800;color:var(--ac);font-size:14px;margin:14px 0 8px}
+.bk>.tt:before{counter-increment:oc;content:"Registro " counter(oc) " — "}
+.ar>.tt:before{counter-increment:oc;content:"Abordagem " counter(oc) " — "}
+.rb>.tt:before{counter-increment:oc;content:"Repasse " counter(oc) " — "}
+.tr>.tt:before{counter-increment:oc;content:"Envolvido " counter(oc) " — "}
+.ov>.tt:before{counter-increment:oc;content:"Envolvido " counter(oc) " — "}
+.oc>.tt:before{counter-increment:oc;content:"Envolvido " counter(oc) " — "}
+.tt2{font-weight:800;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);margin:20px 0 4px;padding-top:12px;border-top:1px solid var(--bd)}
+.hr{margin-left:auto;font-variant-numeric:tabular-nums;color:var(--ok);font-size:13px;font-weight:800}
+.ubs,.esc,.crc{display:flex;align-items:center;gap:12px;margin:0 0 8px;padding:12px 14px;border:1px solid var(--bd);border-radius:10px;background:var(--bg);color:var(--tx);font-size:14px;cursor:pointer}
+.ubs input,.esc input,.crc input{width:18px;height:18px;accent-color:var(--ok)}
+.ubs:has(input:checked),.esc:has(input:checked),.crc:has(input:checked){border-color:var(--ok);background:color-mix(in srgb,var(--ok) 9%,var(--card));font-weight:650}
+.bo{border-top:1px solid var(--bd);margin-top:18px;padding-top:10px}
+.maria{border:1px solid #e7b4b4;background:color-mix(in srgb,#b91c1c 3%,var(--card));border-radius:12px;padding:14px;margin:12px 0}.maria .tt{font-weight:800;color:#a61b1b;font-size:14px;margin:0 0 10px}.maria .tt:before{content:"Registro " counter(maria) " — "}.maria{counter-increment:maria}#marias{counter-reset:maria}
+button{font:inherit;font-size:14px;font-weight:650;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:9px;padding:10px 14px;min-height:42px;cursor:pointer;transition:transform .12s,background .12s,border-color .12s}
+button:hover{border-color:var(--ac);background:var(--soft)}
+button:active{transform:translateY(1px)}
+button.p{background:var(--ac);color:var(--acx);border-color:var(--ac);font-weight:750}
+button.p:hover{filter:brightness(1.06)}
+.sm{margin-top:12px}
 canvas{width:100%;height:150px;background:var(--bg);border:1px dashed var(--bd);border-radius:10px;touch-action:none;display:block}
-.bar{position:fixed;z-index:5;left:0;right:0;bottom:0;background:color-mix(in srgb,var(--card) 94%,transparent);backdrop-filter:blur(14px);border-top:1px solid var(--bd);padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));display:flex;gap:8px;justify-content:center}
-.bar button{flex:1;max-width:230px;padding:11px 6px;font-size:12px}
-#msg{text-align:center;color:var(--ok);font-size:13px;min-height:20px;padding:5px}
+.bar{position:fixed;left:0;right:0;bottom:0;background:color-mix(in srgb,var(--card) 94%,transparent);backdrop-filter:blur(14px);border-top:1px solid var(--bd);padding:12px 18px calc(12px + env(safe-area-inset-bottom,0px));display:flex;gap:10px;justify-content:center;z-index:10}
+.bar button{flex:1;max-width:220px;padding:11px 10px;font-size:13px}
+#msg{text-align:center;color:var(--ok);font-size:13px;min-height:20px;font-weight:700}
 #out{display:none;width:100%;min-height:200px;margin-top:8px}
-@media(min-width:650px){main{padding-left:20px;padding-right:20px}.bar button{font-size:14px}.row3{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media(max-width:520px){header{padding:16px 13px 14px}.brandline{gap:7px;letter-spacing:.08em}.brandmark{flex:0 0 34px}.status-pill{font-size:10px;padding:4px 7px}main{padding-left:10px;padding-right:10px}section{padding:13px;border-radius:13px}.row,.row3{gap:8px}.row3{grid-template-columns:repeat(2,minmax(0,1fr))}.opt{flex-direction:column}.opt label{flex-basis:auto}.notice{display:block;padding:11px 12px}.notice strong{display:block;margin:0 0 3px}.bar{gap:5px;padding-left:8px;padding-right:8px}.bar button{min-width:0;white-space:normal;overflow-wrap:anywhere;line-height:1.2;padding:9px 4px;font-size:11px}.fotos{grid-template-columns:repeat(auto-fit,minmax(64px,1fr))!important}}
-@media(max-width:360px){.row,.row3{grid-template-columns:minmax(0,1fr)}h1{font-size:25px}.bar button{font-size:10px}}
-</style>
+#totAt{font-variant-numeric:tabular-nums;color:var(--ac)}
+@media(min-width:900px){main{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 18px}main>section{align-self:start}main>#msg,main>#out{grid-column:1/-1}main>section:nth-of-type(1),main>section:nth-of-type(2),main>section:nth-of-type(3),main>section:nth-of-type(4),main>section:nth-of-type(5),main>section:nth-of-type(6),main>section:nth-of-type(7),main>section:nth-of-type(8){grid-column:auto}main>section:nth-of-type(9),main>section:nth-of-type(10),main>section:nth-of-type(11){grid-column:1/-1}header{padding-top:38px}}
+@media(max-width:640px){header{padding:24px 16px 14px}.status-wrap{margin:10px 12px 0;padding:10px 12px}.status-line{flex-wrap:wrap}.status-count{margin-left:auto}main{padding:12px 12px 110px}section{padding:17px 14px;border-radius:13px;margin:10px 0}.row,.row3{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}h2{font-size:13px;margin-bottom:14px}.bar{padding:9px 8px calc(9px + env(safe-area-inset-bottom,0px));gap:6px}.bar button{font-size:12px;padding:9px 4px;min-height:42px}}
+
+/* Padronização visual inspirada no bloco Maria da Penha: cartões suaves, bordas definidas e títulos consistentes. */
+main>section{border:1px solid #e7b4b4;background:color-mix(in srgb,#b91c1c 2.5%,var(--card));border-radius:12px;box-shadow:none}
+main>section>h2{color:#a61b1b;letter-spacing:.035em}
+main>section>h2:after{background:#e7b4b4}
+main>section>div[id]:not(#out){margin-top:10px}
+main>section>div[id]>*:not(button){border:1px solid #e7b4b4;border-radius:12px;padding:14px;margin:12px 0;background:color-mix(in srgb,#b91c1c 2%,var(--card))}
+main>section>div[id]>.tt{border:0;padding:0;margin:14px 0 8px;background:transparent}
+main>section .tt{color:#a61b1b}
+main>section .tt2{border-top-color:#e7b4b4}
+main>section .bo{border-top-color:#e7b4b4}
+main>section .ubs,main>section .esc,main>section .crc{border-color:#e7b4b4;background:color-mix(in srgb,#b91c1c 2%,var(--card))}
+main>section input[type=text],main>section input[type=date],main>section input[type=time],main>section input[type=number],main>section input[type=tel],main>section select,main>section textarea{background:var(--card);border-color:#e1caca}
+main>section input:focus,main>section select:focus,main>section textarea:focus{border-color:#b91c1c;box-shadow:0 0 0 3px color-mix(in srgb,#b91c1c 12%,transparent)}
+@media(min-width:900px){main>section{grid-column:1/-1!important}}
+@media print{body{background:#fff;color:#111}.status-wrap{display:none}header,main{max-width:none;padding:10px}section{box-shadow:none;break-inside:avoid}.bar{display:none}}
+
+.brand-head{display:flex;align-items:center;gap:18px}.gcm-logo{display:block;width:104px;height:104px;object-fit:contain;flex:0 0 auto;background:#fff;border:1px solid var(--bd);border-radius:12px;padding:4px}.brand-copy{min-width:0}.brand-kicker{display:block;color:var(--ac);font-size:11px;letter-spacing:.14em;font-weight:800;margin:0 0 7px}header:before{display:none}.storage-note{display:flex;align-items:flex-start;gap:10px;margin:0 0 14px;padding:12px 14px;border:1px solid var(--bd);border-left:4px solid var(--ac);border-radius:11px;background:var(--card);color:var(--mut);font-size:13px}.storage-note strong{flex:0 0 auto;color:var(--ac)}.row>*,.row3>*{min-width:0}input,select,textarea{min-width:0;max-width:100%}@media(max-width:640px){header{padding:18px 12px 14px}.brand-head{align-items:flex-start;gap:12px}.gcm-logo{width:74px;height:74px;border-radius:10px;padding:3px}.brand-kicker{font-size:9px;letter-spacing:.09em;margin-bottom:5px}h1{font-size:clamp(22px,6vw,29px)}header p{font-size:13px}.status-wrap{margin-left:10px;margin-right:10px}.storage-note{display:block;padding:11px 12px;font-size:12px}.storage-note strong{display:block;margin:0 0 3px}main{padding-left:10px;padding-right:10px}section{padding:15px 12px}.row,.row3{gap:8px}.bar{gap:5px;padding-left:7px;padding-right:7px}.bar button{min-width:0;white-space:normal;overflow-wrap:anywhere;line-height:1.2;padding:8px 3px;font-size:11px}}
+@media(max-width:380px){.row,.row3{grid-template-columns:minmax(0,1fr)}.brand-head{gap:9px}.gcm-logo{width:62px;height:62px}.brand-kicker{font-size:8px;letter-spacing:.07em}.status-count{width:100%;margin-left:17px}.bar button{font-size:10px}}</style>
 </head>
 <body>
 <header>
-<div class="brandline"><span class="brandmark">RP</span><span>REGISTRO OPERACIONAL</span><span class="status-pill" id="saveStatus">Salvamento automático</span></div>
-<h1>Resumo de Plantão</h1>
-<p class="intro">Registre as atividades do turno com clareza, padronização e organização. Preencha apenas os campos aplicáveis; as informações são salvas neste aparelho.</p>
+<div class="brand-head"><img class="gcm-logo" src="logo.svg" alt="Brasão da Guarda Civil Municipal de Mongaguá"><div class="brand-copy"><span class="brand-kicker">GUARDA CIVIL MUNICIPAL • MONGAGUÁ</span><h1>Relatório de Plantão</h1><p>Registre as atividades do plantão de forma clara, objetiva e padronizada. Preencha os campos aplicáveis e confira as informações antes de gerar o relatório. Os dados são salvos automaticamente neste dispositivo.</p></div></div>
 </header>
+<div class="status-wrap" aria-live="polite">
+  <div class="status-line"><span class="status-dot" aria-hidden="true"></span><span id="saveStatus">Salvamento automático ativado</span><span class="status-count" id="completionCount">0 campos preenchidos</span></div>
+  <div class="progress-track" role="progressbar" aria-label="Preenchimento do formulário" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressTrack"><span id="progressFill"></span></div>
+</div>
 <main>
-<div class="notice storage-note" role="note"><strong>Salvamento local</strong><span>O preenchimento fica salvo somente neste navegador e não é sincronizado. Baixe o PDF para guardar uma cópia; limpar os dados do navegador ou trocar de aparelho pode apagar o formulário.</span></div>
-
-
+<div class="storage-note" role="note"><strong>Salvamento local</strong><span>Os dados ficam salvos somente neste navegador e não são sincronizados. Baixe o PDF ao concluir para guardar uma cópia. Se limpar os dados do navegador ou trocar de aparelho, o preenchimento pode ser perdido.</span></div>
 <section>
 <label for="data" style="margin-top:0">Data</label>
 <input type="date" id="data" data-k="data">
 </section>
 
 <section>
-<h2>1. Ronda aos postos</h2>
+<h2>1. Ronda nos postos</h2>
 <div class="opt">
 <label><input type="radio" name="ronda" value="Sem novidades" data-k="ronda"> Sem novidades</label>
 <label><input type="radio" name="ronda" value="Novidades" data-k="ronda"> Novidades</label>
 </div>
 <div id="rondaBox" class="hide">
-<label for="rondaDesc">Descreva as alterações, irregularidades ou providências adotadas</label>
+<label for="rondaDesc">Descreva as alterações, irregularidades ou ocorrências identificadas</label>
 <textarea id="rondaDesc" data-k="rondaDesc"></textarea>
 </div>
 </section>
 
 <section>
-<h2>2. Viatura e abastecimentos</h2>
-<label class="chk"><input type="checkbox" id="viatura" data-k="viatura"> Viatura disponível/em operação</label>
+<h2>2. Viatura e abastecimento</h2>
+<label class="chk"><input type="checkbox" id="viatura" data-k="viatura"> Viatura disponível para operação</label>
 <label for="prefixo">Prefixo da VTR</label>
 <input type="text" id="prefixo" data-k="prefixo" autocapitalize="characters" style="margin-bottom:4px">
 <div class="row">
-<div><label for="talaoAb">Nº do talão</label><input type="text" id="talaoAb" data-k="talaoAb" inputmode="numeric"></div>
+<div><label for="talaoAb">Número do talão</label><input type="text" id="talaoAb" data-k="talaoAb" inputmode="numeric"></div>
 <div><label for="horaAb">Horário</label><input type="time" id="horaAb" data-k="horaAb"></div>
-<div><label for="vale">Nº do vale</label><input type="text" id="vale" data-k="vale" inputmode="numeric"></div>
-<div><label for="litros">Litros</label><input type="text" id="litros" data-k="litros" inputmode="decimal"></div>
+<div><label for="vale">Número do vale</label><input type="text" id="vale" data-k="vale" inputmode="numeric"></div>
+<div><label for="litros">Quantidade abastecida (L)</label><input type="text" id="litros" data-k="litros" inputmode="decimal"></div>
 </div>
 <div id="abs"></div>
 <button type="button" class="sm" id="addAb">+ Adicionar abastecimento</button>
+<div id="viaturaFotos" aria-label="Fotos da viatura e do abastecimento"></div>
 </section>
 
 <section>
 <h2>3. Ausências no plantão</h2>
-<label for="ausencia" style="margin-top:0">Servidor ausente e justificativa</label>
+<label for="ausencia" style="margin-top:0">Identificação do servidor ausente e justificativa</label>
 <textarea id="ausencia" data-k="ausencia"></textarea>
 </section>
 
 <section>
 <h2>4. Remanejamento de servidor</h2>
-<label for="remanej" style="margin-top:0">Informe o servidor, a origem, o destino e o motivo do remanejamento</label>
+<label for="remanej" style="margin-top:0">Identificação do servidor, unidade de origem e unidade de destino</label>
 <textarea id="remanej" data-k="remanej"></textarea>
 </section>
 
 <section>
-<h2>5. Perturbação do sossego</h2>
+<h2>5. Atendimento de perturbação do sossego</h2>
 <div id="pss"></div>
-<button type="button" class="sm" id="addPs">+ Adicionar registro de atendimento</button>
+<button type="button" class="sm" id="addPs">+ Registrar atendimento</button>
 </section>
 
 <section>
-<h2>6. Boletins de ocorrência — GCM</h2>
+<h2>6. Boletins de ocorrência (GCM)</h2>
 <div id="bos"></div>
 <button type="button" class="sm" id="addBo">+ Adicionar B.O.</button>
 </section>
@@ -152,19 +163,19 @@ canvas{width:100%;height:150px;background:var(--bg);border:1px dashed var(--bd);
 <section>
 <h2>7. Autuações de trânsito</h2>
 <div id="ats"></div>
-<button type="button" class="sm" id="addAt">+ Adicionar autuação</button>
-<div style="margin-top:14px;padding:12px;border:1px solid var(--bd);border-radius:10px;background:var(--bg);display:flex;justify-content:space-between;align-items:center"><span>Total de autuações registradas</span><strong id="totAt" style="font-size:22px">0</strong></div>
+<button type="button" class="sm" id="addAt">+ Registrar autuação</button>
+<div style="margin-top:14px;padding:12px;border:1px solid var(--bd);border-radius:10px;background:var(--bg);display:flex;justify-content:space-between;align-items:center"><span>Total de autuações</span><strong id="totAt" style="font-size:22px">0</strong></div>
 </section>
 
 <section>
 <h2>8. Solicitações do Ministério Público</h2>
 <div id="mps"></div>
-<button type="button" class="sm" id="addMp">+ Adicionar solicitação</button>
+<button type="button" class="sm" id="addMp">+ Registrar solicitação</button>
 </section>
 
 <section>
-<h2>9. Ronda às unidades de saúde</h2>
-<p style="margin:0 0 10px;color:var(--mut);font-size:13px">Toque para destacar as unidades onde a ronda foi realizada.</p>
+<h2>9. Rondas em unidades de saúde</h2>
+<p style="margin:0 0 10px;color:var(--mut);font-size:13px">Marque cada unidade visitada. O horário será registrado automaticamente no momento da seleção.</p>
 <label class="ubs"><input type="checkbox" data-k="ubs0"> UBS Florida Mirim</label>
 <label class="ubs"><input type="checkbox" data-k="ubs1"> UBS Itaguaí</label>
 <label class="ubs"><input type="checkbox" data-k="ubs2"> UBS Agenor Campos</label>
@@ -179,8 +190,8 @@ canvas{width:100%;height:150px;background:var(--bg);border:1px dashed var(--bd);
 </section>
 
 <section>
-<h2>10. Ronda às escolas (EMEF, EMEIEF e EMEI)</h2>
-<p style="margin:0 0 10px;color:var(--mut);font-size:13px">Toque para destacar as escolas onde a ronda foi realizada.</p>
+<h2>10. Rondas em unidades escolares</h2>
+<p style="margin:0 0 10px;color:var(--mut);font-size:13px">Marque cada unidade escolar visitada. O horário será registrado automaticamente no momento da seleção.</p>
 <label class="esc"><input type="checkbox" data-k="esc0"> EMEF Sirana</label>
 <label class="esc"><input type="checkbox" data-k="esc1"> EMEF Gilvado</label>
 <label class="esc"><input type="checkbox" data-k="esc2"> EMEF Regina Maria</label>
@@ -207,8 +218,8 @@ canvas{width:100%;height:150px;background:var(--bg);border:1px dashed var(--bd);
 </section>
 
 <section>
-<h2>11. Ronda às creches</h2>
-<p style="margin:0 0 10px;color:var(--mut);font-size:13px">Toque para destacar as creches onde a ronda foi realizada.</p>
+<h2>11. Rondas em creches</h2>
+<p style="margin:0 0 10px;color:var(--mut);font-size:13px">Marque cada creche visitada. O horário será registrado automaticamente no momento da seleção.</p>
 <label class="crc"><input type="checkbox" data-k="crc0"> Creche Vera Lúcia</label>
 <label class="crc"><input type="checkbox" data-k="crc1"> Creche Tia Dita</label>
 <label class="crc"><input type="checkbox" data-k="crc2"> Creche Suely Silva</label>
@@ -225,48 +236,55 @@ canvas{width:100%;height:150px;background:var(--bg);border:1px dashed var(--bd);
 </section>
 
 <section>
-<h2>12. Ocorrência de trânsito sem vítima</h2>
+<h2>12. Ocorrências de violência doméstica e familiar contra a mulher — Lei Maria da Penha</h2>
+<p style="margin:0 0 10px;color:var(--mut);font-size:13px">Registre os fatos de forma objetiva, cronológica e sem julgamentos. Evite incluir dados pessoais desnecessários; utilize o sistema oficial autorizado para informações sensíveis.</p>
+<div id="marias"></div>
+<button type="button" class="sm" id="addMaria">+ Adicionar ocorrência</button>
+</section>
+
+<section>
+<h2>13. Ocorrência de trânsito sem vítima</h2>
 <div id="ocs"></div>
-<button type="button" class="sm" id="addOc">+ Adicionar envolvido</button>
+<button type="button" class="sm" id="addOc">+ Adicionar pessoa envolvida</button>
 </section>
 
 <section>
-<h2>13. Ocorrência de trânsito com vítima</h2>
+<h2>14. Ocorrência de trânsito com vítima</h2>
 <div id="ovs"></div>
-<button type="button" class="sm" id="addOv">+ Adicionar envolvido</button>
+<button type="button" class="sm" id="addOv">+ Adicionar pessoa envolvida</button>
 </section>
 
 <section>
-<h2>14. Ocorrência envolvendo transeunte</h2>
+<h2>15. Ocorrência envolvendo transeunte</h2>
 <div id="trs"></div>
-<button type="button" class="sm" id="addTr">+ Adicionar envolvido</button>
+<button type="button" class="sm" id="addTr">+ Adicionar pessoa envolvida</button>
 </section>
 
 <section>
-<h2>15. Repasse de boletim de ocorrência</h2>
+<h2>16. Repasse de boletim de ocorrência</h2>
 <div id="rbs"></div>
 <button type="button" class="sm" id="addRb">+ Adicionar repasse</button>
 </section>
 
 <section>
-<h2>16. Abordagens</h2>
+<h2>17. Abordagens</h2>
 <div id="ars"></div>
-<button type="button" class="sm" id="addAr">+ Adicionar abordagem</button>
+<button type="button" class="sm" id="addAr">+ Registrar abordagem</button>
 </section>
 
 <section>
-<h2>17. Apreensão de bicicleta</h2>
+<h2>18. Apreensão de bicicleta</h2>
 <div id="bks"></div>
-<button type="button" class="sm" id="addBk">+ Adicionar apreensão</button>
+<button type="button" class="sm" id="addBk">+ Registrar apreensão</button>
 </section>
 
 <section>
 <h2>Responsável</h2>
-<label for="resp" style="margin-top:0">Responsável pelo preenchimento do relatório</label>
+<label for="resp" style="margin-top:0">Nome do responsável pelo plantão</label>
 <input type="text" id="resp" data-k="resp" autocomplete="name">
-<label>Assinatura do responsável (desenhe com o dedo ou mouse)</label>
+<label>Assinatura do responsável pelo plantão</label>
 <canvas id="sig"></canvas>
-<button type="button" class="sm" id="clrSig">Limpar assinatura</button>
+<button type="button" class="sm" id="clrSig">Apagar assinatura</button>
 </section>
 
 <div id="msg"></div>
@@ -274,9 +292,9 @@ canvas{width:100%;height:150px;background:var(--bg);border:1px dashed var(--bd);
 </main>
 
 <div class="bar">
-<button type="button" id="clear">Limpar</button>
+<button type="button" id="clear">Limpar formulário</button>
 <button type="button" id="copy">Copiar relatório</button>
-<button type="button" class="p" id="share">Gerar / compartilhar PDF</button>
+<button type="button" class="p" id="share">Gerar ou enviar PDF</button>
 </div>
 
 <script>
@@ -296,7 +314,7 @@ bosEl.appendChild(d);
 }
 function addAb(t,h,v,l){
 var d=document.createElement("div");d.className="ab";d.style.cssText="border-top:1px dashed var(--bd);margin-top:10px;padding-top:2px";
-d.innerHTML='<div class="row"><div><label>Nº do talão</label><input type="text" class="at" inputmode="numeric"></div><div><label>Horário</label><input type="time" class="ah"></div><div><label>Nº do vale</label><input type="text" class="av" inputmode="numeric"></div><div><label>Litros</label><input type="text" class="al" inputmode="decimal"></div></div>';
+d.innerHTML='<div class="row"><div><label>Número do talão</label><input type="text" class="at" inputmode="numeric"></div><div><label>Horário</label><input type="time" class="ah"></div><div><label>Número do vale</label><input type="text" class="av" inputmode="numeric"></div><div><label>Quantidade abastecida (L)</label><input type="text" class="al" inputmode="decimal"></div></div>';
 d.querySelector(".at").value=t||"";d.querySelector(".ah").value=h||"";d.querySelector(".av").value=v||"";d.querySelector(".al").value=l||"";
 var r=document.createElement("button");r.type="button";r.className="sm";r.textContent="Remover";r.onclick=function(){d.remove();save()};d.appendChild(r);
 $("#abs").appendChild(d);
@@ -444,14 +462,26 @@ d.querySelector(".pa").addEventListener("change",function(){var on=d.querySelect
 if($("#pss").children.length){var r=document.createElement("button");r.type="button";r.className="sm";r.textContent="Remover";r.onclick=function(){d.remove();save()};d.appendChild(r)}
 $("#pss").appendChild(d);
 }
-function addMp(t,l,i,f){
-var d=document.createElement("div");d.className="mp";
+function addMp(t,l,i,f,rs,inf){
+var d=document.createElement("div");d.className="mp";addMp.n=(addMp.n||0)+1;var n=addMp.n;
 if($("#mps").children.length)d.style.cssText="border-top:1px dashed var(--bd);margin-top:10px;padding-top:2px";
-d.innerHTML='<div class="row"><div><label>Talão nº</label><input type="text" class="mt" inputmode="numeric"></div><div><label>Local</label><input type="text" class="ml"></div><div><label>Horário inicial</label><input type="time" class="mi"></div><div><label>Horário final</label><input type="time" class="mf"></div></div>';
-d.querySelector(".mt").value=t||"";d.querySelector(".ml").value=l||"";d.querySelector(".mi").value=i||"";d.querySelector(".mf").value=f||"";
+d.innerHTML='<div class="row"><div><label>Talão nº</label><input type="text" class="mt" inputmode="numeric"></div><div><label>Local</label><input type="text" class="ml"></div><div><label>Horário inicial</label><input type="time" class="mi"></div><div><label>Horário final</label><input type="time" class="mf"></div></div><div class="opt" style="margin-top:10px"><label><input type="radio" class="mr" name="mp'+n+'" value="Sem novidades"> Sem novidades</label><label><input type="radio" class="mr" name="mp'+n+'" value="Novidades"> Novidades</label></div><div class="mpinfo hide"><label>Informação</label><textarea class="mn"></textarea></div>';
+d.querySelector(".mt").value=t||"";d.querySelector(".ml").value=l||"";d.querySelector(".mi").value=i||"";d.querySelector(".mf").value=f||"";Array.prototype.forEach.call(d.querySelectorAll(".mr"),function(x){x.checked=(x.value===rs)});
+d.querySelector(".mn").value=inf||"";d.querySelector(".mpinfo").classList.toggle("hide",rs!=="Novidades");
+Array.prototype.forEach.call(d.querySelectorAll(".mr"),function(x){x.addEventListener("change",function(){var on=d.querySelector(".mr:checked").value==="Novidades";d.querySelector(".mpinfo").classList.toggle("hide",!on);if(!on)d.querySelector(".mn").value=""})});
 if($("#mps").children.length){var r=document.createElement("button");r.type="button";r.className="sm";r.textContent="Remover";r.onclick=function(){d.remove();save()};d.appendChild(r)}
 $("#mps").appendChild(d);
 }
+function addMaria(v){
+ v=v||[];if(Array.isArray(v[9])){v[19]=v[9];for(var mi=9;mi<=18;mi++)v[mi]="";}var d=document.createElement("div");d.className="maria";
+ d.innerHTML='<div class="tt">Ocorrência</div><div class="row"><div><label>Data</label><input class="md" type="date"></div><input class="mh" type="hidden" value=""></div><div class="row"><div><label>Talão</label><input class="mtalao" type="text"></div><div><label>Horário inicial</label><input class="mhini" type="time"></div><div><label>Horário final</label><input class="mhfim" type="time"></div></div><div class="tt2">Identificação</div><label>Nome</label><input class="mnome" type="text" autocomplete="name"><div class="row"><div><label>RG</label><input class="mrg" type="text"></div><div><label>CPF</label><input class="mcpf" type="text" inputmode="numeric"></div><div><label>CNH</label><input class="mcnh" type="text"></div><div><label>Data de nascimento</label><input class="mnasc" type="date"></div></div><label>Endereço residencial</label><input class="mend" type="text" autocomplete="street-address"><label>Telefone</label><input class="mtel" type="tel" autocomplete="tel"><div class="tt2">Dados da ocorrência</div><label>Local da ocorrência</label><input class="mloc" type="text" placeholder="Endereço ou referência necessária"><label>Tipo de atendimento</label><select class="mtipo"><option value="">Selecione</option><option>Atendimento de ocorrência</option><option>Averiguação</option><option>Acompanhamento de vítima</option><option>Apoio a outro órgão</option><option>Encaminhamento</option><option>Outro</option></select><label>Relato objetivo dos fatos</label><textarea class="mrel" placeholder="Descreva os fatos de forma clara e cronológica, distinguindo informações relatadas de fatos constatados."></textarea><label>Providências adotadas</label><textarea class="mprov" placeholder="Registre acionamentos, orientações, encaminhamentos e demais providências efetivamente realizadas."></textarea><div class="row"><div><label>Situação do atendimento</label><select class="msit"><option>Em andamento</option><option>Concluído</option><option>Encaminhado</option><option>Pendente de providências</option></select></div><div><label>Nº do boletim/protocolo (se houver)</label><input class="mprot" type="text"></div></div><label>Pendências e observações</label><textarea class="mpend" placeholder="Providências pendentes ou observações necessárias."></textarea>';
+ var keys=["md","mh","mloc","mtipo","mrel","mprov","msit","mprot","mpend","mtalao","mhini","mhfim","mnome","mrg","mcpf","mcnh","mnasc","mend","mtel"];
+ keys.forEach(function(k,i){var e=d.querySelector("."+k);if(e)e.value=v[i]|| (k==="msit"?"Em andamento":"")});
+ initFotos(d,v[19]||[]);
+ var rem=document.createElement("button");rem.type="button";rem.className="sm mrem";rem.textContent="Remover ocorrência";rem.onclick=function(){d.remove();save()};d.appendChild(rem);
+ $("#marias").appendChild(d);
+}
+function mariaState(){return $$(".maria").map(function(d){var a=["md","mh","mloc","mtipo","mrel","mprov","msit","mprot","mpend","mtalao","mhini","mhfim","mnome","mrg","mcpf","mcnh","mnasc","mend","mtel"].map(function(k){return d.querySelector("."+k).value});a.push(fotosDe(d));return a})}
 function bos(){return $$(".bo").map(function(d){return{n:d.querySelector(".bn").value.trim(),t:d.querySelector(".bt").value.trim()}}).filter(function(b){return b.n||b.t})}
 
 function state(){
@@ -463,6 +493,8 @@ else if(e.type==="checkbox")s[k]=e.checked;
 else s[k]=e.value;
 });
 s.bos=$$(".bo").map(function(d){return[d.querySelector(".bn").value,d.querySelector(".bt").value]});
+s.marias=mariaState();
+s.viaturaFotos=fotosDe($("#viaturaFotos"));
 s.hr={};$$(".hr").forEach(function(sp){var i=sp.parentNode.querySelector("input");if(i.checked&&sp.textContent)s.hr[i.dataset.k]=sp.textContent});
 s.bks=$$(".bk").map(function(d){var a=[];for(var i=0;i<15;i++)a.push(d.querySelector(".f"+i).value);return a});
 s.ars=$$(".ar").map(function(d){var a=[];for(var i=0;i<8;i++)a.push(d.querySelector(".f"+i).value);var p=d.querySelector(".f8:checked");a.push(p?p.value:"");var ph=[];d.querySelectorAll(".fotos img").forEach(function(i){ph.push(i.src)});a.push(ph);return a});
@@ -472,26 +504,25 @@ s.ovs=$$(".ov").map(function(d){var a=[];for(var i=0;i<25;i++)a.push(d.querySele
 s.ocs=$$(".oc").map(function(d){var a=[];for(var i=0;i<20;i++)a.push(d.querySelector(".f"+i).value);a.push(fotosDe(d));recDe(d,a);return a});
 s.ats=$$(".au").map(function(d){return[d.querySelector(".ua").value,d.querySelector(".uc").value,d.querySelector(".ur").value]});
 s.pss=$$(".ps").map(function(d){return[d.querySelector(".pt").value,d.querySelector(".pe").value,d.querySelector(".pi").value,d.querySelector(".pf").value,d.querySelector(".pa").checked,d.querySelector(".po").checked,d.querySelector(".pn").value]});
-s.mps=$$(".mp").map(function(d){return[d.querySelector(".mt").value,d.querySelector(".ml").value,d.querySelector(".mi").value,d.querySelector(".mf").value]});
+s.mps=$$(".mp").map(function(d){return[d.querySelector(".mt").value,d.querySelector(".ml").value,d.querySelector(".mi").value,d.querySelector(".mf").value,(d.querySelector(".mr:checked")||{value:""}).value,d.querySelector(".mn").value]});
 s.abs=$$(".ab").map(function(d){return[d.querySelector(".at").value,d.querySelector(".ah").value,d.querySelector(".av").value,d.querySelector(".al").value]});
 s.sig=drawn?sig.toDataURL():"";
 return s;
 }
 function updAt(){var n=$$(".au").filter(function(d){return d.querySelector(".ua").value.trim()||d.querySelector(".uc").value.trim()||d.querySelector(".ur").value.trim()}).length;$("#totAt").textContent=n}
-function save(){
-updAt();
-try {
-  localStorage.setItem(KEY,JSON.stringify(state()));
-  var status=$("#saveStatus");
-  if(status){status.textContent="Salvo neste aparelho";status.style.color="var(--ok)";}
-} catch(e) {
-  msg("Armazenamento cheio: algumas informações ou fotos podem não ser salvas.");
-  var status=$("#saveStatus"); if(status){status.textContent="Falha ao salvar";status.style.color="#b45309";}
+function updateProgress(){
+ var fields=$$('input:not([type=button]):not([type=submit]),select,textarea').filter(function(e){return e.id!=='out'&&e.id!=='sig'&&!e.closest('.bar')});
+ var filled=fields.filter(function(e){if(e.type==='checkbox'||e.type==='radio')return e.checked;return !!String(e.value||'').trim()}).length;
+ var pct=fields.length?Math.round(filled/fields.length*100):0;
+ var count=$('#completionCount'),fill=$('#progressFill'),track=$('#progressTrack');
+ if(count)count.textContent=filled+' de '+fields.length+' campos preenchidos';
+ if(fill)fill.style.width=pct+'%';if(track)track.setAttribute('aria-valuenow',String(pct));
 }
-}
+function save(){updAt();updateProgress();try{localStorage.setItem(KEY,JSON.stringify(state()));var st=$('#saveStatus');if(st)st.textContent='Alterações salvas neste dispositivo'}catch(e){var st=$('#saveStatus');if(st)st.textContent='Não foi possível salvar automaticamente';msg("Armazenamento insuficiente: algumas imagens podem não ser salvas.")}}
 function load(){
 var s=null;try{s=JSON.parse(localStorage.getItem(KEY)||"null")}catch(e){}
-if(!s){addBo();addMp();addPs();addAt();addOc();addOv();addTr();addRb();addAr();addBk();$("#data").value=hoje();toggleRonda();return}
+$("#viaturaFotos").innerHTML="";initFotos($("#viaturaFotos"),s&&s.viaturaFotos||[]);
+if(!s){addBo();addMp();addPs();addAt();addMaria();addOc();addOv();addTr();addRb();addAr();addBk();$("#data").value=hoje();toggleRonda();return}
 $$("[data-k]").forEach(function(e){
 var k=e.dataset.k;
 if(e.type==="radio")e.checked=(s[k]===e.value);
@@ -501,8 +532,9 @@ else if(s[k]!=null)e.value=s[k];
 if(!$("#data").value)$("#data").value=hoje();
 $$(".hr").forEach(function(sp){var i=sp.parentNode.querySelector("input");sp.textContent=(s.hr&&s.hr[i.dataset.k]&&i.checked)?s.hr[i.dataset.k]:""});
 (s.bos&&s.bos.length?s.bos:[["",""]]).forEach(function(b){addBo(b[0],b[1])});
+(s.marias&&s.marias.length?s.marias:[[]]).forEach(function(m){addMaria(m)});
 (s.abs||[]).forEach(function(a){addAb(a[0],a[1],a[2],a[3])});
-(s.mps&&s.mps.length?s.mps:[["","","",""]]).forEach(function(m){addMp(m[0],m[1],m[2],m[3])});
+(s.mps&&s.mps.length?s.mps:[["","","",""]]).forEach(function(m){addMp(m[0],m[1],m[2],m[3],m[4],m[5])});
 (s.pss&&s.pss.length?s.pss:[["","","","",false,false]]).forEach(function(p){addPs(p[0],p[1],p[2],p[3],p[4],p[5],p[6])});
 (s.ats&&s.ats.length?s.ats:[["","",""]]).forEach(function(u){addAt(u[0],u[1],u[2])});
 (s.ocs&&s.ocs.length?s.ocs:[[]]).forEach(function(o){addOc(o)});
@@ -519,7 +551,7 @@ function toggleRonda(){var v=($$('input[name=ronda]:checked')[0]||{}).value;$("#
 function nh(e){var l=e.parentNode,h=l.querySelector(".hr").textContent;return l.textContent.replace(h,"").trim()+(h?" ("+h+")":"")}
 function texto(){
 var s=state(),L=[],v=function(x){return(x||"").toString().trim()};
-L.push("RESUMO DE PLANTÃO");
+L.push("RELATÓRIO DE PLANTÃO");
 L.push("Data: "+fmtData(s.data));
 L.push("");
 L.push("1. RONDA AOS POSTOS");
@@ -527,36 +559,41 @@ L.push(v(s.ronda)||"—");
 if(s.ronda==="Novidades"&&v(s.rondaDesc))L.push(v(s.rondaDesc));
 L.push("");
 L.push("2. VIATURA E ABASTECIMENTO");
-L.push("Viatura disponível/em operação: "+(s.viatura?"Sim":"Não"));
+L.push("Viatura disponível para operação: "+(s.viatura?"Sim":"Não informado / indisponível"));
 L.push("Prefixo da VTR: "+(v(s.prefixo)||"—"));
-L.push("Talão nº: "+(v(s.talaoAb)||"—")+" | Horário: "+(v(s.horaAb)||"—")+" | Vale nº: "+(v(s.vale)||"—")+" | Litros: "+(v(s.litros)||"—"));
-(s.abs||[]).forEach(function(a){if(a[0]||a[1]||a[2]||a[3])L.push("Talão nº: "+(a[0]||"—")+" | Horário: "+(a[1]||"—")+" | Vale nº: "+(a[2]||"—")+" | Litros: "+(a[3]||"—"))});
+L.push("Talão nº: "+(v(s.talaoAb)||"—")+" | Horário: "+(v(s.horaAb)||"—")+" | Vale nº: "+(v(s.vale)||"—")+" | Quantidade abastecida (L): "+(v(s.litros)||"—"));
+if(s.viaturaFotos&&s.viaturaFotos.length)L.push("Fotos anexadas: "+s.viaturaFotos.length);
+(s.abs||[]).forEach(function(a){if(a[0]||a[1]||a[2]||a[3])L.push("Talão nº: "+(a[0]||"—")+" | Horário: "+(a[1]||"—")+" | Vale nº: "+(a[2]||"—")+" | Quantidade abastecida (L): "+(a[3]||"—"))});
 L.push("");
-L.push("3. AUSÊNCIA NO PLANTÃO");L.push(v(s.ausencia)||"—");L.push("");
-L.push("4. REMANEJAMENTO DE SERVIDOR");L.push(v(s.remanej)||"—");L.push("");
-L.push("5. PERTURBAÇÃO DO SOSSEGO");
+L.push("3. AUSÊNCIAS NO PLANTÃO");L.push(v(s.ausencia)||"—");L.push("");
+L.push("4. REMANEJAMENTO DE SERVIDORES");L.push(v(s.remanej)||"—");L.push("");
+L.push("5. ATENDIMENTOS DE PERTURBAÇÃO DO SOSSEGO");
 var ps=s.pss.filter(function(p){return p[0]||p[1]||p[2]||p[3]||p[4]||p[5]});
-if(!ps.length)L.push("—");ps.forEach(function(p){L.push("Talão nº: "+(p[0]||"—")+" | Endereço: "+(p[1]||"—")+" | Início: "+(p[2]||"—")+" | Fim: "+(p[3]||"—")+" | Autuado: "+(p[4]?("Sim"+(p[6]?" (nº "+p[6]+")":"")):"Não")+" | Orientado: "+(p[5]?"Sim":"Não"))});
+if(!ps.length)L.push("—");ps.forEach(function(p){L.push("Talão nº: "+(p[0]||"—")+" | Endereço: "+(p[1]||"—")+" | Início: "+(p[2]||"—")+" | Fim: "+(p[3]||"—")+" | Autuação realizada: "+(p[4]?("Sim"+(p[6]?" (nº "+p[6]+")":"")):"Não")+" | Orientação realizada: "+(p[5]?"Sim":"Não"))});
 L.push("Total: "+ps.length+" atendimento(s) | "+ps.filter(function(p){return p[4]}).length+" autuado(s) | "+ps.filter(function(p){return p[5]}).length+" orientado(s)");L.push("");
-L.push("6. Boletins de ocorrência — GCM");
+L.push("6. BOLETINS DE OCORRÊNCIA — GCM");
 var b=bos();if(!b.length)L.push("—");b.forEach(function(x){L.push("Natureza: "+(x.n||"—")+" | Talão nº: "+(x.t||"—"))});L.push("");
-L.push("7. AUTUAÇÃO DE TRÂNSITO");
+L.push("7. AUTUAÇÕES DE TRÂNSITO");
 var us=s.ats.filter(function(u){return u[0]||u[1]||u[2]});
 if(!us.length)L.push("—");us.forEach(function(u){L.push("AIT nº: "+(u[0]||"—")+" | Código: "+(u[1]||"—")+" | Artigo: "+(u[2]||"—"))});
 L.push("Total: "+us.length+" autuação(ões)");L.push("");
-L.push("8. SOLICITAÇÃO MINISTÉRIO PÚBLICO");
-var ms=s.mps.filter(function(m){return m[0]||m[1]||m[2]||m[3]});
-if(!ms.length)L.push("—");ms.forEach(function(m){L.push("Talão nº: "+(m[0]||"—")+" | Local: "+(m[1]||"—")+" | Início: "+(m[2]||"—")+" | Fim: "+(m[3]||"—"))});L.push("");
-L.push("9. RONDA UNIDADE BÁSICA SAÚDE");
+L.push("8. SOLICITAÇÕES DO MINISTÉRIO PÚBLICO");
+var ms=s.mps.filter(function(m){return m[0]||m[1]||m[2]||m[3]||m[4]||m[5]});
+if(!ms.length)L.push("—");ms.forEach(function(m){L.push("Talão nº: "+(m[0]||"—")+" | Local: "+(m[1]||"—")+" | Início: "+(m[2]||"—")+" | Fim: "+(m[3]||"—")+" | Resultado: "+(m[4]||"—"));if(m[5])L.push("Informação: "+m[5])});L.push("");
+L.push("9. RONDAS EM UNIDADES DE SAÚDE");
 var ub=$$(".ubs input:checked").map(nh);
-L.push(ub.length?"Ronda realizada em: "+ub.join(", "):"—");L.push("");
-L.push("10. RONDA EMEF E EMEIEF");
+L.push(ub.length?"Unidades visitadas: "+ub.join(", "):"—");L.push("");
+L.push("10. RONDAS EM UNIDADES ESCOLARES");
 var ec=$$(".esc input:checked").map(nh);
-L.push(ec.length?"Ronda realizada em: "+ec.join(", "):"—");L.push("");
-L.push("11. RONDA CRECHES");
+L.push(ec.length?"Unidades visitadas: "+ec.join(", "):"—");L.push("");
+L.push("11. RONDAS EM CRECHES");
 var cr=$$(".crc input:checked").map(nh);
-L.push(cr.length?"Ronda realizada em: "+cr.join(", "):"—");L.push("");
-L.push("12. OCORRÊNCIA DE TRÂNSITO SEM VÍTIMA");
+L.push(cr.length?"Unidades visitadas: "+cr.join(", "):"—");L.push("");
+L.push("12. OCORRÊNCIAS DE VIOLÊNCIA DOMÉSTICA E FAMILIAR CONTRA A MULHER — LEI MARIA DA PENHA");
+var vm=mariaState().filter(function(m){return m.some(function(x){return String(x||"").trim()})});
+if(!vm.length)L.push("—");
+vm.forEach(function(m,i){L.push("Ocorrência "+(i+1));L.push("Data: "+(m[0]?fmtData(m[0]):"—"));L.push("Talão: "+(m[9]||"—")+" | Horário inicial: "+(m[10]||"—")+" | Horário final: "+(m[11]||"—"));L.push("Nome: "+(m[12]||"—")+" | RG: "+(m[13]||"—")+" | CPF: "+(m[14]||"—")+" | CNH: "+(m[15]||"—"));L.push("Data de nascimento: "+(m[16]?fmtData(m[16]):"—")+" | Endereço residencial: "+(m[17]||"—")+" | Telefone: "+(m[18]||"—"));L.push("Local: "+(m[2]||"—"));L.push("Tipo de atendimento: "+(m[3]||"—"));L.push("Relato objetivo: "+(m[4]||"—"));L.push("Providências adotadas: "+(m[5]||"—"));L.push("Situação: "+(m[6]||"—")+" | Boletim/protocolo: "+(m[7]||"—"));L.push("Pendências e observações: "+(m[8]||"—"));if(m[19]&&m[19].length)L.push("Fotos anexadas: "+m[19].length);});L.push("");
+L.push("13. OCORRÊNCIA DE TRÂNSITO SEM VÍTIMA");
 var oc=s.ocs.filter(function(o){return o.some(nv)});
 if(!oc.length)L.push("—");
 oc.forEach(function(o,i){var g=function(k){return(o[k]&&o[k].trim())||"—"};
@@ -573,7 +610,7 @@ L.push("Local dos fatos: "+g(14));
 L.push("Observação: "+g(15));
 if(o[20]&&o[20].length)L.push("Fotos anexadas: "+o[20].length)});
 L.push("");
-L.push("13. OCORRÊNCIA DE TRÂNSITO COM VÍTIMA");
+L.push("14. OCORRÊNCIA DE TRÂNSITO COM VÍTIMA");
 var ov=s.ovs.filter(function(o){return o.some(nv)});
 if(!ov.length)L.push("—");
 ov.forEach(function(o,i){var g=function(k){return(o[k]&&o[k].trim())||"—"};
@@ -595,7 +632,7 @@ L.push("Chegada: "+g(17)+" | Saída: "+g(18));
 L.push("Destino da vítima: "+g(19));
 if(o[25]&&o[25].length)L.push("Fotos anexadas: "+o[25].length)});
 L.push("");
-L.push("14. OCORRÊNCIA COM TRANSEUNTE");
+L.push("15. OCORRÊNCIA ENVOLVENDO TRANSEUNTE");
 var tq=s.trs.filter(function(o){return o.some(nv)});
 if(!tq.length)L.push("—");
 tq.forEach(function(o,i){var g=function(k){return(o[k]&&o[k].trim())||"—"};
@@ -614,7 +651,7 @@ L.push("Local: "+g(20)+" | Perícia: "+g(21));
 if(o[21]==="Com perícia"){L.push("Perito 1: "+g(22)+" | Perito 2: "+g(23));L.push("Viatura da perícia: "+g(24)+" | Chegada: "+g(25)+" | Saída: "+g(26))}
 if(o[19]&&o[19].length)L.push("Fotos anexadas: "+o[19].length)});
 L.push("");
-L.push("15. REPASSE BOLETIM DE OCORRÊNCIA");
+L.push("16. REPASSE BOLETIM DE OCORRÊNCIA");
 var rq=s.rbs.map(function(o){o=o.slice();if(o[29]===MODELO)o[29]="";return o}).filter(function(o){return o.some(nv)});
 if(!rq.length)L.push("—");
 rq.forEach(function(o,i){var g=function(k){return(o[k]&&o[k].trim())||"—"};
@@ -635,7 +672,7 @@ if(o[28]==="Com perícia"){L.push("Perito 1: "+g(31)+" | Perito 2: "+g(32));L.pu
 L.push("Histórico: "+g(29));
 if(o[30]&&o[30].length)L.push("Fotos anexadas: "+o[30].length)});
 L.push("");
-L.push("16. ABORDAGEM");
+L.push("17. ABORDAGENS");
 var aq=s.ars.filter(function(o){return o.some(function(x){return typeof x==="string"?x.trim():(x&&x.length)})});
 if(!aq.length)L.push("—");
 aq.forEach(function(o,i){var g=function(k){return(o[k]&&o[k].trim())||"—"};
@@ -647,7 +684,7 @@ L.push("Motivo: "+g(7));
 L.push("Resultado: "+g(8));
 if(o[9]&&o[9].length)L.push("Fotos anexadas: "+o[9].length)});
 L.push("");
-L.push("17. APREENSÃO DE BICICLETA");
+L.push("18. APREENSÃO DE BICICLETA");
 var bq=s.bks.filter(function(o){return o.some(nv)});
 if(!bq.length)L.push("—");
 bq.forEach(function(o,i){var g=function(k){return(o[k]&&o[k].trim())||"—"};
@@ -661,7 +698,7 @@ L.push("Local dos fatos: "+g(12));
 L.push("Motivo do recolhimento: "+g(13));
 L.push("Destino: "+g(14))});
 L.push("");
-L.push("Responsável pelo preenchimento do relatório: "+(v(s.resp)||"—"));
+L.push("Responsável pelo plantão: "+(v(s.resp)||"—"));
 return L.join("\n");
 }
 
@@ -683,11 +720,12 @@ sig.addEventListener("pointerup",up);sig.addEventListener("pointercancel",up);
 }
 
 $$(".ubs,.esc,.crc").forEach(function(l){var sp=document.createElement("span");sp.className="hr";l.appendChild(sp)});
-initSig();load();save();
+initSig();load();updateProgress();
 try{var ic=document.createElement("canvas");ic.width=ic.height=180;var x=ic.getContext("2d");x.fillStyle="#1d4ed8";x.fillRect(0,0,180,180);x.font="96px sans-serif";x.textAlign="center";x.textBaseline="middle";x.fillText("📋",90,95);var lk=document.createElement("link");lk.rel="apple-touch-icon";lk.href=ic.toDataURL("image/png");document.head.appendChild(lk)}catch(e){}
 document.addEventListener("input",save);
 document.addEventListener("change",function(e){if(e.target.name==="ronda")toggleRonda();var l=e.target.parentNode,sp=(l&&l.classList&&(l.classList.contains("ubs")||l.classList.contains("esc")||l.classList.contains("crc")))?l.querySelector(".hr"):null;if(sp){if(e.target.checked){var n=new Date();sp.textContent=("0"+n.getHours()).slice(-2)+":"+("0"+n.getMinutes()).slice(-2)}else sp.textContent=""}save()});
 $("#addBo").onclick=function(){addBo();save()};
+$("#addMaria").onclick=function(){addMaria();save()};
 $("#addAb").onclick=function(){addAb();save()};
 $("#addMp").onclick=function(){addMp();save()};
 $("#addPs").onclick=function(){addPs();save()};
@@ -700,15 +738,15 @@ $("#addAr").onclick=function(){addAr();save()};
 $("#addBk").onclick=function(){addBk();save()};
 $("#clrSig").onclick=function(){ctx.clearRect(0,0,sig.clientWidth,sig.clientHeight);drawn=false;save()};
 $("#clear").onclick=function(){
-if(!confirm("Deseja apagar todos os dados deste relatório? Esta ação não pode ser desfeita."))return;
+if(!confirm("Limpar todos os campos?"))return;
 try{localStorage.removeItem(KEY)}catch(e){}
 $$("[data-k]").forEach(function(e){if(e.type==="radio"||e.type==="checkbox")e.checked=false;else e.value=""});$$(".hr").forEach(function(sp){sp.textContent=""});
-bosEl.innerHTML="";addBo();$("#abs").innerHTML="";$("#mps").innerHTML="";addMp();$("#pss").innerHTML="";addPs();$("#ats").innerHTML="";addAt();updAt();$("#ocs").innerHTML="";addOc();$("#ovs").innerHTML="";addOv();$("#trs").innerHTML="";addTr();$("#rbs").innerHTML="";addRb();$("#ars").innerHTML="";addAr();$("#bks").innerHTML="";addBk();ctx.clearRect(0,0,sig.clientWidth,sig.clientHeight);drawn=false;
-$("#data").value=hoje();$("#out").style.display="none";toggleRonda();
+bosEl.innerHTML="";addBo();$("#abs").innerHTML="";$("#viaturaFotos").innerHTML="";initFotos($("#viaturaFotos"),[]);$("#mps").innerHTML="";addMp();$("#pss").innerHTML="";addPs();$("#ats").innerHTML="";addAt();updAt();$("#ocs").innerHTML="";addOc();$("#ovs").innerHTML="";addOv();$("#trs").innerHTML="";addTr();$("#rbs").innerHTML="";addRb();$("#ars").innerHTML="";addAr();$("#bks").innerHTML="";addBk();ctx.clearRect(0,0,sig.clientWidth,sig.clientHeight);drawn=false;
+$("#data").value=hoje();$("#out").style.display="none";toggleRonda();updateProgress();msg("Formulário limpo.");
 };
 $("#copy").onclick=function(){
 var t=texto();
-if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){msg("Resumo copiado!")},function(){mostrar(t);msg("Selecione e copie o texto abaixo")})}
+if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){msg("Relatório copiado para a área de transferência!")},function(){mostrar(t);msg("Selecione e copie o texto abaixo")})}
 else{mostrar(t);msg("Selecione e copie o texto abaixo")}
 };
 function pdfBlob(){
@@ -716,7 +754,7 @@ var J=window.jspdf&&window.jspdf.jsPDF;if(!J)return null;
 var doc=new J({unit:"mm",format:"a4"}),M=15,mw=180,y=M;
 function need(h){if(y+h>285){doc.addPage();y=M}}
 doc.setTextColor(20);
-var S=state(),A=[],pi=0;[["ocs",20],["ovs",25],["trs",19],["rbs",30],["ars",9]].forEach(function(p){(S[p[0]]||[]).forEach(function(o){if(o[p[1]]&&o[p[1]].length)A.push(o[p[1]])})});
+var S=state(),A=[],pi=0;if(S.viaturaFotos&&S.viaturaFotos.length)A.push(S.viaturaFotos);(S.marias||[]).forEach(function(m){if(m[19]&&m[19].length)A.push(m[19])});[["ocs",20],["ovs",25],["trs",19],["rbs",30],["ars",9]].forEach(function(p){(S[p[0]]||[]).forEach(function(o){if(o[p[1]]&&o[p[1]].length)A.push(o[p[1]])})});
 texto().replace(/\u2014/g,"-").split("\n").forEach(function(l,i){
 if(i===0){doc.setFont("helvetica","bold");doc.setFontSize(16);doc.text(l,M,y+4);y+=11;return}
 if(!l.trim()){y+=1.5;return}
@@ -741,7 +779,7 @@ var nome="Resumo-de-Plantao-"+($("#data").value||hoje()).split("-").reverse().jo
 function salvar(){
 var url=URL.createObjectURL(b), a=document.createElement("a");
 a.href=url;a.download=nome;document.body.appendChild(a);a.click();a.remove();
-setTimeout(function(){URL.revokeObjectURL(url)},1500);msg("PDF baixado. Confira o arquivo e compartilhe pelo canal adequado.");
+setTimeout(function(){URL.revokeObjectURL(url)},1500);msg("PDF baixado. Confira e guarde uma cópia do arquivo.");
 }
 try{
 var f=new File([b],nome,{type:"application/pdf"});
@@ -753,8 +791,5 @@ salvar();
 </script>
 </body>
 </html>
-
-
-
 
 
