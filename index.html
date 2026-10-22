@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Relatório de Plantão | Registro Operacional</title>
 <meta name="theme-color" content="#1d4ed8">
-<link rel="icon" type="image/svg+xml" href="logo.svg">
+<link rel="icon" type="image/svg+xml" href="logo.svg?v=3">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Plantão">
@@ -106,11 +106,16 @@ header:before{display:none}
 input,select,textarea{min-width:0;max-width:100%}
 @media(max-width:640px){header{padding:18px 12px 14px}.brand-head{align-items:flex-start;gap:12px}.gcm-logo{width:74px;height:74px;border-radius:10px;padding:3px}.brand-kicker{font-size:9px;letter-spacing:.09em;margin-bottom:5px}h1{font-size:clamp(22px,6vw,29px)}header p{font-size:13px}.status-wrap{margin-left:10px;margin-right:10px}.storage-note{display:block;padding:11px 12px;font-size:12px}.storage-note strong{display:block;margin:0 0 3px}main{padding-left:10px;padding-right:10px}section{padding:15px 12px}.row,.row3{gap:8px}.bar{gap:5px;padding-left:7px;padding-right:7px}.bar button{min-width:0;white-space:normal;overflow-wrap:anywhere;line-height:1.2;padding:8px 3px;font-size:11px}}
 @media(max-width:380px){.row,.row3{grid-template-columns:minmax(0,1fr)}.brand-head{gap:9px}.gcm-logo{width:62px;height:62px}.brand-kicker{font-size:8px;letter-spacing:.07em}.status-count{width:100%;margin-left:17px}.bar button{font-size:10px}}
+/* Ajustes adicionais para celular: logo, grades de campos e barra de ações. */
+.gcm-logo{object-fit:contain;max-width:100%;height:auto;aspect-ratio:1}
+.brand-copy{flex:1;min-width:0}
+@media(max-width:640px){header{padding:16px 12px 14px}.brand-head{gap:12px;align-items:flex-start}.gcm-logo{width:72px;height:72px;flex-basis:72px}.brand-kicker{font-size:9px;letter-spacing:.07em;line-height:1.3}.brand-copy h1{font-size:clamp(21px,6vw,28px)}.row{grid-template-columns:repeat(2,minmax(0,1fr))}.row3{grid-template-columns:repeat(2,minmax(0,1fr))}.row>div,.row3>div{min-width:0}.opt label{min-width:0}input[type=text],input[type=date],input[type=time],input[type=number],input[type=tel],select,textarea{font-size:16px;padding-left:10px;padding-right:10px}.bar{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;padding:8px 8px calc(8px + env(safe-area-inset-bottom,0px))}.bar button{width:100%;min-width:0;max-width:none;padding:8px 4px;font-size:11px;line-height:1.2;overflow-wrap:anywhere}main{padding-bottom:100px}}
+@media(max-width:390px){.brand-head{gap:9px}.gcm-logo{width:60px;height:60px;flex-basis:60px}.brand-kicker{font-size:8px;letter-spacing:.04em}.row,.row3{grid-template-columns:minmax(0,1fr)}.status-count{margin-left:0;width:100%}.bar button{font-size:10px;padding:7px 2px}}
 </style>
 </head>
 <body>
 <header>
-<div class="brand-head"><img class="gcm-logo" src="logo.svg" alt="Brasão da Guarda Civil Municipal"><div class="brand-copy"><span class="brand-kicker">Guarda Civil Municipal</span><h1>Relatório de Plantão</h1><p>Registre as atividades do plantão de forma clara, objetiva e padronizada. Preencha os campos aplicáveis e confira as informações antes de gerar o relatório. Os dados são salvos automaticamente neste dispositivo.</p></div></div>
+<div class="brand-head"><img class="gcm-logo" src="logo.svg?v=3" alt="Brasão da Guarda Civil Municipal" width="104" height="104" decoding="async"><div class="brand-copy"><span class="brand-kicker">Guarda Civil Municipal</span><h1>Relatório de Plantão</h1><p>Registre as atividades do plantão de forma clara, objetiva e padronizada. Preencha os campos aplicáveis e confira as informações antes de gerar o relatório. Os dados são salvos automaticamente neste dispositivo.</p></div></div>
 </header>
 <div class="status-wrap" aria-live="polite">
   <div class="status-line"><span class="status-dot" aria-hidden="true"></span><span id="saveStatus">Salvamento automático ativado</span><span class="status-count" id="completionCount">0 campos preenchidos</span></div>
