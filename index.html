@@ -1,106 +1,15 @@
 <!DOCTYPE html>
-
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Relatório de Plantão | Registro Operacional</title>
-<meta content="#1d4ed8" name="theme-color"/>
-<link href="favicon.svg?v=4" rel="icon" type="image/svg+xml"/>
-<meta content="yes" name="mobile-web-app-capable"/>
-<meta content="yes" name="apple-mobile-web-app-capable"/>
-<meta content="Plantão" name="apple-mobile-web-app-title"/>
-
-<style>
-
-:root{color-scheme:light;--bg:#f3f6fb;--card:#fff;--tx:#172235;--mut:#637086;--bd:#dbe3ef;--ac:#174ea6;--acx:#fff;--ok:#147d55;--soft:#eaf1fb;--shadow:0 8px 28px rgba(25,45,80,.06)}
-@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#101722;--card:#182231;--tx:#edf3fb;--mut:#a5b2c5;--bd:#344256;--ac:#8bb7ff;--acx:#101722;--ok:#58d6a2;--soft:#202f44;--shadow:0 8px 28px rgba(0,0,0,.18)}}
-:root[data-theme="dark"]{color-scheme:dark;--bg:#101722;--card:#182231;--tx:#edf3fb;--mut:#a5b2c5;--bd:#344256;--ac:#8bb7ff;--acx:#101722;--ok:#58d6a2;--soft:#202f44;--shadow:0 8px 28px rgba(0,0,0,.18)}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-header{max-width:1120px;margin:0 auto;padding:32px 24px 18px;border-bottom:1px solid var(--bd)}
-header:before{content:"REGISTRO OPERACIONAL • PLANTÃO";display:inline-block;color:var(--ac);font-size:11px;letter-spacing:.14em;font-weight:800;margin-bottom:8px}
-h1{font-size:clamp(25px,3vw,34px);line-height:1.2;letter-spacing:-.035em;margin:0 0 8px;font-weight:800}
-header p{margin:0;color:var(--mut);font-size:14px;max-width:760px}
-.status-wrap{max-width:1072px;margin:14px auto 0;padding:12px 16px;background:var(--card);border:1px solid var(--bd);border-radius:12px}
-.status-line{display:flex;align-items:center;gap:9px;font-size:12px;color:var(--mut);font-weight:650}
-.status-dot{width:8px;height:8px;border-radius:50%;background:var(--ok);flex:0 0 auto}
-.status-count{margin-left:auto;font-variant-numeric:tabular-nums;color:var(--ac)}
-.progress-track{height:5px;background:var(--bd);border-radius:99px;overflow:hidden;margin-top:9px}
-#progressFill{display:block;height:100%;width:0;background:var(--ac);border-radius:99px;transition:width .2s ease}
-main{max-width:1120px;margin:0 auto;padding:18px 24px 120px}
-section{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:22px;margin:14px 0;box-shadow:var(--shadow)}
-h2{font-size:14px;margin:0 0 18px;letter-spacing:.055em;text-transform:uppercase;color:var(--ac);font-weight:800;display:flex;align-items:center;gap:10px}
-h2:after{content:"";height:1px;background:var(--bd);flex:1}
-label{display:block;font-size:12px;color:var(--mut);font-weight:650;margin:12px 0 5px}
-input[type=text],input[type=date],input[type=time],input[type=number],input[type=tel],select,textarea{width:100%;font:inherit;font-size:14px;color:var(--tx);background:var(--bg);border:1px solid var(--bd);border-radius:9px;padding:11px 12px;min-height:44px;transition:border-color .15s,box-shadow .15s}
-textarea{min-height:100px;resize:vertical}
-input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ac);box-shadow:0 0 0 3px color-mix(in srgb,var(--ac) 15%,transparent)}
-.row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.row3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-.opt{display:flex;gap:10px;flex-wrap:wrap}
-.opt label{flex:1;min-width:140px;margin:0;color:var(--tx);font-size:14px;border:1px solid var(--bd);border-radius:10px;padding:12px;display:flex;align-items:center;gap:8px;background:var(--bg);cursor:pointer}
-.opt input{width:18px;height:18px;accent-color:var(--ac)}
-.opt label:has(input:checked){border-color:var(--ok);background:color-mix(in srgb,var(--ok) 10%,var(--card));font-weight:700}
-.chk{display:flex;align-items:center;gap:10px;color:var(--tx);font-size:14px;margin:8px 0}
-.chk input{width:19px;height:19px;accent-color:var(--ac)}
-.hide{display:none}
-#ocs,#ovs,#trs,#rbs,#ars,#bks,#gvs{counter-reset:oc}
-.gv>.tt,.bk>.tt,.ar>.tt,.rb>.tt,.tr>.tt,.ov>.tt,.oc>.tt{font-weight:800;color:var(--ac);font-size:14px;margin:14px 0 8px}
-.gv>.tt:before{counter-increment:oc;content:"Registro " counter(oc) " — "}
-.bk>.tt:before{counter-increment:oc;content:"Registro " counter(oc) " — "}
-.ar>.tt:before{counter-increment:oc;content:"Abordagem " counter(oc) " — "}
-.rb>.tt:before{counter-increment:oc;content:"Repasse " counter(oc) " — "}
-.tr>.tt:before{counter-increment:oc;content:"Envolvido " counter(oc) " — "}
-.ov>.tt:before{counter-increment:oc;content:"Envolvido " counter(oc) " — "}
-.oc>.tt:before{counter-increment:oc;content:"Envolvido " counter(oc) " — "}
-.tt2{font-weight:800;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);margin:20px 0 4px;padding-top:12px;border-top:1px solid var(--bd)}
-.hr{margin-left:auto;font-variant-numeric:tabular-nums;color:var(--ok);font-size:13px;font-weight:800}
-.ubs,.esc,.crc{display:flex;align-items:center;gap:12px;margin:0 0 8px;padding:12px 14px;border:1px solid var(--bd);border-radius:10px;background:var(--bg);color:var(--tx);font-size:14px;cursor:pointer}
-.ubs input,.esc input,.crc input{width:18px;height:18px;accent-color:var(--ok)}
-.ubs:has(input:checked),.esc:has(input:checked),.crc:has(input:checked){border-color:var(--ok);background:color-mix(in srgb,var(--ok) 9%,var(--card));font-weight:650}
-.bo{border-top:1px solid var(--bd);margin-top:18px;padding-top:10px}
-.maria{border:1px solid #e7b4b4;background:color-mix(in srgb,#b91c1c 3%,var(--card));border-radius:12px;padding:14px;margin:12px 0}.maria .tt{font-weight:800;color:#a61b1b;font-size:14px;margin:0 0 10px}.maria .tt:before{content:"Registro " counter(maria) " — "}.maria{counter-increment:maria}#marias{counter-reset:maria}
-button{font:inherit;font-size:14px;font-weight:650;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:9px;padding:10px 14px;min-height:42px;cursor:pointer;transition:transform .12s,background .12s,border-color .12s}
-button:hover{border-color:var(--ac);background:var(--soft)}
-button:active{transform:translateY(1px)}
-button.p{background:var(--ac);color:var(--acx);border-color:var(--ac);font-weight:750}
-button.p:hover{filter:brightness(1.06)}
-.sm{margin-top:12px}
-canvas{width:100%;height:150px;background:var(--bg);border:1px dashed var(--bd);border-radius:10px;touch-action:none;display:block}
-.bar{position:fixed;left:0;right:0;bottom:0;background:color-mix(in srgb,var(--card) 94%,transparent);backdrop-filter:blur(14px);border-top:1px solid var(--bd);padding:12px 18px calc(12px + env(safe-area-inset-bottom,0px));display:flex;gap:10px;justify-content:center;z-index:10}
-.bar button{flex:1;max-width:220px;padding:11px 10px;font-size:13px}
-#msg{text-align:center;color:var(--ok);font-size:13px;min-height:20px;font-weight:700}
-#out{display:none;width:100%;min-height:200px;margin-top:8px}
-#totAt{font-variant-numeric:tabular-nums;color:var(--ac)}
-@media(min-width:900px){main{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 18px}main>section{align-self:start}main>#msg,main>#out{grid-column:1/-1}main>section:nth-of-type(1),main>section:nth-of-type(2),main>section:nth-of-type(3),main>section:nth-of-type(4),main>section:nth-of-type(5),main>section:nth-of-type(6),main>section:nth-of-type(7),main>section:nth-of-type(8){grid-column:auto}main>section:nth-of-type(9),main>section:nth-of-type(10),main>section:nth-of-type(11){grid-column:1/-1}header{padding-top:38px}}
-@media(max-width:640px){header{padding:24px 16px 14px}.status-wrap{margin:10px 12px 0;padding:10px 12px}.status-line{flex-wrap:wrap}.status-count{margin-left:auto}main{padding:12px 12px 110px}section{padding:17px 14px;border-radius:13px;margin:10px 0}.row,.row3{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}h2{font-size:13px;margin-bottom:14px}.bar{padding:9px 8px calc(9px + env(safe-area-inset-bottom,0px));gap:6px}.bar button{font-size:12px;padding:9px 4px;min-height:42px}}
-
-/* Padronização visual inspirada no bloco Maria da Penha: cartões suaves, bordas definidas e títulos consistentes. */
-main>section{border:1px solid #e7b4b4;background:color-mix(in srgb,#b91c1c 2.5%,var(--card));border-radius:12px;box-shadow:none}
-main>section>h2{color:#a61b1b;letter-spacing:.035em}
-main>section>h2:after{background:#e7b4b4}
-main>section>div[id]:not(#out){margin-top:10px}
-main>section>div[id]>*:not(button){border:1px solid #e7b4b4;border-radius:12px;padding:14px;margin:12px 0;background:color-mix(in srgb,#b91c1c 2%,var(--card))}
-main>section>div[id]>.tt{border:0;padding:0;margin:14px 0 8px;background:transparent}
-main>section .tt{color:#a61b1b}
-main>section .tt2{border-top-color:#e7b4b4}
-main>section .bo{border-top-color:#e7b4b4}
-main>section .ubs,main>section .esc,main>section .crc{border-color:#e7b4b4;background:color-mix(in srgb,#b91c1c 2%,var(--card))}
-main>section input[type=text],main>section input[type=date],main>section input[type=time],main>section input[type=number],main>section input[type=tel],main>section select,main>section textarea{background:var(--card);border-color:#e1caca}
-main>section input:focus,main>section select:focus,main>section textarea:focus{border-color:#b91c1c;box-shadow:0 0 0 3px color-mix(in srgb,#b91c1c 12%,transparent)}
-@media(min-width:900px){main>section{grid-column:1/-1!important}}
-@media print{body{background:#fff;color:#111}.status-wrap{display:none}header,main{max-width:none;padding:10px}section{box-shadow:none;break-inside:avoid}.bar{display:none}}
-
-
-main>section>h2[data-tg]{cursor:pointer;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent}
-main>section>h2 .tgb{order:1;flex:0 0 auto;min-height:32px;padding:4px 12px;font-size:12px;font-weight:700;letter-spacing:0;text-transform:none;border-radius:99px;border:1px solid var(--bd);background:var(--bg);color:var(--tx);cursor:pointer}
-main>section.closed>h2{margin-bottom:0}
-main>section.closed>*:not(h2){display:none!important}
-.brand-head{display:flex;align-items:center;gap:18px}.gcm-logo{display:block;width:104px;height:104px;object-fit:contain;flex:0 0 auto;background:#fff;border:1px solid var(--bd);border-radius:12px;padding:4px}.brand-copy{flex:1;min-width:0}.brand-kicker{display:block;color:var(--ac);font-size:11px;letter-spacing:.14em;font-weight:800;margin:0 0 7px}header:before{display:none}.storage-note{display:flex;align-items:flex-start;gap:10px;margin:0 0 14px;padding:12px 14px;border:1px solid var(--bd);border-left:4px solid var(--ac);border-radius:11px;background:var(--card);color:var(--mut);font-size:13px}.storage-note strong{flex:0 0 auto;color:var(--ac)}.row>*,.row3>*{min-width:0}input,select,textarea{min-width:0;max-width:100%}
-@media(max-width:640px){header{padding:16px 12px 14px}.brand-head{gap:12px;align-items:flex-start}.gcm-logo{width:72px;height:72px;flex-basis:72px;padding:3px}.brand-kicker{font-size:9px;letter-spacing:.07em;line-height:1.3}.brand-copy h1{font-size:clamp(21px,6vw,28px)}.row{grid-template-columns:repeat(2,minmax(0,1fr))}.row3{grid-template-columns:repeat(2,minmax(0,1fr))}.row>div,.row3>div{min-width:0}.opt label{min-width:0}.storage-note{display:block;padding:11px 12px;font-size:12px}.storage-note strong{display:block;margin:0 0 3px}.status-wrap{margin-left:10px;margin-right:10px}input[type=text],input[type=date],input[type=time],input[type=number],input[type=tel],select,textarea{font-size:16px;padding-left:10px;padding-right:10px}.bar{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;padding:8px 8px calc(8px + env(safe-area-inset-bottom,0px))}.bar button{width:100%;min-width:0;max-width:none;padding:8px 4px;font-size:11px;line-height:1.2;overflow-wrap:anywhere}main{padding-left:10px;padding-right:10px;padding-bottom:100px}section{padding:15px 12px}}
-@media(max-width:390px){.brand-head{gap:9px}.gcm-logo{width:60px;height:60px;flex-basis:60px}.brand-kicker{font-size:8px;letter-spacing:.04em}.row,.row3{grid-template-columns:minmax(0,1fr)}.status-count{margin-left:0;width:100%}.bar button{font-size:10px;padding:7px 2px}}
-</style>
+<meta name="theme-color" content="#1d4ed8">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Plantão">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
 <style>
 
 :root{color-scheme:light;--bg:#f3f6fb;--card:#fff;--tx:#172235;--mut:#637086;--bd:#dbe3ef;--ac:#174ea6;--acx:#fff;--ok:#147d55;--soft:#eaf1fb;--shadow:0 8px 28px rgba(25,45,80,.06)}
@@ -150,7 +59,7 @@ input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ac);box-
 .ov>.tt:before{counter-increment:oc;content:"Envolvido " counter(oc) " — "}
 .oc>.tt:before{counter-increment:oc;content:"Envolvido " counter(oc) " — "}
 .tt2{font-weight:800;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);margin:20px 0 4px;padding-top:12px;border-top:1px solid var(--bd)}
-.hr{margin-left:auto;display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px 10px;font-variant-numeric:tabular-nums;color:var(--ok);font-size:13px;font-weight:800}#docFotos .fotos{grid-template-columns:1fr!important;gap:14px!important}#docFotos .fotos img{aspect-ratio:auto!important;object-fit:contain!important;height:auto!important;max-height:none!important;background:var(--bg);cursor:zoom-in}.hr .rd{display:inline-flex;align-items:center;gap:2px}.hr .rh{width:auto!important;min-width:0!important;padding:3px 6px!important;margin:0!important;font-size:14px;font-weight:800;color:var(--ok);background:transparent;border:1px dashed var(--bd);border-radius:6px}.hr .rx{border:0;background:transparent;color:#b91c1c;font-size:22px;font-weight:700;line-height:1;min-width:32px;min-height:32px;padding:0;cursor:pointer}
+.dtp{display:flex;align-items:center;gap:12px;margin:0 0 8px;padding:12px 14px;border:1px solid var(--bd);border-radius:10px;background:var(--bg);color:var(--tx);font-size:14px;cursor:pointer}.dtp input{width:18px;height:18px;accent-color:var(--ok)}.dtp:has(input:checked){border-color:var(--ok);background:color-mix(in srgb,var(--ok) 9%,var(--card));font-weight:650}.dtl{margin:-2px 0 10px;display:flex;flex-direction:column;gap:6px}.dtr{display:flex;align-items:center;gap:6px;color:var(--ok);font-size:13px;font-weight:800;padding-left:6px;font-variant-numeric:tabular-nums}.dtr .dtn{flex:1;min-width:0}.hr{margin-left:auto;display:flex;flex-wrap:wrap;justify-content:flex-end;gap:6px 10px;font-variant-numeric:tabular-nums;color:var(--ok);font-size:13px;font-weight:800}#docFotos .fotos{grid-template-columns:1fr!important;gap:14px!important}#docFotos .fotos img{aspect-ratio:auto!important;object-fit:contain!important;height:auto!important;max-height:none!important;background:var(--bg);cursor:zoom-in}.hr .rd{display:inline-flex;align-items:center;gap:2px}.hr .rh{width:auto!important;min-width:0!important;padding:3px 6px!important;margin:0!important;font-size:14px;font-weight:800;color:var(--ok);background:transparent;border:1px dashed var(--bd);border-radius:6px}.hr .rx{border:0;background:transparent;color:#b91c1c;font-size:22px;font-weight:700;line-height:1;min-width:32px;min-height:32px;padding:0;cursor:pointer}
 .ubs,.esc,.crc,.svs{display:flex;align-items:center;gap:12px;margin:0 0 8px;padding:12px 14px;border:1px solid var(--bd);border-radius:10px;background:var(--bg);color:var(--tx);font-size:14px;cursor:pointer}
 .ubs input,.esc input,.crc input,.svs input{width:18px;height:18px;accent-color:var(--ok)}
 .ubs:has(input:checked),.esc:has(input:checked),.crc:has(input:checked),.svs:has(input:checked){border-color:var(--ok);background:color-mix(in srgb,var(--ok) 9%,var(--card));font-weight:650}
@@ -192,281 +101,320 @@ main>section>h2[data-tg]{cursor:pointer;user-select:none;-webkit-user-select:non
 main>section>h2 .tgb{order:1;flex:0 0 auto;min-height:32px;padding:4px 12px;font-size:12px;font-weight:700;letter-spacing:0;text-transform:none;border-radius:99px;border:1px solid var(--bd);background:var(--bg);color:var(--tx);cursor:pointer}
 main>section.closed>h2{margin-bottom:0}
 main>section.closed>*:not(h2){display:none!important}
-</style></head>
+main>section{scroll-margin-top:84px}
+main>section.sel{border:2px solid #b91c1c;background:color-mix(in srgb,#b91c1c 7%,var(--card));box-shadow:0 0 0 4px color-mix(in srgb,#b91c1c 20%,transparent),0 8px 22px color-mix(in srgb,#b91c1c 18%,transparent)}
+main>section.sel>h2{color:#b91c1c}
+@media print{main>section.sel{border:1px solid #e7b4b4;box-shadow:none;background:transparent}}
+</style>
+</head>
 <body>
 <header>
-<div class="brand-head"><img alt="Brasão da Guarda Civil Municipal" class="gcm-logo" decoding="async" height="104" src="logo.svg?v=4" width="104"/><div class="brand-copy"><span class="brand-kicker">Guarda Civil Municipal</span><h1>Relatório de Plantão</h1><p>Registre as atividades do plantão de forma clara, objetiva e padronizada. Preencha os campos aplicáveis e confira as informações antes de gerar o relatório. Os dados são salvos automaticamente neste dispositivo.</p></div></div>
+<h1>Relatório de Plantão</h1>
+<p>Registre as atividades do plantão de forma clara, objetiva e padronizada. Preencha os campos aplicáveis e confira as informações antes de gerar o relatório. Os dados são salvos automaticamente neste dispositivo.</p>
 </header>
-<div aria-live="polite" class="status-wrap">
-<div class="status-line"><span aria-hidden="true" class="status-dot"></span><span id="saveStatus">Salvamento automático ativado</span><span class="status-count" id="completionCount">0 campos preenchidos</span></div>
-<div aria-label="Preenchimento do formulário" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" class="progress-track" id="progressTrack" role="progressbar"><span id="progressFill"></span></div>
+<div class="status-wrap" aria-live="polite">
+  <div class="status-line"><span class="status-dot" aria-hidden="true"></span><span id="saveStatus">Salvamento automático ativado</span><span class="status-count" id="completionCount">0 campos preenchidos</span></div>
+  <div class="progress-track" role="progressbar" aria-label="Preenchimento do formulário" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressTrack"><span id="progressFill"></span></div>
 </div>
-<div class="storage-note" role="note"><strong>Salvamento local</strong><span>Os dados ficam salvos somente neste navegador e não são sincronizados. Baixe o PDF ao concluir para guardar uma cópia. Se limpar os dados do navegador ou trocar de aparelho, o preenchimento pode ser perdido.</span></div>
 <main>
 <section>
 <label for="data" style="margin-top:0">Data</label>
-<input data-k="data" id="data" type="date"/>
+<input type="date" id="data" data-k="data">
 </section>
+
 <section id="arquivoPlantao">
 <h2>Arquivo e consulta de plantões</h2>
 <p style="margin-top:0;color:var(--mut);font-size:13px">Salve uma cópia do plantão por data e consulte registros anteriores neste aparelho.</p>
 <div class="row">
 <div><label for="arquivoData">Plantões salvos</label><select id="arquivoData"><option value="">Nenhum plantão selecionado</option></select></div>
-<div style="display:flex;align-items:end"><button class="p" id="salvarArquivo" style="width:100%" type="button">Salvar plantão do dia</button></div>
+<div style="display:flex;align-items:end"><button type="button" class="p" id="salvarArquivo" style="width:100%">Salvar plantão do dia</button></div>
 </div>
 <div class="row" style="margin-top:10px">
-<button id="abrirArquivo" type="button">Consultar / abrir plantão</button>
-<button id="excluirArquivo" type="button">Excluir plantão arquivado</button>
+<button type="button" id="abrirArquivo">Consultar / abrir plantão</button>
+<button type="button" id="excluirArquivo">Excluir plantão arquivado</button>
 </div>
-<div aria-live="polite" id="arquivoMsg" style="font-size:13px;color:var(--ok);margin-top:8px"></div>
+<div id="arquivoMsg" style="font-size:13px;color:var(--ok);margin-top:8px" aria-live="polite"></div>
 </section>
+
 <section>
 <h2>1. Ronda nos postos</h2>
 <div class="opt">
-<label><input data-k="ronda" name="ronda" type="radio" value="Sem novidades"/> Sem novidades</label>
-<label><input data-k="ronda" name="ronda" type="radio" value="Novidades"/> Novidades</label>
+<label><input type="radio" name="ronda" value="Sem novidades" data-k="ronda"> Sem novidades</label>
+<label><input type="radio" name="ronda" value="Novidades" data-k="ronda"> Novidades</label>
 </div>
-<div class="hide" id="rondaBox">
+<div id="rondaBox" class="hide">
 <label for="rondaDesc">Descreva as alterações, irregularidades ou ocorrências identificadas</label>
-<textarea data-k="rondaDesc" id="rondaDesc"></textarea>
+<textarea id="rondaDesc" data-k="rondaDesc"></textarea>
 <div id="rondaRegs"></div>
-<button class="sm" id="addRondaReg" type="button">+ Adicionar novo registro</button>
-<div aria-label="Fotos da ronda nos postos" id="rondaFotos"></div>
+<button type="button" class="sm" id="addRondaReg">+ Adicionar novo registro</button>
+<div id="rondaFotos" aria-label="Fotos da ronda nos postos"></div>
 <div class="tt2">Arquivos PDF</div>
 <p style="font-size:12px;color:var(--mut);margin:4px 0 8px">Os novos PDFs são guardados no armazenamento local do navegador, separado do formulário. Limite por arquivo: 25 MB (sujeito ao espaço disponível no aparelho).</p>
 <div id="rondaPdfs"></div>
-<label class="addfoto" id="rondaPdfBtn" style="position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;min-height:46px;margin:10px 0 0;border:1px solid var(--bd);border-radius:10px;background:var(--bg);color:var(--tx);font-size:16px">+ Adicionar arquivo PDF<input accept="application/pdf,.pdf" id="rondaPdfIn" multiple="" style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;font-size:0;cursor:pointer" type="file"/></label>
+<label class="addfoto" id="rondaPdfBtn" style="position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;min-height:46px;margin:10px 0 0;border:1px solid var(--bd);border-radius:10px;background:var(--bg);color:var(--tx);font-size:16px">+ Adicionar arquivo PDF<input type="file" id="rondaPdfIn" accept="application/pdf,.pdf" multiple style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;font-size:0;cursor:pointer"></label>
 </div>
 </section>
+
 <section>
 <h2>2. Escala Extraordinária GRASEV</h2>
 <div id="gvs"></div>
-<button class="sm" id="addGv" type="button">+ Adicionar novo registro</button>
+<button type="button" class="sm" id="addGv">+ Adicionar novo registro</button>
 </section>
+
 <section>
 <h2>3. Higienização Viatura</h2>
 <div id="hvs"></div>
-<button class="sm" id="addHv" type="button">+ Adicionar novo registro</button>
+<button type="button" class="sm" id="addHv">+ Adicionar novo registro</button>
 </section>
+
 <section>
 <h2>4. Permuta</h2>
 <div id="pmus"></div>
-<button class="sm" id="addPmu" type="button">+ Adicionar novo registro</button>
+<button type="button" class="sm" id="addPmu">+ Adicionar novo registro</button>
 </section>
+
+
+
+
 <section>
 <h2>5. Viatura e abastecimento</h2>
-<label class="chk"><input data-k="viatura" id="viatura" type="checkbox"/> Viatura disponível para operação</label>
+<label class="chk"><input type="checkbox" id="viatura" data-k="viatura"> Viatura disponível para operação</label>
 <label for="prefixo">Prefixo da VTR</label>
-<input autocapitalize="characters" data-k="prefixo" id="prefixo" style="margin-bottom:4px" type="text"/>
+<input type="text" id="prefixo" data-k="prefixo" autocapitalize="characters" style="margin-bottom:4px">
 <div class="row">
-<div><label for="talaoAb">Número do talão</label><input data-k="talaoAb" id="talaoAb" inputmode="numeric" type="text"/></div>
-<div><label for="horaAb">Horário</label><input data-k="horaAb" id="horaAb" type="time"/></div>
-<div><label for="vale">Número do vale</label><input data-k="vale" id="vale" inputmode="numeric" type="text"/></div>
-<div><label for="litros">Quantidade abastecida (L)</label><input data-k="litros" id="litros" inputmode="decimal" type="text"/></div>
+<div><label for="talaoAb">Número do talão</label><input type="text" id="talaoAb" data-k="talaoAb" inputmode="numeric"></div>
+<div><label for="horaAb">Horário</label><input type="time" id="horaAb" data-k="horaAb"></div>
+<div><label for="vale">Número do vale</label><input type="text" id="vale" data-k="vale" inputmode="numeric"></div>
+<div><label for="litros">Quantidade abastecida (L)</label><input type="text" id="litros" data-k="litros" inputmode="decimal"></div>
 </div>
 <div id="abs"></div>
-<button class="sm" id="addAb" type="button">+ Adicionar abastecimento</button>
-<div aria-label="Fotos da viatura e do abastecimento" id="viaturaFotos"></div>
+<button type="button" class="sm" id="addAb">+ Adicionar abastecimento</button>
+<div id="viaturaFotos" aria-label="Fotos da viatura e do abastecimento"></div>
 </section>
+
 <section>
 <h2>6. Ausências no plantão</h2>
 <label style="margin-top:0">Servidor ausente (selecione)</label>
 <div class="aus" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px 12px">
-<label class="chk"><input data-k="aus0" type="checkbox"/> GCM Fábio</label>
-<label class="chk"><input data-k="aus1" type="checkbox"/> GCM Jaqueline</label>
-<label class="chk"><input data-k="aus2" type="checkbox"/> GCM Danilo</label>
-<label class="chk"><input data-k="aus3" type="checkbox"/> GCM Teles</label>
-<label class="chk"><input data-k="aus4" type="checkbox"/> GPM Guilherme</label>
-<label class="chk"><input data-k="aus5" type="checkbox"/> GCM Bolelli</label>
-<label class="chk"><input data-k="aus6" type="checkbox"/> GPM Marco Antônio</label>
-<label class="chk"><input data-k="aus7" type="checkbox"/> GPM Vidal</label>
-<label class="chk"><input data-k="aus8" type="checkbox"/> GPM Valter</label>
-<label class="chk"><input data-k="aus9" type="checkbox"/> GPM Marceli</label>
-<label class="chk"><input data-k="aus10" type="checkbox"/> GPM Revelino</label>
-<label class="chk"><input data-k="aus11" type="checkbox"/> GPM Orcelio</label>
-<label class="chk"><input data-k="aus12" type="checkbox"/> GPM Silvio</label>
-<label class="chk"><input data-k="aus13" type="checkbox"/> GPM Possani</label>
-<label class="chk"><input data-k="aus14" type="checkbox"/> GPM Valdir</label>
+<label class="chk"><input type="checkbox" data-k="aus0"> GCM Fábio</label>
+<label class="chk"><input type="checkbox" data-k="aus1"> GCM Jaqueline</label>
+<label class="chk"><input type="checkbox" data-k="aus2"> GCM Danilo</label>
+<label class="chk"><input type="checkbox" data-k="aus3"> GCM Teles</label>
+<label class="chk"><input type="checkbox" data-k="aus4"> GPM Guilherme</label>
+<label class="chk"><input type="checkbox" data-k="aus5"> GCM Bolelli</label>
+<label class="chk"><input type="checkbox" data-k="aus6"> GPM Marco Antônio</label>
+<label class="chk"><input type="checkbox" data-k="aus7"> GPM Vidal</label>
+<label class="chk"><input type="checkbox" data-k="aus8"> GPM Valter</label>
+<label class="chk"><input type="checkbox" data-k="aus9"> GPM Marceli</label>
+<label class="chk"><input type="checkbox" data-k="aus10"> GPM Revelino</label>
+<label class="chk"><input type="checkbox" data-k="aus11"> GPM Orcelio</label>
+<label class="chk"><input type="checkbox" data-k="aus12"> GPM Silvio</label>
+<label class="chk"><input type="checkbox" data-k="aus13"> GPM Possani</label>
+<label class="chk"><input type="checkbox" data-k="aus14"> GPM Valdir</label>
 </div>
 <label for="ausencia">Justificativa e outros servidores ausentes</label>
-<textarea data-k="ausencia" id="ausencia"></textarea>
+<textarea id="ausencia" data-k="ausencia"></textarea>
 </section>
+
 <section>
 <h2>7. Remanejamento de servidor</h2>
 <div id="rmus"></div>
-<button class="sm" id="addRmu" type="button">+ Adicionar novo registro</button>
+<button type="button" class="sm" id="addRmu">+ Adicionar novo registro</button>
 </section>
+
 <section>
 <h2>8. Atendimento de perturbação do sossego</h2>
 <div id="pss"></div>
-<button class="sm" id="addPs" type="button">+ Registrar atendimento</button>
+<button type="button" class="sm" id="addPs">+ Registrar atendimento</button>
 </section>
+
 <section>
-<h2>9. Boletins de ocorrência (GCM)</h2>
-<div id="bos"></div>
-<button class="sm" id="addBo" type="button">+ Adicionar B.O.</button>
-</section>
-<section>
-<h2>10. Autuações de trânsito</h2>
+<h2>9. Autuações de trânsito</h2>
 <div id="ats"></div>
-<button class="sm" id="addAt" type="button">+ Registrar autuação</button>
+<button type="button" class="sm" id="addAt">+ Registrar autuação</button>
 <div style="margin-top:14px;padding:12px;border:1px solid var(--bd);border-radius:10px;background:var(--bg);display:flex;justify-content:space-between;align-items:center"><span>Total de autuações</span><strong id="totAt" style="font-size:22px">0</strong></div>
 </section>
+
 <section>
-<h2>11. Solicitações do Ministério Público</h2>
+<h2>10. Solicitações do Ministério Público</h2>
 <div id="mps"></div>
-<button class="sm" id="addMp" type="button">+ Registrar solicitação</button>
+<button type="button" class="sm" id="addMp">+ Registrar solicitação</button>
 </section>
+
 <section>
-<h2>12. Rondas em unidades de saúde</h2>
+<h2>11. Rondas em unidades de saúde</h2>
 <p style="margin:0 0 10px;color:var(--mut);font-size:13px">Marque cada unidade visitada. O horário é registrado ao marcar; se marcar a mesma unidade de novo, entra a 2ª Ronda, e assim por diante.</p>
 <div style="margin:0 0 12px"><label style="margin-top:0">Viatura da ronda</label><select class="vtrsel" data-g="ubs" data-k="vtr_ubs"><option value=""></option><option>VTR L-66</option><option>VTR L-67</option><option>VTR L-697</option><option>VTR L-698</option></select></div>
-<label class="ubs"><input data-k="ubs12" type="checkbox"/> CAPS</label>
-<label class="ubs"><input data-k="ubs7" type="checkbox"/> Centro de Especialidades</label>
-<label class="ubs"><input data-k="ubs13" type="checkbox"/> Centro Saúde da Mulher</label>
-<label class="ubs"><input data-k="ubs9" type="checkbox"/> PS Central</label>
-<label class="ubs"><input data-k="ubs2" type="checkbox"/> UBS Agenor Campos</label>
-<label class="ubs"><input data-k="ubs0" type="checkbox"/> UBS Florida Mirim</label>
-<label class="ubs"><input data-k="ubs1" type="checkbox"/> UBS Itaguaí</label>
-<label class="ubs"><input data-k="ubs4" type="checkbox"/> UBS JD Praia Grande</label>
-<label class="ubs"><input data-k="ubs5" type="checkbox"/> UBS Jussara</label>
-<label class="ubs"><input data-k="ubs6" type="checkbox"/> UBS Pedreira</label>
-<label class="ubs"><input data-k="ubs3" type="checkbox"/> UBS Primavera</label>
-<label class="ubs"><input data-k="ubs10" type="checkbox"/> UBS Vila Atlântica</label>
-<label class="ubs"><input data-k="ubs11" type="checkbox"/> UBS Vila Operária</label>
-<label class="ubs"><input data-k="ubs8" type="checkbox"/> UPA</label>
-<label class="ubs"><input data-k="ubs14" type="checkbox"/> Zoonoses</label>
+<label class="ubs"><input type="checkbox" data-k="ubs12"> CAPS</label>
+<label class="ubs"><input type="checkbox" data-k="ubs7"> Centro de Especialidades</label>
+<label class="ubs"><input type="checkbox" data-k="ubs13"> Centro Saúde da Mulher</label>
+<label class="ubs"><input type="checkbox" data-k="ubs9"> PS Central</label>
+<label class="ubs"><input type="checkbox" data-k="ubs2"> UBS Agenor Campos</label>
+<label class="ubs"><input type="checkbox" data-k="ubs0"> UBS Florida Mirim</label>
+<label class="ubs"><input type="checkbox" data-k="ubs1"> UBS Itaguaí</label>
+<label class="ubs"><input type="checkbox" data-k="ubs4"> UBS JD Praia Grande</label>
+<label class="ubs"><input type="checkbox" data-k="ubs5"> UBS Jussara</label>
+<label class="ubs"><input type="checkbox" data-k="ubs6"> UBS Pedreira</label>
+<label class="ubs"><input type="checkbox" data-k="ubs3"> UBS Primavera</label>
+<label class="ubs"><input type="checkbox" data-k="ubs10"> UBS Vila Atlântica</label>
+<label class="ubs"><input type="checkbox" data-k="ubs11"> UBS Vila Operária</label>
+<label class="ubs"><input type="checkbox" data-k="ubs8"> UPA</label>
+<label class="ubs"><input type="checkbox" data-k="ubs14"> Zoonoses</label>
 </section>
+
 <section>
-<h2>13. Rondas em unidades escolares</h2>
+<h2>12. Rondas em unidades escolares</h2>
 <p style="margin:0 0 10px;color:var(--mut);font-size:13px">Marque cada unidade escolar visitada. O horário é registrado ao marcar; se marcar a mesma unidade de novo, entra a 2ª Ronda, e assim por diante.</p>
 <div style="margin:0 0 12px"><label style="margin-top:0">Viatura da ronda</label><select class="vtrsel" data-g="esc" data-k="vtr_esc"><option value=""></option><option>VTR L-66</option><option>VTR L-67</option><option>VTR L-697</option><option>VTR L-698</option></select></div>
-<label class="esc"><input data-k="esc12" type="checkbox"/> EMEF Barigui</label>
-<label class="esc"><input data-k="esc20" type="checkbox"/> EMEI Branca de Neve</label>
-<label class="esc"><input data-k="esc11" type="checkbox"/> EMEF Cassimiro</label>
-<label class="esc"><input data-k="esc19" type="checkbox"/> EMEI Catatau</label>
-<label class="esc"><input data-k="esc16" type="checkbox"/> EMEIEF Célia Pupo</label>
-<label class="esc"><input data-k="esc3" type="checkbox"/> EMEF Claudia Andrella</label>
-<label class="esc"><input data-k="esc14" type="checkbox"/> EMEF Dona Naia</label>
-<label class="esc"><input data-k="esc1" type="checkbox"/> EMEF Gilvado</label>
-<label class="esc"><input data-k="esc8" type="checkbox"/> EMEF Hortência</label>
-<label class="esc"><input data-k="esc7" type="checkbox"/> EMEF Ivone Monteiro</label>
-<label class="esc"><input data-k="esc24" type="checkbox"/> EMEF Jacoub Koukdjian</label>
-<label class="esc"><input data-k="esc5" type="checkbox"/> EMEF Jacyra</label>
-<label class="esc"><input data-k="esc13" type="checkbox"/> EMEF Joaquim Monteiro</label>
-<label class="esc"><input data-k="esc4" type="checkbox"/> EMEF José Carlos Freitas</label>
-<label class="esc"><input data-k="esc9" type="checkbox"/> EMEF José Cesário</label>
-<label class="esc"><input data-k="esc26" type="checkbox"/> EMEI Manoel Rocha</label>
-<label class="esc"><input data-k="esc25" type="checkbox"/> EMEF Minol Ivata</label>
-<label class="esc"><input data-k="esc10" type="checkbox"/> EMEF Pedro Fernandes</label>
-<label class="esc"><input data-k="esc6" type="checkbox"/> EMEF Pequeno Príncipe</label>
-<label class="esc"><input data-k="esc21" type="checkbox"/> EMEI Pingo de Gente</label>
-<label class="esc"><input data-k="esc2" type="checkbox"/> EMEF Regina Maria</label>
-<label class="esc"><input data-k="esc23" type="checkbox"/> EMEI Sininho</label>
-<label class="esc"><input data-k="esc0" type="checkbox"/> EMEF Sirana</label>
-<label class="esc"><input data-k="esc17" type="checkbox"/> EMEIEF Sitio do Pica Pau Amarelo</label>
-<label class="esc"><input data-k="esc22" type="checkbox"/> EMEI Tio Patinhas</label>
-<label class="esc"><input data-k="esc15" type="checkbox"/> EMEF Tonico Silva</label>
-<label class="esc"><input data-k="esc18" type="checkbox"/> EMEIEF Vila Atlântica</label>
-<label class="esc"><input data-k="esc27" type="checkbox"/> EMEI Xodó da Vovó</label>
+<label class="esc"><input type="checkbox" data-k="esc12"> EMEF Barigui</label>
+<label class="esc"><input type="checkbox" data-k="esc20"> EMEI Branca de Neve</label>
+<label class="esc"><input type="checkbox" data-k="esc11"> EMEF Cassimiro</label>
+<label class="esc"><input type="checkbox" data-k="esc19"> EMEI Catatau</label>
+<label class="esc"><input type="checkbox" data-k="esc16"> EMEIEF Célia Pupo</label>
+<label class="esc"><input type="checkbox" data-k="esc3"> EMEF Claudia Andrella</label>
+<label class="esc"><input type="checkbox" data-k="esc14"> EMEF Dona Naia</label>
+<label class="esc"><input type="checkbox" data-k="esc1"> EMEF Gilvado</label>
+<label class="esc"><input type="checkbox" data-k="esc8"> EMEF Hortência</label>
+<label class="esc"><input type="checkbox" data-k="esc7"> EMEF Ivone Monteiro</label>
+<label class="esc"><input type="checkbox" data-k="esc24"> EMEF Jacoub Koukdjian</label>
+<label class="esc"><input type="checkbox" data-k="esc5"> EMEF Jacyra</label>
+<label class="esc"><input type="checkbox" data-k="esc13"> EMEF Joaquim Monteiro</label>
+<label class="esc"><input type="checkbox" data-k="esc4"> EMEF José Carlos Freitas</label>
+<label class="esc"><input type="checkbox" data-k="esc9"> EMEF José Cesário</label>
+<label class="esc"><input type="checkbox" data-k="esc26"> EMEI Manoel Rocha</label>
+<label class="esc"><input type="checkbox" data-k="esc25"> EMEF Minol Ivata</label>
+<label class="esc"><input type="checkbox" data-k="esc10"> EMEF Pedro Fernandes</label>
+<label class="esc"><input type="checkbox" data-k="esc6"> EMEF Pequeno Príncipe</label>
+<label class="esc"><input type="checkbox" data-k="esc21"> EMEI Pingo de Gente</label>
+<label class="esc"><input type="checkbox" data-k="esc2"> EMEF Regina Maria</label>
+<label class="esc"><input type="checkbox" data-k="esc23"> EMEI Sininho</label>
+<label class="esc"><input type="checkbox" data-k="esc0"> EMEF Sirana</label>
+<label class="esc"><input type="checkbox" data-k="esc17"> EMEIEF Sitio do Pica Pau Amarelo</label>
+<label class="esc"><input type="checkbox" data-k="esc22"> EMEI Tio Patinhas</label>
+<label class="esc"><input type="checkbox" data-k="esc15"> EMEF Tonico Silva</label>
+<label class="esc"><input type="checkbox" data-k="esc18"> EMEIEF Vila Atlântica</label>
+<label class="esc"><input type="checkbox" data-k="esc27"> EMEI Xodó da Vovó</label>
 </section>
+
 <section>
-<h2>14. Rondas em creches</h2>
+<h2>13. Rondas em creches</h2>
 <p style="margin:0 0 10px;color:var(--mut);font-size:13px">Marque a creche para registrar automaticamente o horário e o número da ronda. Para registrar outra ronda na mesma creche, desmarque e marque novamente.</p>
 <div style="margin:0 0 12px"><label style="margin-top:0">Viatura da ronda</label><select class="vtrsel" data-g="crc" data-k="vtr_crc"><option value=""></option><option>VTR L-66</option><option>VTR L-67</option><option>VTR L-697</option><option>VTR L-698</option></select></div>
-<label class="crc"><input data-k="crc7" type="checkbox"/> Creche Barigui</label>
-<label class="crc"><input data-k="crc3" type="checkbox"/> Creche Elio Gonçalves</label>
-<label class="crc"><input data-k="crc4" type="checkbox"/> Creche Manoel José</label>
-<label class="crc"><input data-k="crc5" type="checkbox"/> Creche Nilton de Oliveira</label>
-<label class="crc"><input data-k="crc9" type="checkbox"/> Creche Nossa Senhora Aparecida</label>
-<label class="crc"><input data-k="crc11" type="checkbox"/> Creche Oceanopolis</label>
-<label class="crc"><input data-k="crc10" type="checkbox"/> Creche Raudna Maria</label>
-<label class="crc"><input data-k="crc2" type="checkbox"/> Creche Suely Silva</label>
-<label class="crc"><input data-k="crc1" type="checkbox"/> Creche Tia Dita</label>
-<label class="crc"><input data-k="crc0" type="checkbox"/> Creche Vera Lúcia</label>
-<label class="crc"><input data-k="crc6" type="checkbox"/> Creche Vila Atlântica</label>
-<label class="crc"><input data-k="crc12" type="checkbox"/> Creche Walter Gomes</label>
-<label class="crc"><input data-k="crc8" type="checkbox"/> Creche Zico Bucanas</label>
+<label class="crc"><input type="checkbox" data-k="crc7"> Creche Barigui</label>
+<label class="crc"><input type="checkbox" data-k="crc3"> Creche Elio Gonçalves</label>
+<label class="crc"><input type="checkbox" data-k="crc4"> Creche Manoel José</label>
+<label class="crc"><input type="checkbox" data-k="crc5"> Creche Nilton de Oliveira</label>
+<label class="crc"><input type="checkbox" data-k="crc9"> Creche Nossa Senhora Aparecida</label>
+<label class="crc"><input type="checkbox" data-k="crc11"> Creche Oceanopolis</label>
+<label class="crc"><input type="checkbox" data-k="crc10"> Creche Raudna Maria</label>
+<label class="crc"><input type="checkbox" data-k="crc2"> Creche Suely Silva</label>
+<label class="crc"><input type="checkbox" data-k="crc1"> Creche Tia Dita</label>
+<label class="crc"><input type="checkbox" data-k="crc0"> Creche Vera Lúcia</label>
+<label class="crc"><input type="checkbox" data-k="crc6"> Creche Vila Atlântica</label>
+<label class="crc"><input type="checkbox" data-k="crc12"> Creche Walter Gomes</label>
+<label class="crc"><input type="checkbox" data-k="crc8"> Creche Zico Bucanas</label>
 </section>
+
 <section>
-<h2>15. Ronda Serviço Social</h2>
+<h2>14. Ronda Serviço Social</h2>
 <p style="margin:0 0 10px;color:var(--mut);font-size:13px">Marque o local para registrar automaticamente o horário e o número da ronda. Para registrar outra ronda no mesmo local, desmarque e marque novamente.</p>
 <div style="margin:0 0 12px"><label style="margin-top:0">Viatura da ronda</label><select class="vtrsel" data-g="svs" data-k="vtr_svs"><option value=""></option><option>VTR L-66</option><option>VTR L-67</option><option>VTR L-697</option><option>VTR L-698</option></select></div>
-<label class="svs"><input data-k="svs0" type="checkbox"/> CRAS</label>
-<label class="svs"><input data-k="svs1" type="checkbox"/> CREAS</label>
-<label class="svs"><input data-k="svs2" type="checkbox"/> Secretaria de Assistência Social</label>
+<label class="svs"><input type="checkbox" data-k="svs0"> CRAS</label>
+<label class="svs"><input type="checkbox" data-k="svs1"> CREAS</label>
+<label class="svs"><input type="checkbox" data-k="svs2"> Secretaria de Assistência Social</label>
 </section>
+
 <section>
-<h2>16. Ocorrências de violência doméstica e familiar contra a mulher — Lei Maria da Penha</h2>
+<h2>15. Ocorrências de violência doméstica e familiar contra a mulher — Lei Maria da Penha</h2>
 <p style="margin:0 0 10px;color:var(--mut);font-size:13px">Registre os fatos de forma objetiva, cronológica e sem julgamentos. Evite incluir dados pessoais desnecessários; utilize o sistema oficial autorizado para informações sensíveis.</p>
 <div id="marias"></div>
-<button class="sm" id="addMaria" type="button">+ Adicionar ocorrência</button>
+<button type="button" class="sm" id="addMaria">+ Adicionar ocorrência</button>
 </section>
+
+<section>
+<h2>16. Boletins de ocorrência (GCM)</h2>
+<div id="bos"></div>
+<button type="button" class="sm" id="addBo">+ Adicionar B.O.</button>
+</section>
+
 <section>
 <h2>17. Ocorrência de trânsito sem vítima</h2>
 <div id="ocs"></div>
-<button class="sm" id="addOc" type="button">+ Adicionar pessoa envolvida</button>
+<button type="button" class="sm" id="addOc">+ Adicionar pessoa envolvida</button>
 </section>
+
 <section>
 <h2>18. Ocorrência de trânsito com vítima</h2>
 <div id="ovs"></div>
-<button class="sm" id="addOv" type="button">+ Adicionar pessoa envolvida</button>
+<button type="button" class="sm" id="addOv">+ Adicionar pessoa envolvida</button>
 </section>
+
 <section>
 <h2>19. Ocorrência envolvendo transeunte</h2>
 <div id="trs"></div>
-<button class="sm" id="addTr" type="button">+ Adicionar pessoa envolvida</button>
+<button type="button" class="sm" id="addTr">+ Adicionar pessoa envolvida</button>
 </section>
+
 <section>
 <h2>20. Repasse de boletim de ocorrência</h2>
 <div id="rbs"></div>
-<button class="sm" id="addRb" type="button">+ Adicionar repasse</button>
+<button type="button" class="sm" id="addRb">+ Adicionar repasse</button>
 </section>
+
 <section>
 <h2>21. Abordagens</h2>
 <div id="ars"></div>
-<button class="sm" id="addAr" type="button">+ Registrar abordagem</button>
+<button type="button" class="sm" id="addAr">+ Registrar abordagem</button>
 </section>
+
 <section>
 <h2>22. Apreensão de bicicleta</h2>
 <div id="bks"></div>
-<button class="sm" id="addBk" type="button">+ Registrar apreensão</button>
+<button type="button" class="sm" id="addBk">+ Registrar apreensão</button>
 </section>
+
+
 <section>
 <h2>23. Patrulhamento Preventivo</h2>
 <div id="pps"></div>
-<button class="sm" id="addPp" type="button">+ Adicionar novo registro</button>
+<button type="button" class="sm" id="addPp">+ Adicionar novo registro</button>
 </section>
+
 <section>
 <h2>24. Estacionamento Preventivo</h2>
 <div id="ets"></div>
-<button class="sm" id="addEt" type="button">+ Adicionar novo registro</button>
+<button type="button" class="sm" id="addEt">+ Adicionar novo registro</button>
 </section>
+
 <section>
 <h2>25. Documentos anexados</h2>
-<label for="docinfo" style="margin-top:0">Informações</label>
-<textarea data-k="docinfo" id="docinfo"></textarea>
-<div aria-label="Documentos anexados" id="docFotos"></div>
+<label style="margin-top:0">Destaque os documentos (cada toque gera um número)</label>
+<div id="docTipos"></div>
+<label for="docinfo">Informações</label>
+<textarea id="docinfo" data-k="docinfo"></textarea>
+<div id="docFotos" aria-label="Documentos anexados"></div>
 </section>
+
 <section>
 <h2>Responsável</h2>
 <label for="resp" style="margin-top:0">Nome do responsável pelo plantão</label>
-<input autocomplete="name" data-k="resp" id="resp" type="text"/>
+<input type="text" id="resp" data-k="resp" autocomplete="name">
 <label>Assinatura do responsável pelo plantão</label>
 <canvas id="sig"></canvas>
-<button class="sm" id="clrSig" type="button">Apagar assinatura</button>
+<button type="button" class="sm" id="clrSig">Apagar assinatura</button>
 </section>
+
 <div id="msg"></div>
-<textarea id="out" readonly=""></textarea>
+<textarea id="out" readonly></textarea>
 </main>
+
 <div class="bar">
-<button id="clear" type="button">Limpar formulário</button>
-<button id="copy" type="button">Copiar relatório</button>
-<button class="p" id="share" type="button">Gerar ou enviar PDF</button>
+<button type="button" id="clear">Limpar formulário</button>
+<button type="button" id="copy">Copiar relatório</button>
+<button type="button" class="p" id="share">Gerar ou enviar PDF</button>
 </div>
 
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script><script>
+<script>
 (function(){
 var KEY="resumo-plantao-v1", $=function(s){return document.querySelector(s)}, $$=function(s){return Array.prototype.slice.call(document.querySelectorAll(s))};
 var bosEl=$("#bos"), sig=$("#sig"), ctx, drawn=false;
@@ -474,10 +422,10 @@ var bosEl=$("#bos"), sig=$("#sig"), ctx, drawn=false;
 function hoje(){var d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
 function fmtData(v){if(!v)return"";var p=v.split("-");return p[2]+"/"+p[1]+"/"+p[0]}
 
-function addBo(n,t,dt,hi,hf,pessoa,info){
+function addBo(n,t,dt,hi,hf,pessoa,info,papel){
 var d=document.createElement("div");d.className="bo";
-d.innerHTML='<div class="row"><div><label>Natureza</label><input type="text" class="bn"></div><div><label>Talão nº</label><input type="text" class="bt"></div><div><label>Data</label><input type="date" class="bdt"></div><div></div><div><label>Horário inicial</label><input type="time" class="bih"></div><div><label>Horário final</label><input type="time" class="bfh"></div></div>';d.insertAdjacentHTML("beforeend",pspHtml());d.insertAdjacentHTML("beforeend",'<label>Informações</label><textarea class="binf"></textarea>');
-d.querySelector(".bn").value=n||"";d.querySelector(".bt").value=t||"";d.querySelector(".bdt").value=dt||"";d.querySelector(".bih").value=hi||"";d.querySelector(".bfh").value=hf||"";d.querySelector(".binf").value=info||"";var pp=pessoa||[];PSP.forEach(function(f,k){d.querySelector("."+f[0]).value=pp[k]||""});
+d.innerHTML='<div class="row"><div><label>Natureza</label><input type="text" class="bn"></div><div><label>Talão nº</label><input type="text" class="bt"></div><div><label>Data</label><input type="date" class="bdt"></div><div></div><div><label>Horário inicial</label><input type="time" class="bih"></div><div><label>Horário final</label><input type="time" class="bfh"></div></div>';d.insertAdjacentHTML("beforeend",'<label>Envolvido</label><select class="bpap"><option value=""></option><option>Vítima</option><option>Autor</option><option>Proprietário</option></select>');d.insertAdjacentHTML("beforeend",pspHtml());d.insertAdjacentHTML("beforeend",'<label>Informações</label><textarea class="binf"></textarea>');
+d.querySelector(".bn").value=n||"";d.querySelector(".bt").value=t||"";d.querySelector(".bdt").value=dt||"";d.querySelector(".bih").value=hi||"";d.querySelector(".bfh").value=hf||"";d.querySelector(".binf").value=info||"";d.querySelector(".bpap").value=papel||"";var pp=pessoa||[];PSP.forEach(function(f,k){d.querySelector("."+f[0]).value=pp[k]||""});
 if(bosEl.children.length){var r=document.createElement("button");r.type="button";r.className="sm";r.textContent="Remover";r.onclick=function(){d.remove();save()};d.appendChild(r)}
 bosEl.appendChild(d);
 }
@@ -739,7 +687,7 @@ for(var i=0;i<4;i++)d.querySelector(".pu"+i).value=v[i]||"";
 if($("#pmus").children.length){var b=document.createElement("button");b.type="button";b.className="sm";b.textContent="Remover registro";b.onclick=function(){d.remove();save()};d.appendChild(b)}
 $("#pmus").appendChild(d);
 }
-var PP_AV=["Avenida Marina","Avenida São Paulo > Centro","Avenida São Paulo > Agenor de Campos","Avenida Monteiro Lobato > Centro","Avenida Monteiro Lobato > Agenor de Campos","Avenida Mário Covas Jr > Centro","Avenida Mário Covas Jr > Agenor de Campos","Avenida Nossa Senhora de Fátima","PTR área central"];
+var PP_AV=["Avenida Marina","Avenida São Paulo > Centro","Avenida São Paulo > Agenor de Campos","Avenida Monteiro Lobato > Centro","Avenida Monteiro Lobato > Agenor de Campos","Avenida Mário Covas Jr > Centro","Avenida Mário Covas Jr > Agenor de Campos","Avenida Tiradentes > Centro","Avenida Tiradentes > Agenor de Campos","Avenida Nossa Senhora de Fátima","PTR área central"];
 function addPp(v){
 v=Array.isArray(v)?v:[];var d=document.createElement("div");d.className="ppr";
 if($("#pps").children.length)d.style.cssText="border-top:1px dashed var(--bd);margin-top:14px;padding-top:6px";
@@ -803,8 +751,29 @@ function addMaria(v){
  $("#marias").appendChild(d);
 }
 function mariaState(){return $$(".maria").map(function(d){var a=["md","mh","mloc","mtipo","mrel","mprov","msit","mprot","mpend","mtalao","mhini","mhfim","mnome","mrg","mcpf","mcnh","mnasc","mend","mtel"].map(function(k){return d.querySelector("."+k).value});a.push(fotosDe(d));a.push(d.querySelector(".mqual").value);return a})}
-function bos(){return $$(".bo").map(function(d){return{n:d.querySelector(".bn").value.trim(),t:d.querySelector(".bt").value.trim(),d:d.querySelector(".bdt").value,hi:d.querySelector(".bih").value,hf:d.querySelector(".bfh").value,inf:d.querySelector(".binf").value.trim(),p:PSP.map(function(f){return d.querySelector("."+f[0]).value.trim()})}}).filter(function(b){return b.n||b.t||b.d||b.hi||b.hf||b.inf||b.p.some(function(x){return x})})}
+function bos(){return $$(".bo").map(function(d){return{n:d.querySelector(".bn").value.trim(),t:d.querySelector(".bt").value.trim(),d:d.querySelector(".bdt").value,hi:d.querySelector(".bih").value,hf:d.querySelector(".bfh").value,inf:d.querySelector(".binf").value.trim(),pp:d.querySelector(".bpap").value,p:PSP.map(function(f){return d.querySelector("."+f[0]).value.trim()})}}).filter(function(b){return b.n||b.t||b.d||b.hi||b.hf||b.inf||b.pp||b.p.some(function(x){return x})})}
 
+var DOC_TIPOS=["Relatório Motorizado","BO.G.C.M","Informativo","Comunicado","Solicitação","OS Itinerante","O.Serviço","Permuta","Falta Abonada","Folga Natalícia","C.I Inspetoria","Outros"];
+var docTipos=[];
+function docTiposRender(){
+ var box=$("#docTipos");if(!box)return;box.innerHTML="";
+ DOC_TIPOS.forEach(function(t){
+  var w=document.createElement("div"),l=document.createElement("label"),cb=document.createElement("input"),tx=document.createElement("span"),ls=document.createElement("div"),k=0;
+  l.className="dtp";cb.type="checkbox";ls.className="dtl";
+  docTipos.forEach(function(it){
+   if(it.t!==t)return;k++;
+   var c=document.createElement("div"),ni=document.createElement("input"),b=document.createElement("button");
+   c.className="dtr";ni.type="text";ni.className="dtn";ni.value=it.n;ni.setAttribute("aria-label","Nome do documento "+k);
+   ni.oninput=function(){it.n=ni.value};
+   b.type="button";b.className="rx";b.textContent="×";b.setAttribute("aria-label","Excluir "+t+" nº "+k);
+   b.onclick=function(ev){ev.preventDefault();ev.stopPropagation();docTipos.splice(docTipos.indexOf(it),1);docTiposRender();save()};
+   c.appendChild(document.createTextNode("nº "+k));c.appendChild(ni);c.appendChild(b);ls.appendChild(c);
+  });
+  cb.checked=k>0;tx.textContent=t+(k?" ("+k+")":"");
+  cb.onchange=function(){docTipos.push({t:t,n:t});docTiposRender();save()};
+  l.appendChild(cb);l.appendChild(tx);w.appendChild(l);w.appendChild(ls);box.appendChild(w);
+ });
+}
 function renderCrcRondas(label){
  var sp=label.querySelector(".hr"); if(!sp)return;
  var logs=label._rondas||[];
@@ -824,9 +793,9 @@ if(e.type==="radio"){if(e.checked)s[k]=e.value}
 else if(e.type==="checkbox")s[k]=e.checked;
 else s[k]=e.value;
 });
-s.bos=$$(".bo").map(function(d){return[d.querySelector(".bn").value,d.querySelector(".bt").value,d.querySelector(".bdt").value,d.querySelector(".bih").value,d.querySelector(".bfh").value,PSP.map(function(f){return d.querySelector("."+f[0]).value}),d.querySelector(".binf").value]});
+s.bos=$$(".bo").map(function(d){return[d.querySelector(".bn").value,d.querySelector(".bt").value,d.querySelector(".bdt").value,d.querySelector(".bih").value,d.querySelector(".bfh").value,PSP.map(function(f){return d.querySelector("."+f[0]).value}),d.querySelector(".binf").value,d.querySelector(".bpap").value]});
 s.marias=mariaState();
-s.viaturaFotos=fotosDe($("#viaturaFotos"));s.docFotos=fotosDe($("#docFotos"));s.rondaFotos=fotosDe($("#rondaFotos"));s.rondaPdfs=$$(".rpdf").map(function(d){var o={n:d._n,k:d._k||0};if(d._id)o.id=d._id;else if(d._d)o.d=d._d;return o});s.rondaRegs=$$(".rr textarea").map(function(t){return t.value});
+s.viaturaFotos=fotosDe($("#viaturaFotos"));s.docFotos=fotosDe($("#docFotos"));s.docTipos=docTipos.map(function(x){return[x.t,x.n]});s.rondaFotos=fotosDe($("#rondaFotos"));s.rondaPdfs=$$(".rpdf").map(function(d){var o={n:d._n,k:d._k||0};if(d._id)o.id=d._id;else if(d._d)o.d=d._d;return o});s.rondaRegs=$$(".rr textarea").map(function(t){return t.value});
 s.hr={};$$(".hr").forEach(function(sp){var i=sp.parentNode.querySelector("input");if(i.checked&&sp.textContent)s.hr[i.dataset.k]=sp.textContent});s.crcRondas=crcRondasState();
 s.ets=$$(".etr").map(function(d){return[0,1,2].map(function(i){return d.querySelector(".q"+i).value}).concat([Array.prototype.map.call(d.querySelectorAll(".etc:checked"),function(c){return c.value}).join("|"),d.querySelector(".etn").value,d.querySelector(".etv").value])});
 s.pps=$$(".ppr").map(function(d){return[0,1,2].map(function(i){return d.querySelector(".p"+i).value}).concat([Array.prototype.map.call(d.querySelectorAll(".ppc:checked"),function(c){return c.value}).join("|"),d.querySelector(".ppn").value,d.querySelector(".ppv").value])});
@@ -857,7 +826,7 @@ function updateProgress(){
 function save(){updAt();updateProgress();try{localStorage.setItem(KEY,JSON.stringify(state()));var st=$('#saveStatus');if(st)st.textContent='Alterações salvas neste dispositivo'}catch(e){var st=$('#saveStatus');if(st)st.textContent='Não foi possível salvar automaticamente';msg("Armazenamento insuficiente: algumas imagens podem não ser salvas.")}}
 function load(){
 var s=null;try{s=JSON.parse(localStorage.getItem(KEY)||"null")}catch(e){}
-$("#viaturaFotos").innerHTML="";initFotos($("#viaturaFotos"),s&&s.viaturaFotos||[]);$("#docFotos").innerHTML="";initFotos($("#docFotos"),s&&s.docFotos||[]);
+$("#viaturaFotos").innerHTML="";initFotos($("#viaturaFotos"),s&&s.viaturaFotos||[]);$("#docFotos").innerHTML="";initFotos($("#docFotos"),s&&s.docFotos||[]);docTipos=(s&&Array.isArray(s.docTipos)?s.docTipos:[]).map(function(a){return{t:a[0],n:a[1]}});docTiposRender();
 $("#rondaFotos").innerHTML="";initFotos($("#rondaFotos"),s&&s.rondaFotos||[]);$("#rondaRegs").innerHTML="";(s&&s.rondaRegs||[]).forEach(addRondaReg);$("#rondaPdfs").innerHTML="";(s&&s.rondaPdfs||[]).forEach(addRondaPdf);
 if(!s){addBo();addMp();addPs();addAt();addMaria();addOc();addOv();addTr();addRb();addAr();addBk();addGv();addHv();addPmu();addRmu();addPp();addEt();$("#data").value=hoje();toggleRonda();return}
 $$("[data-k]").forEach(function(e){
@@ -869,7 +838,7 @@ else if(s[k]!=null)e.value=s[k];
 if(!$("#data").value)$("#data").value=hoje();
 $$(".hr").forEach(function(sp){var i=sp.parentNode.querySelector("input");sp.textContent=(s.hr&&s.hr[i.dataset.k]&&i.checked)?s.hr[i.dataset.k]:""});
 $$(RSEL).forEach(function(label){var input=label.querySelector("input"),k=input&&input.dataset.k,old=(s.hr&&k&&input.checked&&/^\d\d:\d\d$/.test(s.hr[k]||""))?[{horario:s.hr[k]}]:[];label._rondas=(s.crcRondas&&input&&Array.isArray(s.crcRondas[k]))?s.crcRondas[k]:old;renderCrcRondas(label);});
-(s.bos&&s.bos.length?s.bos:[["",""]]).forEach(function(b){addBo(b[0],b[1],b[2],b[3],b[4],b[5],b[6])});
+(s.bos&&s.bos.length?s.bos:[["",""]]).forEach(function(b){addBo(b[0],b[1],b[2],b[3],b[4],b[5],b[6],b[7])});
 (s.marias&&s.marias.length?s.marias:[[]]).forEach(function(m){addMaria(m)});
 (s.abs||[]).forEach(function(a){addAb(a[0],a[1],a[2],a[3])});
 (s.mps&&s.mps.length?s.mps:[["","","",""]]).forEach(function(m){addMp(m[0],m[1],m[2],m[3],m[4],m[5])});
@@ -944,28 +913,26 @@ L.push("8. ATENDIMENTOS DE PERTURBAÇÃO DO SOSSEGO");
 var ps=s.pss.filter(function(p){return p[0]||p[1]||p[2]||p[3]||p[4]||p[5]||(p[9]&&p[9].length)||(p[8]&&p[8].some(function(x){return String(x||"").trim()}))});
 if(!ps.length)L.push("—");ps.forEach(function(p){L.push("Talão nº: "+(p[0]||"—")+" | Viatura: "+(p[10]||"—")+" | Endereço: "+(p[1]||"—")+" | Início: "+(p[2]||"—")+" | Fim: "+(p[3]||"—")+" | Autuação realizada: "+(p[4]?("Sim"+(p[6]?" (nº "+p[6]+")":"")+(p[7]?" | Decibéis: "+p[7]+" dB":"")):"Não")+" | Orientação realizada: "+(p[5]?"Sim":"Não"));psPessoaTxt(p).forEach(function(x){L.push(x)});if(p[9]&&p[9].length)L.push("Fotos anexadas: "+p[9].length)});
 L.push("Total: "+ps.length+" atendimento(s) | "+ps.filter(function(p){return p[4]}).length+" autuado(s) | "+ps.filter(function(p){return p[5]}).length+" orientado(s)");L.push("");
-L.push("9. BOLETINS DE OCORRÊNCIA — GCM");
-var b=bos();if(!b.length)L.push("—");b.forEach(function(x){L.push("Natureza: "+(x.n||"—")+" | Talão nº: "+(x.t||"—")+" | Data: "+(x.d?fmtData(x.d):"—")+" | Início: "+(x.hi||"—")+" | Fim: "+(x.hf||"—"));psPessoaTxt({8:x.p}).forEach(function(l){L.push(l)});if(x.inf)L.push("Informações: "+x.inf)});L.push("");
-L.push("10. AUTUAÇÕES DE TRÂNSITO");
+L.push("9. AUTUAÇÕES DE TRÂNSITO");
 var us=s.ats.filter(function(u){return u[0]||u[1]||u[2]});
 if(!us.length)L.push("—");us.forEach(function(u){L.push("AIT nº: "+(u[0]||"—")+" | Código: "+(u[1]||"—")+" | Artigo: "+(u[2]||"—"))});
 L.push("Total: "+us.length+" autuação(ões)");L.push("");
-L.push("11. SOLICITAÇÕES DO MINISTÉRIO PÚBLICO");
+L.push("10. SOLICITAÇÕES DO MINISTÉRIO PÚBLICO");
 var ms=s.mps.filter(function(m){return m[0]||m[1]||m[2]||m[3]||m[4]||m[5]});
 if(!ms.length)L.push("—");ms.forEach(function(m){L.push("Talão nº: "+(m[0]||"—")+" | Local: "+(m[1]||"—")+" | Início: "+(m[2]||"—")+" | Fim: "+(m[3]||"—")+" | Resultado: "+(m[4]||"—"));if(m[5])L.push("Informação: "+m[5])});L.push("");
-L.push("12. RONDAS EM UNIDADES DE SAÚDE");
+L.push("11. RONDAS EM UNIDADES DE SAÚDE");
 var ub=rondasTxt(".ubs");
 L.push(ub.length?ub.join("\n"):"—");L.push("");
-L.push("13. RONDAS EM UNIDADES ESCOLARES");
+L.push("12. RONDAS EM UNIDADES ESCOLARES");
 var ec=rondasTxt(".esc");
 L.push(ec.length?ec.join("\n"):"—");L.push("");
-L.push("14. RONDAS EM CRECHES");
+L.push("13. RONDAS EM CRECHES");
 var cr=rondasTxt(".crc");
 L.push(cr.length?cr.join("\n"):"—");L.push("");
-L.push("15. RONDA SERVIÇO SOCIAL");
+L.push("14. RONDA SERVIÇO SOCIAL");
 var sv=rondasTxt(".svs");
 L.push(sv.length?sv.join("\n"):"—");L.push("");
-L.push("16. OCORRÊNCIAS DE VIOLÊNCIA DOMÉSTICA E FAMILIAR CONTRA A MULHER — LEI MARIA DA PENHA");
+L.push("15. OCORRÊNCIAS DE VIOLÊNCIA DOMÉSTICA E FAMILIAR CONTRA A MULHER — LEI MARIA DA PENHA");
 var vm=mariaState().filter(function(m){return m.some(function(x){return String(x||"").trim()})});
 if(!vm.length)L.push("—");
 vm.forEach(function(m,i){
@@ -980,6 +947,8 @@ ln(f("Data de nascimento",16,1),f("Endereço residencial",17),f("Telefone",18));
 ln(f("Local",2));ln(f("Tipo de atendimento",3));ln(f("Relato objetivo",4));ln(f("Providências adotadas",5));
 ln(f("Situação",6),f("Boletim/protocolo",7));ln(f("Pendências e observações",8));
 if(m[19]&&m[19].length)L.push("Fotos anexadas: "+m[19].length)});L.push("");
+L.push("16. BOLETINS DE OCORRÊNCIA — GCM");
+var b=bos();if(!b.length)L.push("—");b.forEach(function(x){L.push("Natureza: "+(x.n||"—")+" | Talão nº: "+(x.t||"—")+" | Data: "+(x.d?fmtData(x.d):"—")+" | Início: "+(x.hi||"—")+" | Fim: "+(x.hf||"—"));if(x.pp)L.push("Envolvido: "+x.pp);psPessoaTxt({8:x.p}).forEach(function(l){L.push(l)});if(x.inf)L.push("Informações: "+x.inf)});L.push("");
 L.push("17. OCORRÊNCIA DE TRÂNSITO SEM VÍTIMA");
 var oc=s.ocs.filter(function(o){return o.some(nv)});
 if(!oc.length)L.push("—");
@@ -1101,7 +1070,7 @@ eq.forEach(function(o,i){var g=function(k){return(o[k]&&o[k].trim())||"—"};
 L.push("Registro "+(i+1)+" - Talão: "+g(0)+" | Início: "+g(1)+" | Fim: "+g(2));
 L.push("Locais: "+(o[3]?o[3].split("|").join("; "):"—"));L.push("Nome: "+g(4)+" | Viatura: "+g(5))});
 L.push("");
-L.push("25. DOCUMENTOS ANEXADOS");var di=v(s.docinfo);if(di)L.push("Informações: "+di);if(s.docFotos&&s.docFotos.length)L.push("Fotos anexadas: "+s.docFotos.length);if(!di&&!(s.docFotos&&s.docFotos.length))L.push("—");L.push("");
+L.push("25. DOCUMENTOS ANEXADOS");var di=v(s.docinfo);if(di)L.push("Informações: "+di);var dcT=s.docTipos||[];if(dcT.length){L.push("Documentos destacados ("+dcT.length+"):");var dcK={};dcT.forEach(function(a){dcK[a[0]]=(dcK[a[0]]||0)+1;var nm=String(a[1]||"").trim()||a[0];L.push("• "+(nm===a[0]?nm+" nº "+dcK[a[0]]:nm+" ("+a[0]+" nº "+dcK[a[0]]+")"))})}if(s.docFotos&&s.docFotos.length)L.push("Fotos anexadas: "+s.docFotos.length);if(!di&&!dcT.length&&!(s.docFotos&&s.docFotos.length))L.push("—");L.push("");
 L.push("Responsável pelo plantão: "+(v(s.resp)||"—"));
 return L.join("\n");
 }
@@ -1175,7 +1144,7 @@ $("#clear").onclick=function(){
 if(!confirm("Limpar todos os campos?"))return;
 try{localStorage.removeItem(KEY)}catch(e){}
 $$("[data-k]").forEach(function(e){if(e.type==="radio"||e.type==="checkbox")e.checked=false;else e.value=""});$$(".hr").forEach(function(sp){sp.textContent=""});$$(RSEL).forEach(function(l){l._rondas=[]});
-bosEl.innerHTML="";addBo();$("#abs").innerHTML="";$("#viaturaFotos").innerHTML="";initFotos($("#viaturaFotos"),[]);$("#rondaFotos").innerHTML="";initFotos($("#rondaFotos"),[]);$("#docFotos").innerHTML="";initFotos($("#docFotos"),[]);$("#rondaRegs").innerHTML="";$("#rondaPdfs").innerHTML="";$("#mps").innerHTML="";addMp();$("#pss").innerHTML="";addPs();$("#ats").innerHTML="";addAt();updAt();$("#ocs").innerHTML="";addOc();$("#ovs").innerHTML="";addOv();$("#trs").innerHTML="";addTr();$("#rbs").innerHTML="";addRb();$("#ars").innerHTML="";addAr();$("#bks").innerHTML="";addBk();$("#gvs").innerHTML="";addGv();$("#hvs").innerHTML="";addHv();$("#pmus").innerHTML="";addPmu();$("#rmus").innerHTML="";addRmu();$("#pps").innerHTML="";addPp();$("#ets").innerHTML="";addEt();ctx.clearRect(0,0,sig.clientWidth,sig.clientHeight);drawn=false;
+bosEl.innerHTML="";addBo();$("#abs").innerHTML="";$("#viaturaFotos").innerHTML="";initFotos($("#viaturaFotos"),[]);$("#rondaFotos").innerHTML="";initFotos($("#rondaFotos"),[]);$("#docFotos").innerHTML="";initFotos($("#docFotos"),[]);docTipos=[];docTiposRender();$("#rondaRegs").innerHTML="";$("#rondaPdfs").innerHTML="";$("#mps").innerHTML="";addMp();$("#pss").innerHTML="";addPs();$("#ats").innerHTML="";addAt();updAt();$("#ocs").innerHTML="";addOc();$("#ovs").innerHTML="";addOv();$("#trs").innerHTML="";addTr();$("#rbs").innerHTML="";addRb();$("#ars").innerHTML="";addAr();$("#bks").innerHTML="";addBk();$("#gvs").innerHTML="";addGv();$("#hvs").innerHTML="";addHv();$("#pmus").innerHTML="";addPmu();$("#rmus").innerHTML="";addRmu();$("#pps").innerHTML="";addPp();$("#ets").innerHTML="";addEt();ctx.clearRect(0,0,sig.clientWidth,sig.clientHeight);drawn=false;
 $("#data").value=hoje();$("#out").style.display="none";toggleRonda();updateProgress();msg("Formulário limpo.");
 };
 $("#copy").onclick=function(){
@@ -1237,7 +1206,8 @@ salvar();
 });
 };
 })();
-</script><script>
+</script>
+<script>
 (function(){
 var secs=Array.prototype.slice.call(document.querySelectorAll("main>section"));
 secs.forEach(function(sec){
@@ -1245,10 +1215,12 @@ var h=sec.querySelector(":scope>h2");if(!h)return;
 h.setAttribute("data-tg","1");
 var b=document.createElement("button");b.type="button";b.className="tgb";h.appendChild(b);
 function set(open){sec.classList.toggle("closed",!open);b.textContent=open?"Fechar ▴":"Abrir ▾";b.setAttribute("aria-expanded",open?"true":"false")}
-h.addEventListener("click",function(){set(sec.classList.contains("closed"))});
+h.addEventListener("click",function(){var open=sec.classList.contains("closed");set(open);if(open){Array.prototype.forEach.call(document.querySelectorAll("main>section.sel"),function(x){x.classList.remove("sel")});sec.classList.add("sel");setTimeout(function(){try{sec.scrollIntoView({behavior:"smooth",block:"start"})}catch(e){sec.scrollIntoView()}},60)}else{sec.classList.remove("sel")}});
 set(/^Respons/.test(h.firstChild?h.firstChild.textContent.trim():""));
 });
 })();
-</script></body>
+</script>
+</body>
 </html>
+
 
