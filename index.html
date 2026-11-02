@@ -392,7 +392,7 @@ main>section.atual>h2:after{background:#cbd9e5!important}
 <label><input type="radio" name="ronda" value="Novidades" data-k="ronda"> Novidades</label>
 </div>
 <div id="rondaBox" class="hide">
-<label for="rondaDesc">Descreva as alterações, irregularidades ou ocorrências identificadas</label>
+<label for="rondaDesc">Registro 1 — descreva as alterações, irregularidades ou ocorrências identificadas</label>
 <textarea id="rondaDesc" data-k="rondaDesc"></textarea>
 <div id="rondaRegs"></div>
 <button type="button" class="sm" id="addRondaReg">+ Adicionar novo registro</button>
@@ -405,7 +405,7 @@ main>section.atual>h2:after{background:#cbd9e5!important}
 </section>
 
 <section>
-<h2><span class="ic" aria-hidden="true">🗓️</span>2. Escala Extraordinária GRASEV</h2>
+<h2><span class="ic" aria-hidden="true">🗓️</span>2. Escala Extra GRASEV / DESEJEM</h2>
 <div id="gvs"></div>
 <button type="button" class="sm" id="addGv">+ Adicionar novo registro</button>
 </section>
@@ -1145,10 +1145,10 @@ L.push("Data: "+fmtData(s.data));
 L.push("");
 L.push("1. RONDA AOS POSTOS");
 L.push(v(s.ronda)||"—");
-if(s.ronda==="Novidades"&&v(s.rondaDesc))L.push(v(s.rondaDesc));
+if(s.ronda==="Novidades"&&v(s.rondaDesc))L.push("Registro 1: "+v(s.rondaDesc));
 if(s.ronda==="Novidades"){(s.rondaRegs||[]).forEach(function(t,i){if(v(t))L.push("Registro "+(i+2)+": "+v(t))});if(s.rondaFotos&&s.rondaFotos.length)L.push("Fotos anexadas: "+s.rondaFotos.length);if(s.rondaPdfs&&s.rondaPdfs.length)L.push("PDFs anexados ao final do documento: "+s.rondaPdfs.map(function(x){return x.n}).join("; "))}
 L.push("");
-L.push("2. ESCALA EXTRAORDINÁRIA GRASEV");
+L.push("2. ESCALA EXTRA GRASEV / DESEJEM");
 var gq=(s.gvs||[]).filter(function(o){return o.some(nv)});
 if(!gq.length)L.push("—");
 gq.forEach(function(o,i){var g=function(k){return(o[k]&&o[k].trim())||"—"};
@@ -1386,7 +1386,7 @@ document.addEventListener("change",function(e){
 function recSum(d,i){var t="";var f=d.querySelectorAll('input:not([type]),input[type="text"],textarea');for(var k=0;k<f.length;k++){var x=(f[k].value||"").trim();if(x){t=x;break}}return "Registro "+(i+1)+(t?" — "+(t.length>38?t.slice(0,38)+"…":t):"")}
 var RECADD={bos:addBo,abs:addAb,ocs:addOc,ovs:addOv,trs:addTr,rbs:addRb,ars:addAr,bks:addBk,gvs:addGv,hvs:addHv,rmus:addRmu,pmus:addPmu,pps:addPp,ets:addEt,ats:addAt,pss:addPs,mps:addMp,marias:addMaria,rondaRegs:null};
 function recDel(d){if(!confirm("Excluir este registro? Essa ação não pode ser desfeita."))return;var c=d.parentNode;d.remove();if(c&&!c.children.length&&RECADD[c.id])RECADD[c.id]();if(c&&c.id==="rondaRegs")renumRR();save()}
-function recSet(d,i,col){var h=d.querySelector(":scope>.rhd");if(!h){h=document.createElement("div");h.className="rhd";h.setAttribute("role","button");h.innerHTML='<span class="ra"></span><span class="rs"></span><span class="rm"></span><button type="button" class="rx" aria-label="Excluir registro">🗑 Excluir</button>';h.onclick=function(){var c=!d.classList.contains("rcol");var all=Array.prototype.slice.call(d.parentNode.children);recSet(d,all.indexOf(d),c)};h.querySelector(".rx").onclick=function(e){e.stopPropagation();e.preventDefault();recDel(d)};d.insertBefore(h,d.firstChild)}
+function recSet(d,i,col){i+=(d.parentNode&&d.parentNode.id==="rondaRegs")?1:0;var h=d.querySelector(":scope>.rhd");if(!h){h=document.createElement("div");h.className="rhd";h.setAttribute("role","button");h.innerHTML='<span class="ra"></span><span class="rs"></span><span class="rm"></span><button type="button" class="rx" aria-label="Excluir registro">🗑 Excluir</button>';h.onclick=function(){var c=!d.classList.contains("rcol");var all=Array.prototype.slice.call(d.parentNode.children);recSet(d,all.indexOf(d),c)};h.querySelector(".rx").onclick=function(e){e.stopPropagation();e.preventDefault();recDel(d)};d.insertBefore(h,d.firstChild)}
 d.classList.toggle("rcol",col);h.querySelector(".ra").textContent=col?"▸":"▾";h.querySelector(".rs").textContent=col?recSum(d,i):"Registro "+(i+1);h.querySelector(".rm").textContent=col?"abrir":"fechar"}
 function recDeco(c){Array.prototype.slice.call(c.children).forEach(function(d,i){if(d.nodeType!==1||d.classList.contains("rhd"))return;recSet(d,i,d.classList.contains("rcol"));Array.prototype.slice.call(d.children).forEach(function(b){if(b.tagName==="BUTTON"&&b.classList.contains("sm")&&/^Remover/.test(b.textContent.trim()))b.remove()})})}
 Object.keys(RECADD).forEach(function(id){var c=document.getElementById(id);if(!c)return;recDeco(c);new MutationObserver(function(){recDeco(c)}).observe(c,{childList:true})});
